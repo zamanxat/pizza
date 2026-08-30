@@ -1,0 +1,278 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Don San | Online Пицца Суши Сэты</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="logo">Don San</div>
+        <button class="cart-button" aria-label="Себет">
+          <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-handbag-icon lucide-handbag"><path d="M2.048 18.566A2 2 0 0 0 4 21h16a2 2 0 0 0 1.952-2.434l-2-9A2 2 0 0 0 18 8H6a2 2 0 0 0-1.952 1.566z"/><path d="M8 11V6a4 4 0 0 1 8 0v5"/></svg>
+        </button>
+      </div>
+      <!-- <p class="welcome-message">Welcome to Don San Pizza House 👋</p> -->
+      <!-- <nav class="nav" aria-label="Main navigation">
+            <a href="#">Home</a>
+            <a href="#">Menu</a>
+            <a href="#">Deals</a>
+            <a href="#">Reviews</a>
+            <a href="#">Contact</a>
+        </nav> -->
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Тез жеткізу • Жаңа піскен</p>
+          <h1>Ыстық пицца, бақытты адамдар.</h1>
+          <p class="hero-text">
+            Сізге 30 минут ішінде жеткізілетін шебер пицца, қытырлақ
+            қосымша өнімдер мен салқын сусындарды тамашалаңыз.
+          </p>
+          <!-- <div class="hero-actions">
+                    <a href="#menu" class="primary-btn">Ақ now</a>
+                    <a href="#deals" class="secondary-btn">Ұсыныстарды көру</a>
+                </div> -->
+          <!-- <div class="hero-stats">
+                    <div>
+                        <strong>15k+</strong>
+                        <span>Orders</span>
+                    </div>
+                    <div>
+                        <strong>4.9/5</strong>
+                        <span>Rating</span>
+                    </div>
+                    <div>
+                        <strong>30 min</strong>
+                        <span>Delivery</span>
+                    </div>
+                </div> -->
+        </div>
+
+        <div class="hero-visual">
+          <!-- <img src="banner.jpg" alt="Fresh pizza" class="main-pizza"> -->
+          <img src="image.png" alt="Пицца ұстап тұрған бала" class="hero-boy" />
+          <div class="floating-card">
+            <p>Бүгінгі арнайы</p>
+            <h3>Комбо ұсыныс</h3>
+            <span>3 пицца + сусынсыз</span>
+            <strong>$24.99</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- <section class="proof-bar" aria-label="Customer trust and sales proof">
+            <div class="proof-pill">
+                <strong>4.9/5</strong>
+                <span>from 2,400+ reviews</span>
+            </div>
+            <div class="proof-pill">
+                <strong>30 min</strong>
+                <span>average delivery</span>
+            </div>
+            <div class="proof-pill">
+                <strong>Free</strong>
+                <span>delivery from $25</span>
+            </div>
+        </section>
+
+        <section class="marketing-strip" aria-label="Marketing highlights">
+            <article>
+                <span>🔥</span>
+                <div>
+                    <h3>Fresh every day</h3>
+                    <p>Prepared with premium ingredients and baked to order.</p>
+                </div>
+            </article>
+            <article>
+                <span>⚡</span>
+                <div>
+                    <h3>Fast delivery</h3>
+                    <p>Hot meals to your door in under 30 minutes.</p>
+                </div>
+            </article>
+            <article>
+                <span>🎁</span>
+                <div>
+                    <h3>Smart deals</h3>
+                    <p>Save more with combo packs, loyalty rewards, and weekly specials.</p>
+                </div>
+            </article>
+        </section> -->
+
+      <section class="products" id="menu">
+        <div class="section-header">
+          <div>
+            <p class="eyebrow dark">Танымал мәзір</p>
+            <h2>Топ Суши, Пицца</h2>
+          </div>
+          <!-- <a href="#" class="text-link">Барлығын көру</a> -->
+        </div>
+        <div class="category-scroll" aria-label="Пицца топтары">
+          <div class="category-card active">Классикалық</div>
+          <div class="category-card">Көкөністі</div>
+          <div class="category-card">Пепперони</div>
+          <div class="category-card">Супрем</div>
+          <div class="category-card">Дессерт</div>
+        </div>
+
+        <div class="product-grid">
+          <article class="product-card" data-name="Маргарита" data-price="18.90" data-image="card.png" data-description="Жаңа базилик, қызанақ соусы, моцарелла және қосымша зәйтүн майы. Жұмсақ, хрустикалық, ерекше aroma-мен дайындалған.">
+            <div class="img-card">
+                <img
+                  src="card4.png"
+                  alt="Маргарита пиццасы"/>
+            </div>
+            <div class="product-body">
+              <div class="product-topline">
+                <h3>Маргарита</h3>
+              </div>
+              <p>
+                Жаңа базилик, қызанақ соусы, моцарелла және қосымша зәйтүн
+                майы.
+              </p>
+              <div class="product-bottom">
+                <strong>$18.90</strong>
+                <button class="add-to-cart-btn">Себетке</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-name="Пепперони" data-price="21.50" data-image="card.png" data-description="Қышқылтым пепперони, бай сыр және хрустикалық алтын қүріш. Пиццаға ерекше дәм береді.">
+            <div class="img-card">
+                <img
+                  src="card3.png"
+                  alt="Пепперони пиццасы"
+                />
+            </div>
+            <div class="product-body">
+              <div class="product-topline">
+                <h3>Пепперони</h3>
+              </div>
+              <p>Қышқылтым пепперони, бай сыр және хрустикалық алтын қүріш.</p>
+              <div class="product-bottom">
+                <strong>$21.50</strong>
+                <button class="add-to-cart-btn">Себетке</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-name="Вегги Макс" data-price="20.20" data-image="card.png" data-description="Қызанақ, зәйтүн, пияз, саңырауқұлақ және түтінді қызанақ негізі. Жылы және жеңіл.">
+            <div class="img-card">
+                <img
+                  src="card.png"
+                  alt="Вегетариан пиццасы"
+                />
+            </div>
+            <div class="product-body">
+              <div class="product-topline">
+                <h3>Вегги Макс</h3>
+              </div>
+              <p>
+                Қызанақ, зәйтүн, пияз, саңырауқұлақ және түтінді қызанақ
+                негізі.
+              </p>
+              <div class="product-bottom">
+                <strong>$20.20</strong>
+                <button class="add-to-cart-btn">Себетке</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="product-card" data-name="Супрем" data-price="24.80" data-image="card.png" data-description="Тауық еті, құс еті, қызанақ және арнайы үй соусымен толтырылған. Классикалық әрі қанықты.">
+            <div class="img-card">
+                <img
+                  src="card2.png"
+                  alt="Супрем пиццасы"
+                />
+            </div>
+            <div class="product-body">
+              <div class="product-topline">
+                <h3>Супрем</h3>
+              </div>
+              <p>
+                Тауық еті, құс еті, қызанақ және арнайы үй соусымен толтырылған.
+              </p>
+              <div class="product-bottom">
+                <strong>$24.80</strong>
+                <button class="add-to-cart-btn">Себетке</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="promo-banner" id="deals">
+        <div class="scroll-story">
+            <div class="card-story">
+                <div class="position-story-img"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdSx1-9iTB32bcGZmItcNTVrPuiIlqLBY1Q3JSB2IFXSvKPOOPLGgzp6A&s=10" alt=""></div>
+                <a href=""></a>
+                <p>Скидка в честь открытия!</p>
+            </div>
+            <div class="card-story">
+                <div class="position-story-img"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Rom_%28IT%29%2C_Kolosseum_--_2024_--_0610.jpg?utm_source=ru.wikipedia.org&utm_campaign=index&utm_content=original" alt=""></div>
+                <a href=""></a>
+                <p>Привет из Рима</p>
+            </div>
+            <div class="card-story">
+                <div class="position-story-img"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEEawz8RK9KMsbG_PuvZAYTxqDUU3oYZfy83h-qDY4rATFBFVXNnb76TBG&s=10" alt=""></div>
+                <p>Откройте заряд ностроений</p>
+            </div>
+            <div class="card-story">
+                <div class="position-story-img"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNUNpDtVEy6ad0q0mZ9nPhE3NdB7UeCSkkqFqYwWcGl9v258cYy0KtUBSW&s=10" alt=""></div>
+                <p>Тепло и сладко</p>
+            </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="product-modal" aria-label="Товар беті">
+      <div class="product-modal-backdrop"></div>
+      <div class="product-modal-card">
+        <button class="modal-close" aria-label="Жабу">×</button>
+
+        <div class="modal-gallery">
+          <img src="card.png" alt="Маргарита пиццасы" />
+        </div>
+
+        <div class="modal-content">
+          <div class="modal-topline">
+            <span class="pill">Танымал</span>
+          </div>
+
+          <h2 id="modal-product-name">Маргарита</h2>
+
+          <p class="modal-description" id="modal-product-description">
+            Жаңа базилик, қызанақ соусы, моцарелла және қосымша зәйтүн майы.
+            Жұмсақ, хрустикалық, ерекше aroma-мен дайындалған.
+          </p>
+
+          <div class="modal-footer">
+            <div class="price-wrap">
+              <small>Бағасы</small>
+              <strong id="modal-product-price">$18.90</strong>
+            </div>
+
+            <button type="button" class="modal-buy">Себетке қосу</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <p>© 2026 Don San. Барлық құқықтар қорғалған.</p>
+      <p>Сайтты <a href="#" target="_blank">JobaLab</a> командасы құрастырған</p>
+    </footer>
+
+  </body>
+</html>
