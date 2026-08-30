@@ -840,13 +840,14 @@ main {
 
 @media(max-width: 550px) {
 
-    .promo-banner {
+.promo-banner {
     height: 180px;
     display: flex;
     gap: 16px;
     background: rgba(255, 255, 255, 0);
     border-radius: 20px;
     width: 100%;
+    min-width: 100%;
     margin-right: 0px;
     padding-right: 0px;
     margin-top: 50px;
