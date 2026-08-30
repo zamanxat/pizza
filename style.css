@@ -502,12 +502,12 @@ main {
 
 .promo-banner {
     height: 200px;
-    display: flex;
+    display: grid;
     gap: 16px;
     background: rgba(255, 255, 255, 0);
     border-radius: 20px;
-    padding: 8px 10px;
-    margin: 40px -10px 10px;
+    /* padding: 8px 10px;
+    margin: 40px -10px 10px; */
     width: 100%;
     margin-top: 50px;
     margin-bottom: 50px;
@@ -842,12 +842,10 @@ main {
 
 .promo-banner {
     height: 180px;
-    display: flex;
+    display: grid;
     gap: 16px;
     background: rgba(255, 255, 255, 0);
     border-radius: 20px;
-    width: 100%;
-    min-width: 100%;
     margin-right: 0px;
     padding-right: 0px;
     margin-top: 50px;
