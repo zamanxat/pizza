@@ -331,7 +331,7 @@ main {
 
 .hero-visual {
     position: relative;
-    height: 200px;
+    height: 120px;
     padding: 0;
     margin: 0;
     display: flex;
@@ -352,7 +352,7 @@ main {
     position: absolute;
     z-index: 4;
     right: 15px;
-    bottom: 55px;
+    bottom: -30px;
     width: 150px;
 }
 
@@ -365,6 +365,26 @@ main {
     border-radius: 20px;
     box-shadow: 0 18px 28px rgba(0, 0, 0, 0.05);
 }
+
+.floating-card-button {
+    color: white;
+    border-radius: 10px;
+    background-color: #ff7700;
+    padding: 10px;
+    border: none;
+    width: 150px;
+}
+
+.floating-card-button:hover {
+   animation: cubic-bezier(0.895, 0.03, 0.685, 0.22);
+}
+
+.floating-card-button:active {
+    font-size: 15.9px;
+}
+
+
+
 
 .floating-card p,
 .floating-card span {
@@ -614,9 +634,9 @@ main {
 
 @media(max-width: 390px) {
     .hero-boy {
-        right: 10px;
+        right: 5px;
         width: 120px;
-        bottom: 70px;
+        bottom: -20px;
     }
 
     .product-bottom strong {
