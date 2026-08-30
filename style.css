@@ -373,6 +373,7 @@ main {
     padding: 10px;
     border: none;
     width: 150px;
+    font-weight: 600;
 }
 
 .floating-card-button:hover {
