@@ -450,7 +450,7 @@ main {
 
 .img-card {
     width: 100%;
-    min-height: 160px;
+    min-height: 100px;
     max-height: 160px;
     overflow: hidden;
     object-fit: cover;
@@ -814,4 +814,20 @@ main {
     margin-top: 4px;
     color: #766760;
     font-family: lora;
+}
+
+@media(max-width: 385px) {
+    .hero-boy {
+        right: 10px;
+        width: 120px;
+        bottom: 70px;
+    }
+
+    .product-bottom strong {
+        font-size: 13px;
+    }
+
+    .product-bottom button {
+        font-size: 10px;
+    }
 }
