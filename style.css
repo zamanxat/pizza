@@ -866,7 +866,7 @@ main {
 }
 
 .card-story {
-    flex: 0 0 120px;
+    max-width: 120px;
     background: #fff;
     padding: 0;
     text-align: center;
