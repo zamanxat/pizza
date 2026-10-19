@@ -2,413 +2,104 @@
 <html lang="kk">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Don San | Online Пицца Суши Сэты</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#e6292e" />
+    <meta name="description" content="DONSAN: суши, пицца және тіскебасарлар. Мәзірден таңдап, WhatsApp арқылы тапсырыс беріңіз." />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="DONSAN — Суши мен пицца" />
+    <meta property="og:description" content="Сүйікті тағамдарыңды таңда. Пицца, суши және үш пиццадан тұратын Armani жиынтығы." />
+    <meta property="og:url" content="https://donsan.vercel.app/" />
+    <meta property="og:image" content="https://donsan.vercel.app/assets/pizza-pepperoni.jpg" />
+    <link rel="canonical" href="https://donsan.vercel.app/" />
+    <title>DONSAN — Суши мен пицца</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css?v=20261020-6" />
+    <script src="script.js?v=20261020-6" defer></script>
   </head>
   <body>
-    <header class="topbar">
-      <div class="brand-wrap">
-        <div class="logo">Don San</div>
-        <button class="cart-button" aria-label="Себетті ашу" id="cartOpenBtn">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="25"
-            height="25"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2.5"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            class="lucide lucide-handbag-icon lucide-handbag"
-          >
-            <path
-              d="M2.048 18.566A2 2 0 0 0 4 21h16a2 2 0 0 0 1.952-2.434l-2-9A2 2 0 0 0 18 8H6a2 2 0 0 0-1.952 1.566z"
-            />
-            <path d="M8 11V6a4 4 0 0 1 8 0v5" />
-          </svg>
-          <span class="cart-count" id="cartCount">0</span>
-        </button>
+    <a class="skip-link" href="#menu" data-i18n="skip">Мәзірге өту</a>
+    <header class="site-header">
+      <div class="header-inner shell">
+        <a class="brand" href="#home" data-i18n-aria="homeLabel">
+          <svg class="brand-logo" viewBox="365 160 800 735" role="img" aria-label="Don saN"><image href="donsan-logo.png" width="1536" height="1024" /></svg>
+        </a>
+        <nav class="desktop-nav" data-i18n-aria="navigation">
+          <a href="#menu" data-i18n="menu">Мәзір</a>
+          <a href="#combo" data-i18n="offers">Арнайы ұсыныс</a>
+          <a href="#contacts" data-i18n="contacts">Байланыс</a>
+        </nav>
+        <div class="header-actions">
+          <div class="language-switch" role="group" data-i18n-aria="language">
+            <button type="button" data-lang="kk" lang="kk" aria-pressed="true">ҚАЗ</button>
+            <button type="button" data-lang="ru" lang="ru" aria-pressed="false">РУС</button>
+            <button type="button" data-lang="en" lang="en" aria-pressed="false">ENG</button>
+          </div>
+          <button class="cart-button" type="button" id="cartOpenBtn" data-i18n-aria="openCart">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l2 13H4L6 7Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
+            <span class="cart-amount" id="cartAmount" aria-live="polite"><span>0 ₸</span></span>
+          </button>
+        </div>
       </div>
-      <!-- <p class="welcome-message">Welcome to Don San Pizza House 👋</p> -->
-      <!-- <nav class="nav" aria-label="Main navigation">
-            <a href="#">Home</a>
-            <a href="#">Menu</a>
-            <a href="#">Deals</a>
-            <a href="#">Reviews</a>
-            <a href="#">Contact</a>
-        </nav> -->
     </header>
-
-    <main>
-      <section class="hero">
+    <main id="home">
+      <section class="hero shell">
         <div class="hero-copy">
-          <p class="eyebrow">Тез жеткізу • Жаңа піскен</p>
-          <h1>Бақыттың дәмі дәл осы жерде.</h1>
-          <p class="hero-text">
-            Жаңа піскен пиццаны қалаған уақытыңда тапсырыс беріңіз. Біз оны
-            ыстық күйінде есігіңізге жеткіземіз.
-          </p>
-          <!-- <div class="hero-actions">
-                    <a href="#menu" class="primary-btn">Ақ now</a>
-                    <a href="#deals" class="secondary-btn">Ұсыныстарды көру</a>
-                </div> -->
-          <!-- <div class="hero-stats">
-                    <div>
-                        <strong>15k+</strong>
-                        <span>Orders</span>
-                    </div>
-                    <div>
-                        <strong>4.9/5</strong>
-                        <span>Rating</span>
-                    </div>
-                    <div>
-                        <strong>30 min</strong>
-                        <span>Delivery</span>
-                    </div>
-                </div> -->
+          <p class="eyebrow"><span class="status-dot"></span><span data-i18n="heroEyebrow">Сенің дәмді үзілісің</span></p>
+          <h1><span data-i18n="heroTitle">Дәмді сәттерді</span><br /><em data-i18n="heroAccent">бірге бөліс.</em></h1>
+          <p class="hero-description" data-i18n="heroDescription">Қытырлақ пицца, сүйікті роллдар мен суши-догтар. Бүгінгі көңіл күйіңе сай дәмді таңда.</p>
+          <a class="button button-red" href="#menu"><span data-i18n="viewMenu">Мәзірді қарау</span><span aria-hidden="true">↗</span></a>
+          <div class="hero-benefits"><span><i aria-hidden="true">✦</i><span data-i18n="fresh">Тапсырыспен дайындалады</span></span><span><i aria-hidden="true">♡</i><span data-i18n="forSharing">Бірге жеуге дәмді</span></span></div>
         </div>
-
-        <div class="hero-visual">
-          <!-- <img src="banner.jpg" alt="Fresh pizza" class="main-pizza"> -->
-          <img src="image.png" alt="Пицца ұстап тұрған бала" class="hero-boy" />
-          <div class="floating-card">
-            <p>Бүгінгі арнайы</p>
-            <h3>Комбо Armani</h3>
-            <span>3 пицца + сусынсыз</span>
-            <strong>12.890〒</strong>
-          </div>
+        <div class="hero-art" aria-hidden="true">
+          <span class="hero-sun"></span>
+          <img class="hero-pizza" src="assets/pizza-pepperoni.jpg" alt="" fetchpriority="high" />
+          <img class="hero-sushi" src="assets/sushi-classic.jpg" alt="" />
+          <span class="hero-sticker">DONSAN<br /><small data-i18n="heroSticker">ДӘМІ БӨЛЕК</small></span>
+          <span class="hero-caption"><span class="status-dot"></span><span data-i18n="heroCaption">Пицца + суши = тамаша жұп</span></span>
         </div>
-        <button class="floating-card-button" id="heroOrderBtn">Тапсырыс беру</button>
       </section>
-
-      <!-- <section class="proof-bar" aria-label="Customer trust and sales proof">
-            <div class="proof-pill">
-                <strong>4.9/5</strong>
-                <span>from 2,400+ reviews</span>
-            </div>
-            <div class="proof-pill">
-                <strong>30 min</strong>
-                <span>average delivery</span>
-            </div>
-            <div class="proof-pill">
-                <strong>Free</strong>
-                <span>delivery from $25</span>
-            </div>
-        </section>
-
-        <section class="marketing-strip" aria-label="Marketing highlights">
-            <article>
-                <span>🔥</span>
-                <div>
-                    <h3>Fresh every day</h3>
-                    <p>Prepared with premium ingredients and baked to order.</p>
-                </div>
-            </article>
-            <article>
-                <span>⚡</span>
-                <div>
-                    <h3>Fast delivery</h3>
-                    <p>Hot meals to your door in under 30 minutes.</p>
-                </div>
-            </article>
-            <article>
-                <span>🎁</span>
-                <div>
-                    <h3>Smart deals</h3>
-                    <p>Save more with combo packs, loyalty rewards, and weekly specials.</p>
-                </div>
-            </article>
-        </section> -->
-
-      <section class="products" id="menu">
-        <div class="section-header">
-          <div>
-            <p class="eyebrow dark">Танымал мәзір</p>
-            <h2>Топ Суши, Пицца</h2>
-          </div>
-          <!-- <a href="#" class="text-link">Барлығын көру</a> -->
-        </div>
-        <div class="category-scroll" aria-label="Пицца топтары" id="categoryScroll">
-          <button class="category-card active" data-category="sets">Сэттер</button>
-          <button class="category-card" data-category="pizza">Пиццалар</button>
-          <button class="category-card" data-category="sushi">Сушилер</button>
-          <button class="category-card" data-category="drinks">Сусындар</button>
-          <button class="category-card" data-category="sauces">Тұздықтар</button>
-        </div>
-
-        <div class="product-grid" id="productGrid">
-          <article
-            class="product-card"
-            data-category="sets"
-            data-name="Маргарита"
-            data-price="19990"
-            data-image="card4.png"
-            data-description="Пицца казы х1, Чеберуки x3, Бургер x2, Соус сыр x4, Корндог x4, Салат Филад x1"
-          >
-            <div class="img-card">
-              <img
-                class="product-image"
-                data-image="card4.png"
-                src="card4.png"
-                alt="Маргарита пиццасы"
-              />
-            </div>
-            <div class="product-body">
-              <div class="product-topline">
-                <h3 data-name="Маргарита">Маргарита</h3>
-              </div>
-              <p>
-                Пицца казы х1, Чеберуки x3, Бургер x2, Соус сыр x4, Корндог x4,
-                Салат Филад x1
-              </p>
-              <div class="product-bottom">
-                <strong data-price="19990">19.990〒</strong>
-                <button class="add-to-cart-btn">Себетке</button>
-              </div>
-            </div>
-          </article>
-
-          <article
-            class="product-card"
-            data-category="sets"
-            data-name="Пепперони"
-            data-price="21000"
-            data-image="card3.png"
-            data-description="Пицца мясо x1, Мини Шаурма x5, Салат Оливие x1, Соус x3, Суши Ораго x8"
-          >
-            <div class="img-card">
-              <img
-                class="product-image"
-                data-image="card3.png"
-                src="card3.png"
-                alt="Пепперони пиццасы"
-              />
-            </div>
-            <div class="product-body">
-              <div class="product-topline">
-                <h3 data-name="Пепперони">Пепперони</h3>
-              </div>
-              <p>
-                Пицца мясо x1, Мини Шаурма x5, Салат Оливие x1, Соус x3, Суши
-                Ораго x8
-              </p>
-              <div class="product-bottom">
-                <strong data-price="21000">21.000〒</strong>
-                <button class="add-to-cart-btn">Себетке</button>
-              </div>
-            </div>
-          </article>
-
-          <article
-            class="product-card"
-            data-category="sets"
-            data-name="Вегги Макс"
-            data-price="20590"
-            data-image="card.png"
-            data-description="Пицца Пеперони x1, Сырный Хлеб x5, Суши Филоделфия x8, Суши Обычные x8, Суши Жаренные x8, Соус набор x1"
-          >
-            <div class="img-card">
-              <img
-                data-image="card.png"
-                src="card.png"
-                alt="Вегетариан пиццасы"
-              />
-            </div>
-            <div class="product-body">
-              <div class="product-topline">
-                <h3 data-name="Вегги Макс">Вегги Макс</h3>
-              </div>
-              <p>
-                Пицца Пеперони x1, Сырный Хлеб x5, Суши Филоделфия x8, Суши
-                Обычные x8, Суши Жаренные x8, Соус набор x1
-              </p>
-              <div class="product-bottom">
-                <strong data-price="20590">20.590〒</strong>
-                <button class="add-to-cart-btn">Себетке</button>
-              </div>
-            </div>
-          </article>
-
-          <article
-            class="product-card"
-            data-category="sets"
-            data-name="Супрем"
-            data-price="24990"
-            data-image="card2.png"
-            data-description="Пицца Салатовый x1, Соус набор x1, Курица в Сладком соусе x10, Салат Муж.Каприз x1, Суши филоделфия x4, Суши Жаренный x4, Суши Микс x4"
-          >
-            <div class="img-card">
-              <img
-                class="product-image"
-                data-image="card2.png"
-                src="card2.png"
-                alt="Супрем пиццасы"
-              />
-            </div>
-            <div class="product-body">
-              <div class="product-topline">
-                <h3 data-name="Супрем">Супрем</h3>
-              </div>
-              <p>
-                Пицца Салатовый x1, Соус набор x1, Курица в Сладком соусе x10,
-                Салат Муж.Каприз x1, Суши филоделфия x4, Суши Жаренный x4, Суши
-                Микс x4
-              </p>
-              <div class="product-bottom">
-                <strong data-price="24990">24.990〒</strong>
-                <button class="add-to-cart-btn">Себетке</button>
-              </div>
-            </div>
-          </article>
-        </div>
-
-        <p class="empty-category" id="emptyCategory" hidden>
-          Бұл санатта тағамдар жақында қосылады. Әзірге «Сэттер» бөлімін қараңыз 🍕
-        </p>
+      <section class="combo-banner shell" id="combo" aria-labelledby="comboHeading">
+        <div class="combo-art"><img src="image.png" alt="" /><span class="gift-badge" data-i18n="colaGift">1 л кола сыйлыққа</span></div>
+        <div class="combo-copy"><p class="eyebrow" data-i18n="specialOffer">Бір дастарқанға жиналайық</p><h2 id="comboHeading" data-i18n="comboName">«Armani» жиынтығы</h2><p data-i18n="comboDescription">Төрт түрдің ішінен кез келген 3 пиццаны таңда. 1 литр кола — бізден!</p></div>
+        <div class="combo-action"><strong>12 890 <span>₸</span></strong><button class="button button-white" type="button" id="heroOrderBtn"><span data-i18n="buildCombo">Пиццаларды таңдау</span><span aria-hidden="true">+</span></button></div>
       </section>
-
-      <section class="promo-banner" id="deals">
-        <div class="scroll-story" id="scrollStory">
-          <div
-            class="card-story"
-            data-caption="Скидка в честь ашылуы!"
-            data-image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdSx1-9iTB32bcGZmItcNTVrPuiIlqLBY1Q3JSB2IFXSvKPOOPLGgzp6A&s=10"
-          >
-            <div class="position-story-img">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTdSx1-9iTB32bcGZmItcNTVrPuiIlqLBY1Q3JSB2IFXSvKPOOPLGgzp6A&s=10"
-                alt=""
-              />
-            </div>
-            <p>Скидка в честь открытия!</p>
-          </div>
-          <div
-            class="card-story"
-            data-caption="Привет из Рима"
-            data-image="https://upload.wikimedia.org/wikipedia/commons/c/c7/Rom_%28IT%29%2C_Kolosseum_--_2024_--_0610.jpg?utm_source=ru.wikipedia.org&utm_campaign=index&utm_content=original"
-          >
-            <div class="position-story-img">
-              <img
-                src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Rom_%28IT%29%2C_Kolosseum_--_2024_--_0610.jpg?utm_source=ru.wikipedia.org&utm_campaign=index&utm_content=original"
-                alt=""
-              />
-            </div>
-            <p>
-              Привет <br />
-              из Рима
-            </p>
-          </div>
-          <div
-            class="card-story"
-            data-caption="Откройте заряд настроений"
-            data-image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEEawz8RK9KMsbG_PuvZAYTxqDUU3oYZfy83h-qDY4rATFBFVXNnb76TBG&s=10"
-          >
-            <div class="position-story-img">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEEawz8RK9KMsbG_PuvZAYTxqDUU3oYZfy83h-qDY4rATFBFVXNnb76TBG&s=10"
-                alt=""
-              />
-            </div>
-            <p>Откройте заряд ностроений</p>
-          </div>
-          <div
-            class="card-story"
-            data-caption="Тепло и сладко"
-            data-image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNUNpDtVEy6ad0q0mZ9nPhE3NdB7UeCSkkqFqYwWcGl9v258cYy0KtUBSW&s=10"
-          >
-            <div class="position-story-img">
-              <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNUNpDtVEy6ad0q0mZ9nPhE3NdB7UeCSkkqFqYwWcGl9v258cYy0KtUBSW&s=10"
-                alt=""
-              />
-            </div>
-            <p>
-              Тепло и <br />
-              сладко
-            </p>
-          </div>
+      <section class="menu-section shell" id="menu" aria-labelledby="menuHeading">
+        <div class="section-heading"><div><p class="eyebrow" data-i18n="menuEyebrow">DONSAN мәзірі</p><h2 id="menuHeading" data-i18n="menuTitle">Бүгін не жейміз?</h2></div><p class="spice-note"><span aria-hidden="true">🌶️</span><span data-i18n="spiceNote">Ащылық деңгейі. Өз талғамыңа сай таңда.</span></p></div>
+        <div class="menu-toolbar">
+          <nav class="category-nav" id="categoryNav" data-i18n-aria="categories"></nav>
+          <label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input type="search" id="menuSearch" data-i18n-placeholder="search" data-i18n-aria="search" placeholder="Мәзірден іздеу" autocomplete="off" /></label>
         </div>
+        <div id="productGrid"></div>
+        <p class="no-results" id="noResults" hidden data-i18n="noResults">Ештеңе табылмады. Басқа атаумен іздеп көріңіз.</p>
+        <p class="photo-note" data-i18n="photoNote">Фотосуреттер үлгі ретінде берілген. Тағамның нақты көрінісі өзгеше болуы мүмкін.</p>
+      </section>
+      <section class="order-info shell" id="order-info">
+        <div><p class="eyebrow" data-i18n="howEyebrow">Бәрі оңай</p><h2 data-i18n="howTitle">Таңда. Тапсырыс бер. Дәмін тат.</h2></div>
+        <ol class="order-steps"><li><span>01</span><h3 data-i18n="step1Title">Сүйіктіңді таңда</h3><p data-i18n="step1Text">Мәзірден тағамдарды себетке қос.</p></li><li><span>02</span><h3 data-i18n="step2Title">Бізге жаз</h3><p data-i18n="step2Text">Себеттегі тапсырысты WhatsApp арқылы жібер.</p></li><li><span>03</span><h3 data-i18n="step3Title">Толық мәліметін келіс</h3><p data-i18n="step3Text">Жеткізу аймағын, уақытын және төлемді оператор нақтылайды.</p></li></ol>
       </section>
     </main>
-
-    <footer class="footer">
-      <p>© 2026 Don San. Барлық құқықтар қорғалған.</p>
-      <p>
-        Сайтты <a href="#" target="_blank">JobaLab</a> командасы құрастырған
-      </p>
+    <footer class="site-footer" id="contacts">
+      <div class="footer-main shell">
+        <div class="footer-brand"><a href="#home" class="footer-wordmark">DON<span>SAN</span><span class="wordmark-dot"></span></a><p data-i18n="footerDescription">Күнделікті сәттерге ерекше дәм. Суши, пицца және жақындарыңмен бөлісетін көңіл күй.</p></div>
+        <div><h3 data-i18n="navigation">Навигация</h3><a href="#menu" data-i18n="menu">Мәзір</a><a href="#combo" data-i18n="offers">Арнайы ұсыныс</a><a href="#order-info" data-i18n="ordering">Қалай тапсырыс беремін?</a></div>
+        <div><h3 data-i18n="contacts">Байланыс</h3><a href="tel:+77477919765">+7 747 791 97 65</a><a href="https://wa.me/77477919765" target="_blank" rel="noopener noreferrer">WhatsApp ↗</a><p data-i18n="deliveryNote">Жеткізу құны мен аймағын оператордан нақтылаңыз.</p></div>
+      </div>
+      <div class="footer-bottom shell"><p>© <span id="year">2026</span> DONSAN. <span data-i18n="rights">Барлық құқықтар қорғалған.</span></p><a class="powered" href="https://jobalab.vercel.app" target="_blank" rel="noopener noreferrer">Powered by <strong>JobaLab</strong><span aria-hidden="true">↗</span></a></div>
     </footer>
-
-    <!-- Cart drawer -->
-    <div class="cart-overlay" id="cartOverlay"></div>
-    <aside class="cart-drawer" id="cartDrawer" aria-label="Себет">
-      <div class="cart-drawer-head">
-        <h2>Себет</h2>
-        <button class="cart-close-btn" id="cartCloseBtn" aria-label="Жабу">✕</button>
-      </div>
-      <div class="cart-items" id="cartItems">
-        <p class="cart-empty" id="cartEmptyMsg">Себетіңіз әзірге бос. Мәзірден таңдаңыз 🍣</p>
-      </div>
-      <div class="cart-drawer-foot">
-        <div class="cart-total-row">
-          <span>Барлығы</span>
-          <strong id="cartTotal">0〒</strong>
-        </div>
-        <button class="checkout-btn" id="checkoutBtn">
-          Тапсырысты растау (WhatsApp)
-        </button>
-      </div>
-    </aside>
-
-    <!-- Product detail modal -->
-    <div class="modal-overlay" id="productOverlay"></div>
-    <div class="product-modal" id="productModal">
-      <button class="modal-close-btn" id="productCloseBtn" aria-label="Жабу">✕</button>
-      <div class="product-modal-img">
-        <img id="productModalImg" src="" alt="" />
-      </div>
-      <div class="product-modal-body">
-        <h3 id="productModalName"></h3>
-        <p id="productModalDesc"></p>
-        <div class="product-modal-footer">
-          <strong id="productModalPrice"></strong>
-          <button id="productModalAddBtn">Себетке қосу</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Story viewer modal -->
-    <div class="story-modal" id="storyModal">
-      <div class="story-modal-inner">
-        <div class="story-progress" id="storyProgress"></div>
-        <button class="story-close-btn" id="storyCloseBtn" aria-label="Жабу">✕</button>
-        <img id="storyModalImg" src="" alt="" />
-        <p class="story-caption" id="storyModalCaption"></p>
-        <button class="story-nav prev" id="storyPrevBtn" aria-label="Алдыңғы"></button>
-        <button class="story-nav next" id="storyNextBtn" aria-label="Келесі"></button>
-      </div>
-    </div>
-
-    <!-- Confirm popup -->
-    <div class="modal-overlay" id="confirmOverlay"></div>
-    <div class="confirm-modal" id="confirmModal">
-      <p id="confirmText">Тауарды себеттен өшіресіз бе?</p>
-      <div class="confirm-actions">
-        <button class="confirm-no" id="confirmNoBtn">Жоқ</button>
-        <button class="confirm-yes" id="confirmYesBtn">Иә, өшіру</button>
-      </div>
-    </div>
-
-    <!-- Toast -->
-    <div class="toast" id="toast"></div>
-
-    <script src="script.js"></script>
+    <dialog class="cart-dialog" id="cartDialog" aria-labelledby="cartHeading">
+      <div class="dialog-head"><div><p class="eyebrow">DONSAN</p><h2 id="cartHeading" data-i18n="yourCart">Сенің себетің</h2></div><button type="button" class="icon-button" data-close="cartDialog" data-i18n-aria="close">✕</button></div>
+      <div class="cart-scroll"><div id="cartItems"></div><label class="order-note" id="orderNoteLabel"><span data-i18n="orderNote">Тапсырысқа ескерту</span><textarea id="orderNote" rows="2" maxlength="500" data-i18n-placeholder="orderNotePlaceholder" placeholder="Мысалы, жеткізу туралы немесе аллергия жөнінде"></textarea></label></div>
+      <div class="cart-summary"><div><span data-i18n="total">Жалпы сома</span><strong id="cartTotal">0 ₸</strong></div><p data-i18n="deliveryNotIncluded">Жеткізу құны бөлек нақтыланады.</p><button class="button button-red" id="checkoutBtn" type="button" disabled><span data-i18n="checkout">WhatsApp арқылы тапсырыс беру</span><span aria-hidden="true">↗</span></button><span class="checkout-note" data-i18n="checkoutNote">WhatsApp-та дайын хабарламаны жіберіп, тапсырысты растаңыз.</span></div>
+    </dialog>
+    <dialog class="combo-dialog" id="comboDialog" aria-labelledby="comboDialogHeading">
+      <div class="dialog-head"><div><p class="eyebrow" data-i18n="specialOffer">Бір дастарқанға жиналайық</p><h2 id="comboDialogHeading" data-i18n="comboName">«Armani» жиынтығы</h2></div><button type="button" class="icon-button" data-close="comboDialog" data-i18n-aria="close">✕</button></div>
+      <div class="combo-dialog-content"><p data-i18n="comboChooseHint">Әр пиццаны өзің таңда. Бір түрін бірнеше рет алуға болады.</p><form id="comboForm"><div id="comboOptions"></div><div class="combo-gift"><span aria-hidden="true">🎁</span><div><strong data-i18n="colaGift">1 л кола сыйлыққа</strong><p data-i18n="giftIncluded">Жиынтыққа тегін кіреді</p></div><span>0 ₸</span></div><div class="combo-dialog-bottom"><strong>12 890 ₸</strong><button class="button button-red" type="submit"><span data-i18n="addCombo">Жиынтықты себетке қосу</span><span aria-hidden="true">+</span></button></div></form></div>
+    </dialog>
+    <dialog class="product-dialog" id="productDialog" aria-labelledby="productHeading"><button type="button" class="icon-button product-close" data-close="productDialog" data-i18n-aria="close">✕</button><div id="productDetails"></div></dialog>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <noscript><p class="noscript-message">Мәзірді көру үшін JavaScript қосыңыз. / Включите JavaScript для просмотра меню. / Enable JavaScript to view the menu.</p></noscript>
   </body>
 </html>
