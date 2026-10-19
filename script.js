@@ -3,6 +3,12 @@
   const WHATSAPP_NUMBER = '77477919765';
   const COMBO_PRICE = 8990;
   const LANGUAGES = ['kk', 'ru', 'en'];
+  const DEFAULT_LANGUAGE = 'ru';
+  // Explicit language links stay shareable; a plain entry URL always opens in Russian.
+  function resolveLocale(search = '') {
+    const requested = new URLSearchParams(search).get('lang');
+    return LANGUAGES.includes(requested) ? requested : DEFAULT_LANGUAGE;
+  }
   const CATEGORIES = [
     { id: 'dogs', names: ['Суши-догтар', 'Суши-доги', 'Sushi dogs'] },
     { id: 'sushi', names: ['Суши', 'Суши', 'Sushi'] },
@@ -18,30 +24,30 @@
   };
   // Product prices are authoritative here, including when restoring a saved cart.
   const PRODUCTS = [
-    { id: 'cezar-dog', category: 'dogs', names: ['Цезарь суши-догы', 'Цезарь дог', 'Cezar Dog'], price: 1490, spice: 0, photo: 'sushi-dog' },
-    { id: 'salmon-dog', category: 'dogs', names: ['Албырт қосылған суши-дог', 'Суши-дог с лососем', 'Salmon Dog'], price: 2090, spice: 0, photo: 'sushi-dog' },
-    { id: 'sausage-dog', category: 'dogs', names: ['Шұжық қосылған суши-дог', 'Суши-дог с сосиской', 'Sausage Dog'], price: 1590, spice: 0, photo: 'sushi-dog' },
-    { id: 'shrimp-dog', category: 'dogs', names: ['Асшаян қосылған суши-дог', 'Суши-дог с креветкой', 'Shrimp Dog'], price: 2290, spice: 3, photo: 'sushi-dog' },
-    { id: 'cheese-dog', category: 'dogs', names: ['Ірімшік қосылған суши-дог', 'Сырный суши-дог', 'Cheese Dog'], price: 1890, spice: 0, photo: 'sushi-dog' },
-    { id: 'americano-tempura', category: 'sushi', group: 'tempura', names: ['Американо темпура', 'Американо темпура', 'Americano Tempura'], price: 1390, spice: 0, photo: 'sushi-tempura' },
-    { id: 'cezar-tempura', category: 'sushi', group: 'tempura', names: ['Цезарь темпура', 'Цезарь темпура', 'Caesar Tempura'], price: 1390, spice: 0, photo: 'sushi-tempura' },
-    { id: 'salmon-tempura', category: 'sushi', group: 'tempura', names: ['Албырт темпура', 'Лосось темпура', 'Salmon Tempura'], price: 1690, spice: 0, photo: 'sushi-tempura' },
-    { id: 'olivier-tempura', category: 'sushi', group: 'tempura', names: ['Оливье темпура', 'Оливье темпура', 'Olivier Tempura'], price: 1390, spice: 5, photo: 'sushi-tempura' },
-    { id: 'alaska', category: 'sushi', group: 'cold', names: ['Аляска', 'Аляска', 'Alaska'], price: 1390, spice: 0, photo: 'sushi-classic' },
-    { id: 'phila', category: 'sushi', group: 'cold', names: ['Фила', 'Фила', 'Phila'], price: 1390, spice: 0, photo: 'sushi-classic' },
-    { id: 'dragon', category: 'sushi', group: 'cold', names: ['Айдаһар', 'Дракон', 'Dragon'], price: 1390, spice: 0, photo: 'sushi-classic' },
-    { id: 'shrimp-roll', category: 'sushi', group: 'cold', names: ['Асшаян', 'Креветка', 'Shrimp'], price: 1390, spice: 0, photo: 'sushi-classic' },
-    { id: 'killer', category: 'sushi', group: 'cold', names: ['Киллер', 'Киллер', 'Killer'], price: 1390, spice: 3, photo: 'sushi-classic' },
-    { id: 'kazuto', category: 'sushi', group: 'baked', names: ['Казуто', 'Казуто', 'Kazuto'], price: 1590, spice: 0, photo: 'sushi-baked' },
-    { id: 'unagi-rice', category: 'sushi', group: 'baked', names: ['Унаги райс', 'Унаги райс', 'Unagi Rice'], price: 1590, spice: 0, photo: 'sushi-baked' },
-    { id: 'spicy-salmon', category: 'sushi', group: 'baked', names: ['Ащы албырт', 'Острый с лососем', 'Spicy Salmon'], price: 1590, spice: 4, photo: 'sushi-baked' },
-    { id: 'mexican-pizza', category: 'pizza', names: ['Мексикалық пицца', 'Мексиканская пицца', 'Mexican Pizza'], price: 2900, spice: 3, photo: 'pizza-spicy' },
-    { id: 'margherita', category: 'pizza', names: ['Маргарита', 'Маргарита', 'Margherita'], price: 1790, spice: 0, photo: 'pizza-margherita' },
-    { id: 'pepperoni', category: 'pizza', names: ['Пепперони', 'Пепперони', 'Pepperoni'], price: 2490, spice: 0, photo: 'pizza-pepperoni' },
-    { id: 'spicy-chicken-pizza', category: 'pizza', names: ['Ащы тауық еті қосылған пицца', 'Острый с курицей', 'Spicy Chicken Pizza'], price: 2990, spice: 5, photo: 'pizza-spicy' },
-    { id: 'chicken-mini', category: 'snacks', names: ['Тауық еті — 8 дана', 'Курица мини — 8 шт.', 'Chicken Mini — 8 pcs'], price: 2490, spice: 3, photo: 'chicken' },
-    { id: 'chicken-big', category: 'snacks', names: ['Тауық еті — 16 дана', 'Курица большая — 16 шт.', 'Chicken Big — 16 pcs'], price: 4590, spice: 3, photo: 'chicken' },
-    { id: 'fried-shrimp', category: 'snacks', names: ['Қуырылған асшаян — 5 дана', 'Жареные креветки — 5 шт.', 'Fried Shrimps — 5 pcs'], price: 3590, spice: 0, photo: 'shrimp' },
+    { id: 'cezar-dog', category: 'dogs', names: ['Цезарь суши-догы', 'Цезарь дог', 'Cezar Dog'], price: 1490, spice: 0 },
+    { id: 'salmon-dog', category: 'dogs', names: ['Албырт қосылған суши-дог', 'Суши-дог с лососем', 'Salmon Dog'], price: 2090, spice: 0 },
+    { id: 'sausage-dog', category: 'dogs', names: ['Шұжық қосылған суши-дог', 'Суши-дог с сосиской', 'Sausage Dog'], price: 1590, spice: 0 },
+    { id: 'shrimp-dog', category: 'dogs', names: ['Асшаян қосылған суши-дог', 'Суши-дог с креветкой', 'Shrimp Dog'], price: 2290, spice: 3 },
+    { id: 'cheese-dog', category: 'dogs', names: ['Ірімшік қосылған суши-дог', 'Сырный суши-дог', 'Cheese Dog'], price: 1890, spice: 0 },
+    { id: 'americano-tempura', category: 'sushi', group: 'tempura', names: ['Американо темпура', 'Американо темпура', 'Americano Tempura'], price: 1390, spice: 0 },
+    { id: 'cezar-tempura', category: 'sushi', group: 'tempura', names: ['Цезарь темпура', 'Цезарь темпура', 'Caesar Tempura'], price: 1390, spice: 0 },
+    { id: 'salmon-tempura', category: 'sushi', group: 'tempura', names: ['Албырт темпура', 'Лосось темпура', 'Salmon Tempura'], price: 1690, spice: 0 },
+    { id: 'olivier-tempura', category: 'sushi', group: 'tempura', names: ['Оливье темпура', 'Оливье темпура', 'Olivier Tempura'], price: 1390, spice: 5 },
+    { id: 'alaska', category: 'sushi', group: 'cold', names: ['Аляска', 'Аляска', 'Alaska'], price: 1390, spice: 0 },
+    { id: 'phila', category: 'sushi', group: 'cold', names: ['Фила', 'Фила', 'Phila'], price: 1390, spice: 0 },
+    { id: 'dragon', category: 'sushi', group: 'cold', names: ['Айдаһар', 'Дракон', 'Dragon'], price: 1390, spice: 0 },
+    { id: 'shrimp-roll', category: 'sushi', group: 'cold', names: ['Асшаян', 'Креветка', 'Shrimp'], price: 1390, spice: 0 },
+    { id: 'killer', category: 'sushi', group: 'cold', names: ['Киллер', 'Киллер', 'Killer'], price: 1390, spice: 3 },
+    { id: 'kazuto', category: 'sushi', group: 'baked', names: ['Казуто', 'Казуто', 'Kazuto'], price: 1590, spice: 0 },
+    { id: 'unagi-rice', category: 'sushi', group: 'baked', names: ['Унаги райс', 'Унаги райс', 'Unagi Rice'], price: 1590, spice: 0 },
+    { id: 'spicy-salmon', category: 'sushi', group: 'baked', names: ['Ащы албырт', 'Острый с лососем', 'Spicy Salmon'], price: 1590, spice: 4 },
+    { id: 'mexican-pizza', category: 'pizza', names: ['Мексикалық пицца', 'Мексиканская пицца', 'Mexican Pizza'], price: 2900, spice: 3 },
+    { id: 'margherita', category: 'pizza', names: ['Маргарита', 'Маргарита', 'Margherita'], price: 1790, spice: 0 },
+    { id: 'pepperoni', category: 'pizza', names: ['Пепперони', 'Пепперони', 'Pepperoni'], price: 2490, spice: 0 },
+    { id: 'spicy-chicken-pizza', category: 'pizza', names: ['Ащы тауық еті қосылған пицца', 'Острый с курицей', 'Spicy Chicken Pizza'], price: 2990, spice: 5 },
+    { id: 'chicken-mini', category: 'snacks', names: ['Тауық еті — 8 дана', 'Курица мини — 8 шт.', 'Chicken Mini — 8 pcs'], price: 2490, spice: 3 },
+    { id: 'chicken-big', category: 'snacks', names: ['Тауық еті — 16 дана', 'Курица большая — 16 шт.', 'Chicken Big — 16 pcs'], price: 4590, spice: 3 },
+    { id: 'fried-shrimp', category: 'snacks', names: ['Қуырылған асшаян — 5 дана', 'Жареные креветки — 5 шт.', 'Fried Shrimps — 5 pcs'], price: 3590, spice: 0 },
     { id: 'cola-1', category: 'drinks', names: ['Кола — 1 л', 'Кола — 1 л', 'Cola — 1 L'], price: 700, spice: 0, image: 'assets/cola.jpg' },
     { id: 'cola-05', category: 'drinks', names: ['Кола — 0,5 л', 'Кола — 0,5 л', 'Cola — 0.5 L'], price: 450, spice: 0, image: 'assets/cola-05.png' },
     { id: 'fanta-1', category: 'drinks', names: ['Фанта — 1 л', 'Фанта — 1 л', 'Fanta — 1 L'], price: 700, spice: 0, image: 'assets/fanta.jpg' },
@@ -144,11 +150,11 @@
   Object.entries(EXTRA_TEXT).forEach(([lang, words]) => Object.assign(I18N[lang], words));
   const PRODUCT_MAP = new Map(PRODUCTS.map(product => [product.id, product]));
   const PIZZAS = PRODUCTS.filter(product => product.category === 'pizza');
-  const photo = product => product.image || 'assets/' + (product.category === 'dogs' || product.category === 'sushi' ? product.id + '.png' : product.photo + '.jpg');
+  const photo = product => product.image || 'assets/products/' + product.id + '.jpg';
   const money = value => new Intl.NumberFormat('ru-RU').format(value) + ' ₸';
   const linePrice = line => line.type === 'combo' ? COMBO_PRICE : (PRODUCT_MAP.get(line.id)?.price || 0);
   const total = lines => lines.reduce((sum, line) => sum + linePrice(line) * line.qty, 0);
-  function selectProducts(products, filters = {}, query = '', language = 'kk') {
+  function selectProducts(products, filters = {}, query = '', language = DEFAULT_LANGUAGE) {
     filters = { category: 'all', spice: 'all', maxPrice: 0, sort: 'default', ...filters };
     const needle = query.trim().toLocaleLowerCase(language);
     const selected = products.filter(product =>
@@ -180,7 +186,7 @@
     return [...combined.values()];
   }
   function buildOrderMessage(order, language, note = '') {
-    const lang = LANGUAGES.includes(language) ? language : 'kk';
+    const lang = LANGUAGES.includes(language) ? language : DEFAULT_LANGUAGE;
     const words = I18N[lang];
     const name = id => PRODUCT_MAP.get(id).names[LANGUAGES.indexOf(lang)];
     const lines = [words.messageHello, '', '*' + words.messageItems + ':*'];
@@ -201,14 +207,13 @@
     const steps = distance + (spin && distance > 0 && distance < 4 ? 10 : 0);
     return Array.from({ length: steps + 1 }, (_, index) => (from + direction * index + 100) % 10);
   }
-  if (typeof module !== 'undefined' && module.exports) module.exports = { PRODUCTS, CATEGORIES, GROUPS, I18N, COMBO_PRICE, total, normalizeCart, buildOrderMessage, digitSequence, selectProducts, photo };
+  if (typeof module !== 'undefined' && module.exports) module.exports = { PRODUCTS, CATEGORIES, GROUPS, I18N, COMBO_PRICE, DEFAULT_LANGUAGE, resolveLocale, total, normalizeCart, buildOrderMessage, digitSequence, selectProducts, photo };
   if (typeof document === 'undefined') return;
 
   const $ = selector => document.querySelector(selector);
   const safeGet = key => { try { return localStorage.getItem(key); } catch { return null; } };
   const safeSet = (key, value) => { try { localStorage.setItem(key, value); } catch { /* The cart still works without storage. */ } };
-  let locale = new URLSearchParams(location.search).get('lang') || safeGet('donsan-language') || 'kk';
-  if (!LANGUAGES.includes(locale)) locale = 'kk';
+  let locale = resolveLocale(location.search);
   let cart;
   try { cart = normalizeCart(JSON.parse(safeGet('donsan-cart-v2') || '[]')); } catch { cart = []; }
   let selectedProductId = null;
@@ -478,7 +483,7 @@
   function productCard(product) {
     const name = escapeHTML(productName(product));
     const heading = product.group ? 'h4' : 'h3';
-    const pack = product.category === 'drinks' || product.category === 'sauces' ? ' is-pack' : '';
+    const pack = product.category === 'drinks' || product.category === 'sauces' ? ' is-pack' : product.category === 'pizza' || product.category === 'snacks' ? ' is-plated' : '';
     return '<article class="product-card' + pack + '" data-product="' + product.id + '"><button type="button" class="product-photo" data-details="' + product.id + '" aria-label="' + t('details') + ': ' + name + '"><img src="' + photo(product) + '" alt="' + name + '" loading="lazy" decoding="async" /><span class="product-seal" aria-hidden="true">' + icon('sakura') + '</span>' + spice(product.spice) + '</button><div class="product-body"><' + heading + ' class="product-name"><button type="button" class="product-name" data-details="' + product.id + '">' + name + '</button></' + heading + '><div class="product-bottom"><strong class="product-price">' + money(product.price).replace(' ₸', ' <small>₸</small>') + '</strong><div class="product-control" data-product-control="' + product.id + '"></div></div></div></article>';
   }
 
@@ -567,7 +572,6 @@
     document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', t(el.dataset.i18nAria)); });
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = t(el.dataset.i18nPlaceholder); });
     document.querySelectorAll('[data-lang]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.lang === locale)));
-    safeSet('donsan-language', locale);
     const url = new URL(location.href);
     url.searchParams.set('lang', locale);
     history.replaceState(null, '', url);
