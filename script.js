@@ -1,13 +1,15 @@
 (() => {
   'use strict';
   const WHATSAPP_NUMBER = '77477919765';
-  const COMBO_PRICE = 12890;
+  const COMBO_PRICE = 8990;
   const LANGUAGES = ['kk', 'ru', 'en'];
   const CATEGORIES = [
     { id: 'dogs', names: ['Суши-догтар', 'Суши-доги', 'Sushi dogs'] },
     { id: 'sushi', names: ['Суши', 'Суши', 'Sushi'] },
     { id: 'pizza', names: ['Пиццалар', 'Пицца', 'Pizza'] },
     { id: 'snacks', names: ['Тауық еті мен асшаян', 'Курица и креветки', 'Chicken & shrimp'] },
+    { id: 'drinks', names: ['Сусындар', 'Напитки', 'Drinks'] },
+    { id: 'sauces', names: ['Тұздықтар', 'Соусы', 'Sauces'] },
   ];
   const GROUPS = {
     tempura: ['Темпура роллдары', 'Роллы темпура', 'Tempura rolls'],
@@ -40,6 +42,16 @@
     { id: 'chicken-mini', category: 'snacks', names: ['Тауық еті — 8 дана', 'Курица мини — 8 шт.', 'Chicken Mini — 8 pcs'], price: 2490, spice: 3, photo: 'chicken' },
     { id: 'chicken-big', category: 'snacks', names: ['Тауық еті — 16 дана', 'Курица большая — 16 шт.', 'Chicken Big — 16 pcs'], price: 4590, spice: 3, photo: 'chicken' },
     { id: 'fried-shrimp', category: 'snacks', names: ['Қуырылған асшаян — 5 дана', 'Жареные креветки — 5 шт.', 'Fried Shrimps — 5 pcs'], price: 3590, spice: 0, photo: 'shrimp' },
+    { id: 'cola-1', category: 'drinks', names: ['Кола — 1 л', 'Кола — 1 л', 'Cola — 1 L'], price: 700, spice: 0, image: 'assets/cola.jpg' },
+    { id: 'cola-05', category: 'drinks', names: ['Кола — 0,5 л', 'Кола — 0,5 л', 'Cola — 0.5 L'], price: 450, spice: 0, image: 'assets/cola-05.png' },
+    { id: 'fanta-1', category: 'drinks', names: ['Фанта — 1 л', 'Фанта — 1 л', 'Fanta — 1 L'], price: 700, spice: 0, image: 'assets/fanta.jpg' },
+    { id: 'fanta-05', category: 'drinks', names: ['Фанта — 0,5 л', 'Фанта — 0,5 л', 'Fanta — 0.5 L'], price: 450, spice: 0, image: 'assets/fanta-05.png' },
+    { id: 'fuse-tea-1', category: 'drinks', names: ['Фьюзти — 1 л', 'Фьюз Ти — 1 л', 'Fuse Tea — 1 L'], price: 700, spice: 0, image: 'assets/fuse-tea.jpg' },
+    { id: 'fuse-tea-05', category: 'drinks', names: ['Фьюзти — 0,5 л', 'Фьюз Ти — 0,5 л', 'Fuse Tea — 0.5 L'], price: 450, spice: 0, image: 'assets/fuse-tea-05.jpg' },
+    { id: 'bonaqua-1', category: 'drinks', names: ['Бонаква — 1 л', 'Бонаква — 1 л', 'Bonaqua — 1 L'], price: 450, spice: 0, image: 'assets/bonaqua.jpg' },
+    { id: 'bonaqua-05', category: 'drinks', names: ['Бонаква — 0,5 л', 'Бонаква — 0,5 л', 'Bonaqua — 0.5 L'], price: 300, spice: 0, image: 'assets/bonaqua-05.png' },
+    { id: 'cheese-sauce', category: 'sauces', names: ['Ірімшік тұздығы', 'Сырный соус', 'Cheese sauce'], price: 200, spice: 0, image: 'assets/cheese-sauce.jpg' },
+    { id: 'ketchup', category: 'sauces', names: ['Кетчуп', 'Кетчуп', 'Ketchup'], price: 200, spice: 0, image: 'assets/ketchup.png' },
   ];
   const I18N = {
     kk: {
@@ -48,9 +60,9 @@
       heroEyebrow: 'Сенің дәмді үзілісің', heroTitle: 'Дәмді сәттерді', heroAccent: 'бірге бөліс.',
       heroDescription: 'Қытырлақ пицца, сүйікті роллдар мен суши-догтар. Бүгінгі көңіл күйіңе сай дәмді таңда.',
       viewMenu: 'Мәзірді қарау', fresh: 'Тапсырыспен дайындалады', forSharing: 'Бірге жеуге дәмді', heroSticker: 'ДӘМІ БӨЛЕК', heroCaption: 'Пицца + суши = тамаша жұп',
-      colaGift: '1 л кола сыйлыққа', specialOffer: 'Бір дастарқанға жиналайық', comboName: '3 пицца жиынтығы',
+      colaGift: '1 л кола сыйлыққа', specialOffer: 'Арнайы ұсыныс', comboName: '«Итальяно» жиынтығы',
       comboDescription: 'Төрт түрдің ішінен кез келген 3 пиццаны таңда. 1 литр кола — бізден!', buildCombo: 'Пиццаларды таңдау',
-      menuEyebrow: 'DONSAN мәзірі', menuTitle: 'Бүгін не жейміз?', spiceNote: 'Ащылық деңгейі. Өз талғамыңа сай таңда.', categories: 'Мәзір санаттары',
+      menuEyebrow: 'DONSAN', menuTitle: 'Мәзір', spiceNote: 'Ащылық деңгейі. Өз талғамыңа сай таңда.', categories: 'Мәзір санаттары',
       search: 'Мәзірден іздеу', noResults: 'Ештеңе табылмады. Басқа атаумен іздеп көріңіз.',
       photoNote: 'Фотосуреттер үлгі ретінде берілген. Тағамның нақты көрінісі өзгеше болуы мүмкін.',
       howEyebrow: 'Бәрі оңай', howTitle: 'Таңда. Тапсырыс бер. Дәмін тат.',
@@ -75,9 +87,9 @@
       heroEyebrow: 'Твой вкусный перерыв', heroTitle: 'Вкусные моменты', heroAccent: 'лучше вместе.',
       heroDescription: 'Хрустящая пицца, любимые роллы и суши-доги. Выбирай вкус под сегодняшнее настроение.',
       viewMenu: 'Смотреть меню', fresh: 'Готовим на заказ', forSharing: 'Вкуснее делиться', heroSticker: 'СО ВКУСОМ', heroCaption: 'Пицца + суши = отличная пара',
-      colaGift: 'Кола 1 л в подарок', specialOffer: 'Собираемся за одним столом', comboName: 'Комбо «3 пиццы»',
+      colaGift: 'Кола 1 л в подарок', specialOffer: 'Специальное предложение', comboName: 'Комбо «Итальяно»',
       comboDescription: 'Выбери любые 3 пиццы из четырёх видов. Литр колы — за наш счёт!', buildCombo: 'Выбрать пиццы',
-      menuEyebrow: 'Меню DONSAN', menuTitle: 'Что едим сегодня?', spiceNote: 'Уровень остроты. Выбирай на свой вкус.', categories: 'Категории меню',
+      menuEyebrow: 'DONSAN', menuTitle: 'Меню', spiceNote: 'Уровень остроты. Выбирай на свой вкус.', categories: 'Категории меню',
       search: 'Поиск по меню', noResults: 'Ничего не найдено. Попробуйте другое название.',
       photoNote: 'Фотографии приведены для примера. Внешний вид блюда может отличаться.',
       howEyebrow: 'Всё просто', howTitle: 'Выбирай. Заказывай. Наслаждайся.',
@@ -102,9 +114,9 @@
       heroEyebrow: 'Your delicious little break', heroTitle: 'Good food tastes', heroAccent: 'better together.',
       heroDescription: 'Crispy pizza, your favourite rolls and sushi dogs. Find the perfect flavour for your mood.',
       viewMenu: 'Explore the menu', fresh: 'Made to order', forSharing: 'Made for sharing', heroSticker: 'FULL OF FLAVOUR', heroCaption: 'Pizza + sushi = the perfect match',
-      colaGift: 'Free 1 L cola', specialOffer: 'Bring everyone to the table', comboName: '3 Pizza Combo',
+      colaGift: 'Free 1 L cola', specialOffer: 'Special offer', comboName: 'Italiano Combo',
       comboDescription: 'Pick any 3 pizzas from our four varieties. A litre of cola is on us!', buildCombo: 'Choose your pizzas',
-      menuEyebrow: 'The DONSAN menu', menuTitle: 'What are we having?', spiceNote: 'Spice level. Find your perfect heat.', categories: 'Menu categories',
+      menuEyebrow: 'DONSAN', menuTitle: 'Menu', spiceNote: 'Spice level. Find your perfect heat.', categories: 'Menu categories',
       search: 'Search the menu', noResults: 'No dishes found. Try a different name.',
       photoNote: 'Photos are illustrative. The actual appearance of dishes may vary.',
       howEyebrow: 'Nice and easy', howTitle: 'Choose. Order. Enjoy.',
@@ -124,12 +136,31 @@
       unavailable: 'WhatsApp could not be opened. Please try again.', cartRestored: 'Cart saved', quantityLimit: 'You can select up to 99 portions of each dish.',
     },
   };
+  const EXTRA_TEXT = {
+    kk: { darkMode: 'Түнгі режимді қосу', lightMode: 'Күндізгі режимді қосу', clearCart: 'Себетті тазалау', cartCleared: 'Себет тазаланды', undo: 'Қайтару', filters: 'Сүзгі', all: 'Барлығы', notSpicy: 'Ащы емес', spicy: 'Ащы', maxPrice: 'Баға шегі', anyPrice: 'Кез келген баға', upTo: 'дейін', sortLabel: 'Сұрыптау', sortDefault: 'Мәзір ретімен', sortAsc: 'Алдымен арзаны', sortDesc: 'Алдымен қымбаты', resetFilters: 'Сүзгілерді тазалау', showResults: 'Көрсету', drinkDescription: 'Сүйікті сусының', sauceDescription: 'Тағамға қосымша тұздық' },
+    ru: { darkMode: 'Включить ночной режим', lightMode: 'Включить дневной режим', clearCart: 'Очистить корзину', cartCleared: 'Корзина очищена', undo: 'Вернуть', filters: 'Фильтры', all: 'Всё меню', notSpicy: 'Неострое', spicy: 'Острое', maxPrice: 'Максимальная цена', anyPrice: 'Любая цена', upTo: 'до', sortLabel: 'Сортировка', sortDefault: 'По порядку меню', sortAsc: 'Сначала дешевле', sortDesc: 'Сначала дороже', resetFilters: 'Сбросить фильтры', showResults: 'Показать', drinkDescription: 'Любимый напиток', sauceDescription: 'Соус к любимому блюду' },
+    en: { darkMode: 'Switch to dark mode', lightMode: 'Switch to light mode', clearCart: 'Clear cart', cartCleared: 'Cart cleared', undo: 'Undo', filters: 'Filters', all: 'All dishes', notSpicy: 'Not spicy', spicy: 'Spicy', maxPrice: 'Maximum price', anyPrice: 'Any price', upTo: 'up to', sortLabel: 'Sort by', sortDefault: 'Menu order', sortAsc: 'Price: low to high', sortDesc: 'Price: high to low', resetFilters: 'Reset filters', showResults: 'Show results', drinkDescription: 'Your favourite drink', sauceDescription: 'A little extra flavour' },
+  };
+  Object.entries(EXTRA_TEXT).forEach(([lang, words]) => Object.assign(I18N[lang], words));
   const PRODUCT_MAP = new Map(PRODUCTS.map(product => [product.id, product]));
   const PIZZAS = PRODUCTS.filter(product => product.category === 'pizza');
-  const photo = product => 'assets/' + (product.category === 'dogs' ? product.id + '.png' : product.photo + '.jpg');
+  const photo = product => product.image || 'assets/' + (product.category === 'dogs' || product.category === 'sushi' ? product.id + '.png' : product.photo + '.jpg');
   const money = value => new Intl.NumberFormat('ru-RU').format(value) + ' ₸';
   const linePrice = line => line.type === 'combo' ? COMBO_PRICE : (PRODUCT_MAP.get(line.id)?.price || 0);
   const total = lines => lines.reduce((sum, line) => sum + linePrice(line) * line.qty, 0);
+  function selectProducts(products, filters = {}, query = '', language = 'kk') {
+    filters = { category: 'all', spice: 'all', maxPrice: 0, sort: 'default', ...filters };
+    const needle = query.trim().toLocaleLowerCase(language);
+    const selected = products.filter(product =>
+      (filters.category === 'all' || product.category === filters.category) &&
+      (filters.spice === 'all' || (filters.spice === 'spicy' ? product.spice > 0 : product.spice === 0)) &&
+      (!filters.maxPrice || product.price <= filters.maxPrice) &&
+      (!needle || product.names.some(name => name.toLocaleLowerCase(language).includes(needle)))
+    );
+    if (filters.sort === 'asc') selected.sort((a, b) => a.price - b.price);
+    if (filters.sort === 'desc') selected.sort((a, b) => b.price - a.price);
+    return selected;
+  }
   function normalizeCart(value) {
     if (!Array.isArray(value)) return [];
     const combined = new Map();
@@ -170,7 +201,7 @@
     const steps = distance + (spin && distance > 0 && distance < 4 ? 10 : 0);
     return Array.from({ length: steps + 1 }, (_, index) => (from + direction * index + 100) % 10);
   }
-  if (typeof module !== 'undefined' && module.exports) module.exports = { PRODUCTS, CATEGORIES, GROUPS, I18N, COMBO_PRICE, total, normalizeCart, buildOrderMessage, digitSequence };
+  if (typeof module !== 'undefined' && module.exports) module.exports = { PRODUCTS, CATEGORIES, GROUPS, I18N, COMBO_PRICE, total, normalizeCart, buildOrderMessage, digitSequence, selectProducts, photo };
   if (typeof document === 'undefined') return;
 
   const $ = selector => document.querySelector(selector);
@@ -182,13 +213,14 @@
   try { cart = normalizeCart(JSON.parse(safeGet('donsan-cart-v2') || '[]')); } catch { cart = []; }
   let selectedProductId = null;
   let toastTimer;
-  let activeCategory = 'dogs';
-  let menuObserver;
+  const defaultFilters = () => ({ category: 'all', spice: 'all', maxPrice: 0, sort: 'default' });
+  let filters = defaultFilters();
+  let clearUndo = null;
   const t = key => I18N[locale][key];
   const translated = names => names[LANGUAGES.indexOf(locale)];
   const productName = product => translated(product.names);
   const categoryName = id => translated(CATEGORIES.find(category => category.id === id).names);
-  const description = product => t(product.category === 'dogs' ? 'dogDescription' : product.group ? product.group + 'Description' : product.category === 'pizza' ? 'pizzaDescription' : 'snackDescription');
+  const description = product => t(product.category === 'dogs' ? 'dogDescription' : product.group ? product.group + 'Description' : product.category === 'pizza' ? 'pizzaDescription' : product.category === 'drinks' ? 'drinkDescription' : product.category === 'sauces' ? 'sauceDescription' : 'snackDescription');
   const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
   const ICON_PATHS = {
     plus: '<path d="M12 5v14M5 12h14"/>',
@@ -201,6 +233,11 @@
     phone: '<path d="m8 3-4 1c-2 7 9 18 16 16l1-4-5-2-2 2a15 15 0 0 1-6-6l2-2-2-5Z"/>',
     gift: '<path d="M3 8h18v4H3zM5 12v9h14v-9M12 8v13"/><path d="M12 8H7.5A2.5 2.5 0 1 1 10 5.5L12 8Zm0 0h4.5A2.5 2.5 0 1 0 14 5.5L12 8Z"/>',
     chili: '<path d="M16 7c3-1 4-3 3-5M15 6c-2-1-5 0-6 4-1 5-3 8-7 10 8 3 17-3 17-9 0-2-1-4-4-5Z"/><path d="m10 8 7 5"/>',
+    moon: '<path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6 19 19M5 19l1.4-1.4M17.6 6.4 19 5"/>',
+    trash: '<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/>',
+    sliders: '<path d="M4 6h5M15 6h5M4 12h10M20 12h0M4 18h2M12 18h8"/><circle cx="12" cy="6" r="3"/><circle cx="17" cy="12" r="3"/><circle cx="9" cy="18" r="3"/>',
+    sakura: '<path d="M12 12C4 8 9 1 12 5c3-4 8 3 0 7Zm0 0c1-9 10-6 7-2 5 2 0 9-7 2Zm0 0c9-1 9 8 4 7 0 5-8 2-4-7Zm0 0c4 8-4 11-5 6-5 1-5-8 5-6Zm0 0c-7 6-12-1-7-3C2 5 10 3 12 12Z"/><circle cx="12" cy="12" r="1.3"/>',
   };
   const icon = name => '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON_PATHS[name] + '</svg>';
   const spice = level => level ? '<span class="spice-level" aria-label="' + t('spiceLabel') + ': ' + level + '/5">' + icon('chili').repeat(level) + '</span>' : '';
@@ -209,14 +246,36 @@
   const lineImage = line => line.type === 'combo' ? 'image.png' : photo(PRODUCT_MAP.get(line.id));
   const lineKey = line => line.type === 'combo' ? 'combo:' + line.choices.join('|') : line.id;
 
-  function showToast(message) {
+  function showToast(message, undo = false) {
     clearTimeout(toastTimer);
     const toast = $('#toast');
     toast.textContent = message;
+    if (undo) {
+      const action = document.createElement('button');
+      action.type = 'button';
+      action.className = 'toast-action';
+      action.dataset.undoCart = '';
+      action.textContent = t('undo');
+      toast.append(action);
+    }
     if (!document.querySelector('dialog[open]')) document.body.append(toast);
     else document.querySelector('dialog[open]').append(toast);
     toast.classList.add('show');
-    toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
+    const undoSnapshot = clearUndo;
+    toastTimer = setTimeout(() => {
+      toast.classList.remove('show');
+      if (undo && clearUndo === undoSnapshot) clearUndo = null;
+    }, undo ? 6000 : 2200);
+  }
+
+  function updateThemeButton() {
+    const dark = document.documentElement.dataset.theme === 'dark';
+    const button = $('#themeToggle');
+    button.innerHTML = icon(dark ? 'sun' : 'moon');
+    button.setAttribute('aria-pressed', String(dark));
+    button.setAttribute('aria-label', t(dark ? 'lightMode' : 'darkMode'));
+    button.title = t(dark ? 'lightMode' : 'darkMode');
+    $('meta[name="theme-color"]').content = dark ? '#171518' : '#fcf7f6';
   }
 
   // Each place value keeps its own reel. Unchanged digits remain still, and rapid
@@ -361,6 +420,8 @@
     }
     rollNumber($('#cartTotal'), total(cart), { animate });
     $('#checkoutBtn').disabled = cart.length === 0;
+    $('#clearCartBtn').hidden = cart.length === 0;
+    $('.cart-tools').hidden = cart.length === 0;
     $('#orderNoteLabel').hidden = cart.length === 0;
     updateAmount(animate);
     syncProductControls(animate);
@@ -373,6 +434,7 @@
   }
 
   function addItem(item) {
+    clearUndo = null;
     const existing = cart.find(line => lineKey(line) === lineKey(item));
     if (existing?.qty === 99) { showToast(t('quantityLimit')); return false; }
     if (existing) existing.qty += 1;
@@ -415,48 +477,50 @@
 
   function productCard(product) {
     const name = escapeHTML(productName(product));
-    const heading = product.group ? 'h5' : 'h4';
-    return '<article class="product-card" data-product="' + product.id + '"><button type="button" class="product-photo" data-details="' + product.id + '" aria-label="' + t('details') + ': ' + name + '"><img src="' + photo(product) + '" alt="' + name + '" loading="lazy" decoding="async" />' + spice(product.spice) + '</button><div class="product-body"><' + heading + ' class="product-name"><button type="button" class="product-name" data-details="' + product.id + '">' + name + '</button></' + heading + '><div class="product-bottom"><strong class="product-price">' + money(product.price).replace(' ₸', ' <small>₸</small>') + '</strong><div class="product-control" data-product-control="' + product.id + '"></div></div></div></article>';
+    const heading = product.group ? 'h4' : 'h3';
+    const pack = product.category === 'drinks' || product.category === 'sauces' ? ' is-pack' : '';
+    return '<article class="product-card' + pack + '" data-product="' + product.id + '"><button type="button" class="product-photo" data-details="' + product.id + '" aria-label="' + t('details') + ': ' + name + '"><img src="' + photo(product) + '" alt="' + name + '" loading="lazy" decoding="async" /><span class="product-seal" aria-hidden="true">' + icon('sakura') + '</span>' + spice(product.spice) + '</button><div class="product-body"><' + heading + ' class="product-name"><button type="button" class="product-name" data-details="' + product.id + '">' + name + '</button></' + heading + '><div class="product-bottom"><strong class="product-price">' + money(product.price).replace(' ₸', ' <small>₸</small>') + '</strong><div class="product-control" data-product-control="' + product.id + '"></div></div></div></article>';
   }
 
   function renderMenu() {
-    const query = $('#menuSearch').value.trim().toLocaleLowerCase(locale);
-    const matches = product => !query || product.names.some(name => name.toLocaleLowerCase(locale).includes(query));
-    let visibleCount = 0;
-    $('#categoryNav').innerHTML = CATEGORIES.map(category => '<a href="#category-' + category.id + '" data-category-link="' + category.id + '" class="' + (activeCategory === category.id ? 'active' : '') + '">' + translated(category.names) + '</a>').join('');
+    const focusedCategory = document.activeElement?.dataset?.categoryFilter;
+    const items = selectProducts(PRODUCTS, filters, $('#menuSearch').value, locale);
+    const navItems = [{ id: 'all', names: LANGUAGES.map(lang => I18N[lang].all) }, ...CATEGORIES];
+    $('#categoryNav').innerHTML = navItems.map(category => '<button type="button" data-category-filter="' + category.id + '" aria-pressed="' + (filters.category === category.id) + '">' + translated(category.names) + '</button>').join('');
     $('#productGrid').innerHTML = CATEGORIES.map(category => {
-      const items = PRODUCTS.filter(product => product.category === category.id && matches(product));
-      visibleCount += items.length;
-      if (!items.length) return '';
+      const categoryItems = items.filter(product => product.category === category.id);
+      if (!categoryItems.length) return '';
       const content = category.id === 'sushi' ? Object.entries(GROUPS).map(([id, names]) => {
-        const groupItems = items.filter(product => product.group === id);
-        return groupItems.length ? '<div class="menu-subgroup"><h4>' + translated(names) + '</h4><div class="menu-products">' + groupItems.map(productCard).join('') + '</div></div>' : '';
-      }).join('') : '<div class="menu-products">' + items.map(productCard).join('') + '</div>';
-      return '<section class="menu-category" id="category-' + category.id + '" aria-labelledby="heading-' + category.id + '"><div class="category-heading"><h3 id="heading-' + category.id + '">' + translated(category.names) + '</h3><span>' + items.length + '</span></div>' + content + '</section>';
+        const groupItems = categoryItems.filter(product => product.group === id);
+        return groupItems.length ? '<div class="menu-subgroup"><h3>' + translated(names) + '</h3><div class="menu-products">' + groupItems.map(productCard).join('') + '</div></div>' : '';
+      }).join('') : '<div class="menu-products">' + categoryItems.map(productCard).join('') + '</div>';
+      return '<section class="menu-category" id="category-' + category.id + '" aria-labelledby="heading-' + category.id + '"><div class="category-heading"><span class="category-flower" aria-hidden="true">' + icon('sakura') + '</span><h2 id="heading-' + category.id + '">' + translated(category.names) + '</h2><span class="category-count">' + categoryItems.length + '</span></div>' + content + '</section>';
     }).join('');
-    $('#noResults').hidden = visibleCount !== 0;
-    document.querySelectorAll('[data-category-link]').forEach(link => {
-      const present = !!$('#category-' + link.dataset.categoryLink);
-      link.hidden = !present;
-    });
+    $('#noResults').hidden = items.length !== 0;
+    const count = Number(filters.category !== 'all') + Number(filters.spice !== 'all') + Number(filters.maxPrice > 0) + Number(filters.sort !== 'default');
+    $('#filterBadge').textContent = count;
+    $('#filterBadge').hidden = count === 0;
+    $('#filterOpenBtn').classList.toggle('has-filters', count > 0);
     syncProductControls();
-    observeCategories();
+    if (focusedCategory) document.querySelector('[data-category-filter="' + focusedCategory + '"]')?.focus({ preventScroll: true });
   }
 
-  function observeCategories() {
-    menuObserver?.disconnect();
-    menuObserver = new IntersectionObserver(entries => {
-      const entry = entries.filter(item => item.isIntersecting).sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top)[0];
-      if (!entry) return;
-      activeCategory = entry.target.id.replace('category-', '');
-      document.querySelectorAll('[data-category-link]').forEach(link => {
-        const isActive = link.dataset.categoryLink === activeCategory;
-        link.classList.toggle('active', isActive);
-        if (isActive) link.setAttribute('aria-current', 'true');
-        else link.removeAttribute('aria-current');
-      });
-    }, { rootMargin: '-215px 0px -45% 0px', threshold: 0 });
-    document.querySelectorAll('.menu-category').forEach(section => menuObserver.observe(section));
+  function renderFilterOptions() {
+    $('#spiceFilterOptions').innerHTML = [['all', 'all'], ['mild', 'notSpicy'], ['spicy', 'spicy']].map(([value, key]) => '<label><input type="radio" name="spice" value="' + value + '"' + (filters.spice === value ? ' checked' : '') + ' /><span>' + t(key) + '</span></label>').join('');
+    $('#maxPriceFilter').innerHTML = [0, 500, 1000, 1500, 3000, 5000].map(value => {
+      const label = value === 0 ? t('anyPrice') : locale === 'kk' ? money(value) + ' ' + t('upTo') : t('upTo') + ' ' + money(value);
+      return '<option value="' + value + '">' + label + '</option>';
+    }).join('');
+    $('#maxPriceFilter').value = String(filters.maxPrice);
+    $('#sortFilter').innerHTML = [['default', 'sortDefault'], ['asc', 'sortAsc'], ['desc', 'sortDesc']].map(([value, key]) => '<option value="' + value + '">' + t(key) + '</option>').join('');
+    $('#sortFilter').value = filters.sort;
+  }
+
+  function resetFilters() {
+    filters = defaultFilters();
+    $('#menuSearch').value = '';
+    renderMenu();
+    renderFilterOptions();
   }
 
   function renderComboOptions(preserve = true) {
@@ -510,12 +574,28 @@
     renderMenu();
     renderCart();
     renderComboOptions();
+    renderFilterOptions();
+    updateThemeButton();
     if ($('#productDialog').open) renderProductDetails();
   }
 
   document.addEventListener('click', event => {
     const lang = event.target.closest('[data-lang]');
     if (lang) setLanguage(lang.dataset.lang);
+    const category = event.target.closest('[data-category-filter]');
+    if (category) {
+      filters.category = category.dataset.categoryFilter;
+      renderMenu();
+    }
+    if (event.target.closest('[data-reset-filters]')) resetFilters();
+    if (event.target.closest('[data-undo-cart]') && clearUndo) {
+      cart = normalizeCart(clearUndo.items);
+      $('#orderNote').value = clearUndo.note;
+      clearUndo = null;
+      saveCart();
+      renderCart(true);
+      $('#toast').classList.remove('show');
+    }
     const closer = event.target.closest('[data-close]');
     if (closer) closeDialog(closer.dataset.close);
     const add = event.target.closest('[data-add]');
@@ -544,7 +624,32 @@
   });
 
   $('#cartOpenBtn').addEventListener('click', () => showDialog('cartDialog'));
+  $('#themeToggle').addEventListener('click', () => {
+    const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
+    document.documentElement.dataset.theme = theme;
+    safeSet('donsan-theme', theme);
+    updateThemeButton();
+  });
+  $('#clearCartBtn').addEventListener('click', () => {
+    if (!cart.length) return;
+    clearUndo = { items: cart.map(line => ({ ...line, ...(line.choices ? { choices: [...line.choices] } : {}) })), note: $('#orderNote').value };
+    cart = [];
+    $('#orderNote').value = '';
+    saveCart();
+    renderCart(true);
+    $('#cartDialog [data-close]').focus({ preventScroll: true });
+    showToast(t('cartCleared'), true);
+  });
   $('#heroOrderBtn').addEventListener('click', () => { renderComboOptions(); showDialog('comboDialog'); });
+  $('#filterOpenBtn').addEventListener('click', () => { renderFilterOptions(); showDialog('filterDialog'); });
+  $('#filterForm').addEventListener('submit', event => {
+    event.preventDefault();
+    filters.spice = new FormData($('#filterForm')).get('spice') || 'all';
+    filters.maxPrice = Number($('#maxPriceFilter').value);
+    filters.sort = $('#sortFilter').value;
+    renderMenu();
+    closeDialog('filterDialog');
+  });
   $('#menuSearch').addEventListener('input', renderMenu);
   $('#comboForm').addEventListener('submit', event => {
     event.preventDefault();
@@ -571,6 +676,7 @@
     window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer');
   });
   document.querySelectorAll('[data-icon]').forEach(element => { element.innerHTML = icon(element.dataset.icon); });
+  document.querySelectorAll('[data-combo-price]').forEach(element => { element.textContent = money(COMBO_PRICE); });
   $('#year').textContent = new Date().getFullYear();
   setLanguage(locale);
 })();

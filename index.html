@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#e6292e" />
+    <meta name="theme-color" content="#fcf7f6" />
+    <script>try{document.documentElement.dataset.theme=localStorage.getItem('donsan-theme')||(matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light')}catch{document.documentElement.dataset.theme='light'}</script>
     <meta name="description" content="DONSAN: суши, пицца және тіскебасарлар. Мәзірден таңдап, WhatsApp арқылы тапсырыс беріңіз." />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="DONSAN — Суши мен пицца" />
@@ -15,9 +16,9 @@
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
-    <link rel="stylesheet" href="style.css?v=20261020-7" />
-    <script src="script.js?v=20261020-7" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Serif:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css?v=20261020-8" />
+    <script src="script.js?v=20261020-8" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#menu" data-i18n="skip">Мәзірге өту</a>
@@ -26,17 +27,13 @@
         <a class="brand" href="#home" data-i18n-aria="homeLabel">
           <svg class="brand-logo" viewBox="365 160 800 735" role="img" aria-label="Don saN"><image href="donsan-logo.png" width="1536" height="1024" /></svg>
         </a>
-        <nav class="desktop-nav" data-i18n-aria="navigation">
-          <a href="#menu" data-i18n="menu">Мәзір</a>
-          <a href="#combo" data-i18n="offers">Арнайы ұсыныс</a>
-          <a href="#contacts" data-i18n="contacts">Байланыс</a>
-        </nav>
         <div class="header-actions">
           <div class="language-switch" role="group" data-i18n-aria="language">
             <button type="button" data-lang="kk" lang="kk" aria-pressed="true">ҚАЗ</button>
             <button type="button" data-lang="ru" lang="ru" aria-pressed="false">РУС</button>
             <button type="button" data-lang="en" lang="en" aria-pressed="false">ENG</button>
           </div>
+          <button class="theme-toggle icon-button" type="button" id="themeToggle" aria-pressed="false" aria-label="Түнгі режимді қосу"></button>
           <button class="cart-button" type="button" id="cartOpenBtn" data-i18n-aria="openCart">
             <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 7h12l2 13H4L6 7Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/></svg>
             <span class="cart-amount" id="cartAmount" aria-live="polite" aria-atomic="true"><span>0 ₸</span></span>
@@ -45,38 +42,21 @@
       </div>
     </header>
     <main id="home">
-      <section class="hero shell">
-        <div class="hero-copy">
-          <p class="eyebrow"><span class="status-dot"></span><span data-i18n="heroEyebrow">Сенің дәмді үзілісің</span></p>
-          <h1><span data-i18n="heroTitle">Дәмді сәттерді</span><br /><em data-i18n="heroAccent">бірге бөліс.</em></h1>
-          <p class="hero-description" data-i18n="heroDescription">Қытырлақ пицца, сүйікті роллдар мен суши-догтар. Бүгінгі көңіл күйіңе сай дәмді таңда.</p>
-          <a class="button button-red" href="#menu"><span data-i18n="viewMenu">Мәзірді қарау</span><span data-icon="arrow" aria-hidden="true"></span></a>
-          <div class="hero-benefits"><span><i data-icon="chef" aria-hidden="true"></i><span data-i18n="fresh">Тапсырыспен дайындалады</span></span><span><i data-icon="heart" aria-hidden="true"></i><span data-i18n="forSharing">Бірге жеуге дәмді</span></span></div>
-        </div>
-        <div class="hero-art" aria-hidden="true">
-          <span class="hero-sun"></span>
-          <img class="hero-pizza" src="assets/pizza-pepperoni.jpg" alt="" fetchpriority="high" />
-          <img class="hero-sushi" src="assets/sushi-classic.jpg" alt="" />
-        </div>
-      </section>
       <section class="combo-banner shell" id="combo" aria-labelledby="comboHeading">
         <div class="combo-art"><img src="image.png" alt="" /><span class="gift-badge" data-i18n="colaGift">1 л кола сыйлыққа</span></div>
-        <div class="combo-copy"><p class="eyebrow" data-i18n="specialOffer">Бір дастарқанға жиналайық</p><h2 id="comboHeading" data-i18n="comboName">3 пицца жиынтығы</h2><p data-i18n="comboDescription">Төрт түрдің ішінен кез келген 3 пиццаны таңда. 1 литр кола — бізден!</p></div>
-        <div class="combo-action"><strong>12 890 <span>₸</span></strong><button class="button button-white" type="button" id="heroOrderBtn"><span data-i18n="buildCombo">Пиццаларды таңдау</span><span data-icon="plus" aria-hidden="true"></span></button></div>
+        <div class="combo-copy"><p class="eyebrow" data-i18n="specialOffer">Бір дастарқанға жиналайық</p><h2 id="comboHeading" data-i18n="comboName">«Итальяно» жиынтығы</h2><p data-i18n="comboDescription">Төрт түрдің ішінен кез келген 3 пиццаны таңда. 1 литр кола — бізден!</p></div>
+        <div class="combo-action"><strong data-combo-price>8 990 ₸</strong><button class="button button-white" type="button" id="heroOrderBtn"><span data-i18n="buildCombo">Пиццаларды таңдау</span><span data-icon="plus" aria-hidden="true"></span></button></div>
       </section>
       <section class="menu-section shell" id="menu" aria-labelledby="menuHeading">
-        <div class="section-heading"><div><p class="eyebrow" data-i18n="menuEyebrow">DONSAN мәзірі</p><h2 id="menuHeading" data-i18n="menuTitle">Бүгін не жейміз?</h2></div><p class="spice-note"><span data-icon="chili" aria-hidden="true"></span><span data-i18n="spiceNote">Ащылық деңгейі. Өз талғамыңа сай таңда.</span></p></div>
+        <div class="section-heading"><div><p class="eyebrow" data-i18n="menuEyebrow">DONSAN мәзірі</p><h1 id="menuHeading" class="menu-title" data-i18n="menuTitle">Мәзір</h1></div><p class="spice-note"><span data-icon="chili" aria-hidden="true"></span><span data-i18n="spiceNote">Ащылық деңгейі. Өз талғамыңа сай таңда.</span></p></div>
         <div class="menu-toolbar">
           <nav class="category-nav" id="categoryNav" data-i18n-aria="categories"></nav>
-          <label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input type="search" id="menuSearch" data-i18n-placeholder="search" data-i18n-aria="search" placeholder="Мәзірден іздеу" autocomplete="off" /></label>
+          <div class="menu-tools"><button type="button" class="filter-button" id="filterOpenBtn"><span data-icon="sliders" aria-hidden="true"></span><span data-i18n="filters">Сүзгі</span><span class="filter-badge" id="filterBadge" hidden></span></button>
+          <label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input type="search" id="menuSearch" data-i18n-placeholder="search" data-i18n-aria="search" placeholder="Мәзірден іздеу" autocomplete="off" /></label></div>
         </div>
         <div id="productGrid"></div>
-        <p class="no-results" id="noResults" hidden data-i18n="noResults">Ештеңе табылмады. Басқа атаумен іздеп көріңіз.</p>
+        <div class="no-results" id="noResults" hidden><p data-i18n="noResults">Ештеңе табылмады. Басқа атаумен іздеп көріңіз.</p><button type="button" class="text-button" data-reset-filters data-i18n="resetFilters">Сүзгілерді тазалау</button></div>
         <p class="photo-note" data-i18n="photoNote">Фотосуреттер үлгі ретінде берілген. Тағамның нақты көрінісі өзгеше болуы мүмкін.</p>
-      </section>
-      <section class="order-info shell" id="order-info">
-        <div><p class="eyebrow" data-i18n="howEyebrow">Бәрі оңай</p><h2 data-i18n="howTitle">Таңда. Тапсырыс бер. Дәмін тат.</h2></div>
-        <ol class="order-steps"><li><span>01</span><h3 data-i18n="step1Title">Сүйіктіңді таңда</h3><p data-i18n="step1Text">Мәзірден тағамдарды себетке қос.</p></li><li><span>02</span><h3 data-i18n="step2Title">Бізге жаз</h3><p data-i18n="step2Text">Себеттегі тапсырысты WhatsApp арқылы жібер.</p></li><li><span>03</span><h3 data-i18n="step3Title">Толық мәліметін келіс</h3><p data-i18n="step3Text">Жеткізу аймағын, уақытын және төлемді оператор нақтылайды.</p></li></ol>
       </section>
     </main>
     <footer class="site-footer" id="contacts">
@@ -88,14 +68,23 @@
     </footer>
     <dialog class="cart-dialog" id="cartDialog" aria-labelledby="cartHeading">
       <div class="dialog-head"><div><p class="eyebrow">DONSAN</p><h2 id="cartHeading" data-i18n="yourCart">Сенің себетің</h2></div><button type="button" class="icon-button" data-close="cartDialog" data-i18n-aria="close" data-icon="close"></button></div>
-      <div class="cart-scroll"><div id="cartItems"></div><label class="order-note" id="orderNoteLabel"><span data-i18n="orderNote">Тапсырысқа ескерту</span><textarea id="orderNote" rows="2" maxlength="500" data-i18n-placeholder="orderNotePlaceholder" placeholder="Мысалы, жеткізу туралы немесе аллергия жөнінде"></textarea></label></div>
+      <div class="cart-scroll"><div class="cart-tools"><button class="text-button" type="button" id="clearCartBtn" hidden><span data-icon="trash" aria-hidden="true"></span><span data-i18n="clearCart">Себетті тазалау</span></button></div><div id="cartItems"></div><label class="order-note" id="orderNoteLabel"><span data-i18n="orderNote">Тапсырысқа ескерту</span><textarea id="orderNote" rows="2" maxlength="500" data-i18n-placeholder="orderNotePlaceholder" placeholder="Мысалы, жеткізу туралы немесе аллергия жөнінде"></textarea></label></div>
       <div class="cart-summary"><div><span data-i18n="total">Жалпы сома</span><strong id="cartTotal" aria-live="polite" aria-atomic="true">0 ₸</strong></div><p data-i18n="deliveryNotIncluded">Жеткізу құны бөлек нақтыланады.</p><button class="button button-red" id="checkoutBtn" type="button" disabled><span data-i18n="checkout">WhatsApp арқылы тапсырыс беру</span><span data-icon="arrow" aria-hidden="true"></span></button><span class="checkout-note" data-i18n="checkoutNote">WhatsApp-та дайын хабарламаны жіберіп, тапсырысты растаңыз.</span></div>
     </dialog>
     <dialog class="combo-dialog" id="comboDialog" aria-labelledby="comboDialogHeading">
-      <div class="dialog-head"><div><p class="eyebrow" data-i18n="specialOffer">Бір дастарқанға жиналайық</p><h2 id="comboDialogHeading" data-i18n="comboName">3 пицца жиынтығы</h2></div><button type="button" class="icon-button" data-close="comboDialog" data-i18n-aria="close" data-icon="close"></button></div>
-      <div class="combo-dialog-content"><p data-i18n="comboChooseHint">Әр пиццаны өзің таңда. Бір түрін бірнеше рет алуға болады.</p><form id="comboForm"><div id="comboOptions"></div><div class="combo-gift"><span data-icon="gift" aria-hidden="true"></span><div><strong data-i18n="colaGift">1 л кола сыйлыққа</strong><p data-i18n="giftIncluded">Жиынтыққа тегін кіреді</p></div><span>0 ₸</span></div><div class="combo-dialog-bottom"><strong>12 890 ₸</strong><button class="button button-red" type="submit"><span data-i18n="addCombo">Жиынтықты себетке қосу</span><span data-icon="plus" aria-hidden="true"></span></button></div></form></div>
+      <div class="dialog-head"><div><p class="eyebrow" data-i18n="specialOffer">Бір дастарқанға жиналайық</p><h2 id="comboDialogHeading" data-i18n="comboName">«Итальяно» жиынтығы</h2></div><button type="button" class="icon-button" data-close="comboDialog" data-i18n-aria="close" data-icon="close"></button></div>
+      <div class="combo-dialog-content"><p data-i18n="comboChooseHint">Әр пиццаны өзің таңда. Бір түрін бірнеше рет алуға болады.</p><form id="comboForm"><div id="comboOptions"></div><div class="combo-gift"><span data-icon="gift" aria-hidden="true"></span><div><strong data-i18n="colaGift">1 л кола сыйлыққа</strong><p data-i18n="giftIncluded">Жиынтыққа тегін кіреді</p></div><span>0 ₸</span></div><div class="combo-dialog-bottom"><strong data-combo-price>8 990 ₸</strong><button class="button button-red" type="submit"><span data-i18n="addCombo">Жиынтықты себетке қосу</span><span data-icon="plus" aria-hidden="true"></span></button></div></form></div>
     </dialog>
     <dialog class="product-dialog" id="productDialog" aria-labelledby="productHeading"><button type="button" class="icon-button product-close" data-close="productDialog" data-i18n-aria="close" data-icon="close"></button><div id="productDetails"></div></dialog>
+    <dialog class="filter-dialog" id="filterDialog" aria-labelledby="filterHeading">
+      <div class="dialog-head"><div><p class="eyebrow">DONSAN</p><h2 id="filterHeading" data-i18n="filters">Сүзгі</h2></div><button type="button" class="icon-button" data-close="filterDialog" data-i18n-aria="close" data-icon="close"></button></div>
+      <form class="filter-content" id="filterForm">
+        <fieldset><legend data-i18n="spiceLabel">Ащылық деңгейі</legend><div class="filter-choices" id="spiceFilterOptions"></div></fieldset>
+        <label class="filter-field"><span data-i18n="maxPrice">Баға шегі</span><select id="maxPriceFilter"></select></label>
+        <label class="filter-field"><span data-i18n="sortLabel">Сұрыптау</span><select id="sortFilter"></select></label>
+        <div class="filter-actions"><button type="button" class="text-button" data-reset-filters data-i18n="resetFilters">Сүзгілерді тазалау</button><button type="submit" class="button button-red" data-i18n="showResults">Көрсету</button></div>
+      </form>
+    </dialog>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>
     <noscript><p class="noscript-message">Мәзірді көру үшін JavaScript қосыңыз. / Включите JavaScript для просмотра меню. / Enable JavaScript to view the menu.</p></noscript>
   </body>
