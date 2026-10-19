@@ -48,7 +48,7 @@
       heroEyebrow: 'Сенің дәмді үзілісің', heroTitle: 'Дәмді сәттерді', heroAccent: 'бірге бөліс.',
       heroDescription: 'Қытырлақ пицца, сүйікті роллдар мен суши-догтар. Бүгінгі көңіл күйіңе сай дәмді таңда.',
       viewMenu: 'Мәзірді қарау', fresh: 'Тапсырыспен дайындалады', forSharing: 'Бірге жеуге дәмді', heroSticker: 'ДӘМІ БӨЛЕК', heroCaption: 'Пицца + суши = тамаша жұп',
-      colaGift: '1 л кола сыйлыққа', specialOffer: 'Бір дастарқанға жиналайық', comboName: '«Armani» жиынтығы',
+      colaGift: '1 л кола сыйлыққа', specialOffer: 'Бір дастарқанға жиналайық', comboName: '3 пицца жиынтығы',
       comboDescription: 'Төрт түрдің ішінен кез келген 3 пиццаны таңда. 1 литр кола — бізден!', buildCombo: 'Пиццаларды таңдау',
       menuEyebrow: 'DONSAN мәзірі', menuTitle: 'Бүгін не жейміз?', spiceNote: 'Ащылық деңгейі. Өз талғамыңа сай таңда.', categories: 'Мәзір санаттары',
       search: 'Мәзірден іздеу', noResults: 'Ештеңе табылмады. Басқа атаумен іздеп көріңіз.',
@@ -75,7 +75,7 @@
       heroEyebrow: 'Твой вкусный перерыв', heroTitle: 'Вкусные моменты', heroAccent: 'лучше вместе.',
       heroDescription: 'Хрустящая пицца, любимые роллы и суши-доги. Выбирай вкус под сегодняшнее настроение.',
       viewMenu: 'Смотреть меню', fresh: 'Готовим на заказ', forSharing: 'Вкуснее делиться', heroSticker: 'СО ВКУСОМ', heroCaption: 'Пицца + суши = отличная пара',
-      colaGift: 'Кола 1 л в подарок', specialOffer: 'Собираемся за одним столом', comboName: 'Комбо «Armani»',
+      colaGift: 'Кола 1 л в подарок', specialOffer: 'Собираемся за одним столом', comboName: 'Комбо «3 пиццы»',
       comboDescription: 'Выбери любые 3 пиццы из четырёх видов. Литр колы — за наш счёт!', buildCombo: 'Выбрать пиццы',
       menuEyebrow: 'Меню DONSAN', menuTitle: 'Что едим сегодня?', spiceNote: 'Уровень остроты. Выбирай на свой вкус.', categories: 'Категории меню',
       search: 'Поиск по меню', noResults: 'Ничего не найдено. Попробуйте другое название.',
@@ -102,7 +102,7 @@
       heroEyebrow: 'Your delicious little break', heroTitle: 'Good food tastes', heroAccent: 'better together.',
       heroDescription: 'Crispy pizza, your favourite rolls and sushi dogs. Find the perfect flavour for your mood.',
       viewMenu: 'Explore the menu', fresh: 'Made to order', forSharing: 'Made for sharing', heroSticker: 'FULL OF FLAVOUR', heroCaption: 'Pizza + sushi = the perfect match',
-      colaGift: 'Free 1 L cola', specialOffer: 'Bring everyone to the table', comboName: 'Armani Combo',
+      colaGift: 'Free 1 L cola', specialOffer: 'Bring everyone to the table', comboName: '3 Pizza Combo',
       comboDescription: 'Pick any 3 pizzas from our four varieties. A litre of cola is on us!', buildCombo: 'Choose your pizzas',
       menuEyebrow: 'The DONSAN menu', menuTitle: 'What are we having?', spiceNote: 'Spice level. Find your perfect heat.', categories: 'Menu categories',
       search: 'Search the menu', noResults: 'No dishes found. Try a different name.',
@@ -165,7 +165,12 @@
     lines.push('', words.messageConfirm);
     return lines.join('\n');
   }
-  if (typeof module !== 'undefined' && module.exports) module.exports = { PRODUCTS, CATEGORIES, GROUPS, I18N, COMBO_PRICE, total, normalizeCart, buildOrderMessage };
+  function digitSequence(from, to, direction, spin = true) {
+    const distance = direction > 0 ? (to - from + 10) % 10 : (from - to + 10) % 10;
+    const steps = distance + (spin && distance > 0 && distance < 4 ? 10 : 0);
+    return Array.from({ length: steps + 1 }, (_, index) => (from + direction * index + 100) % 10);
+  }
+  if (typeof module !== 'undefined' && module.exports) module.exports = { PRODUCTS, CATEGORIES, GROUPS, I18N, COMBO_PRICE, total, normalizeCart, buildOrderMessage, digitSequence };
   if (typeof document === 'undefined') return;
 
   const $ = selector => document.querySelector(selector);
@@ -177,7 +182,6 @@
   try { cart = normalizeCart(JSON.parse(safeGet('donsan-cart-v2') || '[]')); } catch { cart = []; }
   let selectedProductId = null;
   let toastTimer;
-  let amountTimer;
   let activeCategory = 'dogs';
   let menuObserver;
   const t = key => I18N[locale][key];
@@ -186,7 +190,20 @@
   const categoryName = id => translated(CATEGORIES.find(category => category.id === id).names);
   const description = product => t(product.category === 'dogs' ? 'dogDescription' : product.group ? product.group + 'Description' : product.category === 'pizza' ? 'pizzaDescription' : 'snackDescription');
   const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
-  const spice = level => level ? '<span class="spice-level" aria-label="' + t('spiceLabel') + ': ' + level + '/5">' + '🌶️'.repeat(level) + '</span>' : '';
+  const ICON_PATHS = {
+    plus: '<path d="M12 5v14M5 12h14"/>',
+    minus: '<path d="M5 12h14"/>',
+    close: '<path d="m6 6 12 12M6 18 18 6"/>',
+    arrow: '<path d="M7 17 17 7M7 7h10v10"/>',
+    bag: '<path d="M6 7h12l2 13H4L6 7Z"/><path d="M9 9V6a3 3 0 0 1 6 0v3"/>',
+    heart: '<path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1.1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8Z"/>',
+    chef: '<path d="M7 14a4 4 0 1 1-1-7.9 6 6 0 0 1 12 0A4 4 0 1 1 17 14v6H7v-6ZM7 17h10"/>',
+    phone: '<path d="m8 3-4 1c-2 7 9 18 16 16l1-4-5-2-2 2a15 15 0 0 1-6-6l2-2-2-5Z"/>',
+    gift: '<path d="M3 8h18v4H3zM5 12v9h14v-9M12 8v13"/><path d="M12 8H7.5A2.5 2.5 0 1 1 10 5.5L12 8Zm0 0h4.5A2.5 2.5 0 1 0 14 5.5L12 8Z"/>',
+    chili: '<path d="M16 7c3-1 4-3 3-5M15 6c-2-1-5 0-6 4-1 5-3 8-7 10 8 3 17-3 17-9 0-2-1-4-4-5Z"/><path d="m10 8 7 5"/>',
+  };
+  const icon = name => '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON_PATHS[name] + '</svg>';
+  const spice = level => level ? '<span class="spice-level" aria-label="' + t('spiceLabel') + ': ' + level + '/5">' + icon('chili').repeat(level) + '</span>' : '';
   const lineName = line => line.type === 'combo' ? t('comboName') : productName(PRODUCT_MAP.get(line.id));
   const lineDescription = line => line.type === 'combo' ? line.choices.map(id => productName(PRODUCT_MAP.get(id))).join(' + ') + ' · ' + t('colaGift') : description(PRODUCT_MAP.get(line.id));
   const lineImage = line => line.type === 'combo' ? 'image.png' : photo(PRODUCT_MAP.get(line.id));
@@ -202,27 +219,104 @@
     toastTimer = setTimeout(() => toast.classList.remove('show'), 2200);
   }
 
-  function updateAmount(animate) {
-    const amount = $('#cartAmount');
-    const text = money(total(cart));
-    const previous = amount.dataset.value;
-    $('#cartOpenBtn').setAttribute('aria-label', t('openCart') + ' · ' + text);
-    if (previous === text) return;
-    clearTimeout(amountTimer);
-    amount.replaceChildren();
-    amount.dataset.value = text;
-    const next = document.createElement('span');
-    next.textContent = text;
-    if (animate && previous && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      const old = document.createElement('span');
-      old.textContent = previous;
-      old.className = 'amount-leave';
-      old.setAttribute('aria-hidden', 'true');
-      amount.append(old);
-      next.className = 'amount-enter';
-      amountTimer = setTimeout(() => old.remove(), 380);
+  // Each place value keeps its own reel. Unchanged digits remain still, and rapid
+  // updates start from the currently visible digit instead of restarting a price.
+  function rollNumber(element, value, { animate = false, currency = true } = {}) {
+    const previous = element.dataset.numberValue;
+    const label = currency ? money(value) : String(value);
+    if (previous === String(value)) return;
+    const moving = animate && previous !== undefined && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const direction = value >= Number(previous || 0) ? 1 : -1;
+    element.classList.add('rolling-number');
+    element.dataset.numberValue = String(value);
+    element.setAttribute('aria-label', label);
+    let visual = element.querySelector('.number-visual');
+    if (!visual) {
+      element.replaceChildren();
+      const accessible = document.createElement('span');
+      accessible.className = 'sr-only';
+      accessible.dataset.numberLabel = '';
+      visual = document.createElement('span');
+      visual.className = 'number-visual';
+      visual.setAttribute('aria-hidden', 'true');
+      element.append(accessible, visual);
     }
-    amount.append(next);
+    element.querySelector('[data-number-label]').textContent = label;
+    const digits = String(value).split('');
+    let wheels = [...visual.querySelectorAll('.digit-wheel')];
+    if (wheels.length !== digits.length) {
+      const oldWheels = new Map(wheels.map(wheel => [Number(wheel.dataset.place), wheel]));
+      const children = [];
+      digits.forEach((digit, index) => {
+        const place = digits.length - index - 1;
+        if (index && (digits.length - index) % 3 === 0) {
+          const separator = document.createElement('span');
+          separator.className = 'number-separator';
+          separator.textContent = '\u00a0';
+          children.push(separator);
+        }
+        const wheel = oldWheels.get(place) || document.createElement('span');
+        wheel.className = 'digit-wheel';
+        wheel.dataset.place = place;
+        children.push(wheel);
+      });
+      if (currency) {
+        const suffix = document.createElement('span');
+        suffix.className = 'number-currency';
+        suffix.textContent = '₸';
+        children.push(suffix);
+      }
+      visual.replaceChildren(...children);
+      wheels = [...visual.querySelectorAll('.digit-wheel')];
+    }
+    wheels.forEach((wheel, index) => {
+      const target = Number(digits[index]);
+      if (wheel.dataset.digit === String(target)) return;
+      let from = Number(wheel.dataset.digit || 0);
+      const oldStrip = wheel.querySelector('.digit-strip');
+      if (wheel.reelAnimation && oldStrip && wheel.offsetHeight) {
+        const matrix = new DOMMatrixReadOnly(getComputedStyle(oldStrip).transform);
+        const frame = Math.max(0, Math.min(oldStrip.children.length - 1, Math.round(-matrix.m42 / wheel.offsetHeight)));
+        from = Number(oldStrip.children[frame]?.textContent || from);
+        wheel.reelAnimation.cancel();
+      }
+      wheel.dataset.digit = String(target);
+      const strip = document.createElement('span');
+      strip.className = 'digit-strip';
+      const sequence = moving && from !== target ? digitSequence(from, target, direction, currency) : [target];
+      const displaySequence = direction < 0 ? [...sequence].reverse() : sequence;
+      displaySequence.forEach(digit => {
+        const cell = document.createElement('span');
+        cell.className = 'digit-cell';
+        cell.textContent = digit;
+        strip.append(cell);
+      });
+      wheel.replaceChildren(strip);
+      if (sequence.length === 1) return;
+      const distance = (sequence.length - 1) * 1.15;
+      const start = direction > 0 ? 0 : -distance;
+      const end = direction > 0 ? -distance : 0;
+      const animation = strip.animate([
+        { transform: 'translateY(' + start + 'em)' },
+        { transform: 'translateY(' + end + 'em)' },
+      ], { duration: currency ? 600 + Number(wheel.dataset.place) * 45 : 300, delay: currency ? Number(wheel.dataset.place) * 18 : 0, easing: 'cubic-bezier(.2,.68,.2,1)', fill: 'both' });
+      wheel.reelAnimation = animation;
+      animation.onfinish = () => {
+        if (wheel.reelAnimation !== animation) return;
+        const cell = document.createElement('span');
+        cell.className = 'digit-cell';
+        cell.textContent = target;
+        strip.replaceChildren(cell);
+        animation.cancel();
+        wheel.reelAnimation = null;
+      };
+    });
+  }
+
+  function updateAmount(animate) {
+    const value = total(cart);
+    $('#cartOpenBtn').setAttribute('aria-label', t('openCart') + ' · ' + money(value));
+    rollNumber($('#cartAmount'), value, { animate });
   }
 
   function saveCart() {
@@ -231,20 +325,50 @@
 
   function renderCart(animate = false) {
     const active = document.activeElement;
+    const focusRoot = active?.closest('dialog') || document;
     const focusedKey = active?.dataset?.key;
     const focusedAction = active?.dataset?.cartAction;
-    $('#cartItems').innerHTML = cart.length ? cart.map(line => {
-      const key = escapeHTML(lineKey(line));
-      return '<article class="cart-item"><img class="cart-item-image" src="' + lineImage(line) + '" alt="" /><div><h3>' + escapeHTML(lineName(line)) + '</h3><p class="cart-item-description">' + escapeHTML(lineDescription(line)) + '</p><div class="cart-item-bottom"><strong>' + money(linePrice(line) * line.qty) + '</strong><div class="quantity-control"><button type="button" data-cart-action="decrease" data-key="' + key + '" aria-label="' + t('decrease') + '">−</button><span>' + line.qty + '</span><button type="button" data-cart-action="increase" data-key="' + key + '" aria-label="' + t('increase') + '">+</button></div></div><button class="remove-item" type="button" data-cart-action="remove" data-key="' + key + '">' + t('remove') + '</button></div></article>';
-    }).join('') : '<div class="cart-empty"><span aria-hidden="true">♡</span><h3>' + t('emptyTitle') + '</h3><p>' + t('emptyText') + '</p><button type="button" class="button button-red" data-close="cartDialog">' + t('viewMenu') + '</button></div>';
-    $('#cartTotal').textContent = money(total(cart));
+    const root = $('#cartItems');
+    if (!cart.length) {
+      root.innerHTML = '<div class="cart-empty"><span aria-hidden="true">' + icon('bag') + '</span><h3>' + t('emptyTitle') + '</h3><p>' + t('emptyText') + '</p><button type="button" class="button button-red" data-close="cartDialog">' + t('viewMenu') + '</button></div>';
+    } else {
+      root.querySelector('.cart-empty')?.remove();
+      const keys = new Set(cart.map(lineKey));
+      root.querySelectorAll('.cart-item').forEach(row => { if (!keys.has(row.dataset.lineKey)) row.remove(); });
+      cart.forEach((line, index) => {
+        const key = lineKey(line);
+        let row = [...root.children].find(element => element.dataset.lineKey === key);
+        if (!row) {
+          row = document.createElement('article');
+          row.className = 'cart-item';
+          row.dataset.lineKey = key;
+          row.innerHTML = '<img class="cart-item-image" alt="" /><div><h3></h3><p class="cart-item-description"></p><div class="cart-item-bottom"><strong class="cart-line-price"></strong><div class="quantity-control"><button type="button" data-cart-action="decrease">' + icon('minus') + '</button><span class="quantity-value"></span><button type="button" data-cart-action="increase">' + icon('plus') + '</button></div></div><button class="remove-item" type="button" data-cart-action="remove"></button></div>';
+          root.append(row);
+        }
+        row.querySelector('.cart-item-image').src = lineImage(line);
+        row.querySelector('h3').textContent = lineName(line);
+        row.querySelector('.cart-item-description').textContent = line.type === 'combo' ? lineDescription(line) : '';
+        row.querySelector('.cart-item-description').hidden = line.type !== 'combo';
+        row.querySelector('[data-cart-action="remove"]').textContent = t('remove');
+        row.querySelectorAll('[data-cart-action]').forEach(button => {
+          button.dataset.key = key;
+          button.setAttribute('aria-label', t(button.dataset.cartAction) + ': ' + lineName(line));
+          button.disabled = button.dataset.cartAction === 'increase' && line.qty >= 99;
+        });
+        rollNumber(row.querySelector('.cart-line-price'), linePrice(line) * line.qty, { animate });
+        rollNumber(row.querySelector('.quantity-value'), line.qty, { animate, currency: false });
+      });
+    }
+    rollNumber($('#cartTotal'), total(cart), { animate });
     $('#checkoutBtn').disabled = cart.length === 0;
     $('#orderNoteLabel').hidden = cart.length === 0;
     updateAmount(animate);
+    syncProductControls(animate);
     if (focusedKey && focusedAction) {
-      const replacement = [...document.querySelectorAll('[data-cart-action]')].find(el => el.dataset.key === focusedKey && el.dataset.cartAction === focusedAction);
-      if (replacement) replacement.focus({ preventScroll: true });
-      else if ($('#cartDialog').open) $('#cartDialog [data-close]').focus({ preventScroll: true });
+      const replacement = [...focusRoot.querySelectorAll('[data-cart-action]')].find(el => el.dataset.key === focusedKey && el.dataset.cartAction === focusedAction);
+      if (replacement) {
+        if (document.activeElement !== replacement) replacement.focus({ preventScroll: true });
+      } else if ($('#cartDialog').open) $('#cartDialog [data-close]').focus({ preventScroll: true });
     }
   }
 
@@ -262,15 +386,37 @@
   function addProduct(id, button) {
     if (!PRODUCT_MAP.has(id)) return;
     if (!addItem({ type: 'product', id, qty: 1 })) return;
-    if (button) {
-      button.classList.add('added');
-      setTimeout(() => button.classList.remove('added'), 650);
-    }
+  }
+
+  function syncProductControls(animate = false) {
+    document.querySelectorAll('[data-product-control]').forEach(root => {
+      const id = root.dataset.productControl;
+      const product = PRODUCT_MAP.get(id);
+      const qty = cart.find(line => line.type === 'product' && line.id === id)?.qty || 0;
+      const wasFocused = root.contains(document.activeElement);
+      if (qty === 0) {
+        if (root.dataset.state !== 'empty') {
+          root.innerHTML = '<button class="add-button" type="button" data-add="' + id + '" aria-label="' + t('add') + ': ' + escapeHTML(productName(product)) + '"><span>' + t('add') + '</span>' + icon('plus') + '</button>';
+          root.dataset.state = 'empty';
+          if (wasFocused) root.querySelector('button').focus({ preventScroll: true });
+        }
+      } else {
+        if (root.dataset.state !== 'quantity') {
+          root.innerHTML = '<div class="quantity-control product-quantity"><button type="button" data-cart-action="decrease" data-key="' + id + '" aria-label="' + t('decrease') + ': ' + escapeHTML(productName(product)) + '">' + icon('minus') + '</button><span class="quantity-value"></span><button type="button" data-cart-action="increase" data-key="' + id + '" aria-label="' + t('increase') + ': ' + escapeHTML(productName(product)) + '">' + icon('plus') + '</button></div>';
+          root.dataset.state = 'quantity';
+          if (wasFocused) root.querySelector('[data-cart-action="increase"]').focus({ preventScroll: true });
+          if (animate) rollNumber(root.querySelector('.quantity-value'), 0, { currency: false });
+        }
+        rollNumber(root.querySelector('.quantity-value'), qty, { animate, currency: false });
+        root.querySelector('[data-cart-action="increase"]').disabled = qty >= 99;
+      }
+    });
   }
 
   function productCard(product) {
     const name = escapeHTML(productName(product));
-    return '<article class="product-card" data-product="' + product.id + '"><button type="button" class="product-photo" data-details="' + product.id + '" aria-label="' + t('details') + ': ' + name + '"><img src="' + photo(product) + '" alt="' + name + '" loading="lazy" decoding="async" />' + spice(product.spice) + '</button><div class="product-body"><h5 class="product-name"><button type="button" class="product-name" data-details="' + product.id + '">' + name + '</button></h5><p class="product-description">' + description(product) + '</p><div class="product-bottom"><strong class="product-price">' + money(product.price).replace(' ₸', ' <small>₸</small>') + '</strong><button class="add-button" type="button" data-add="' + product.id + '" aria-label="' + t('add') + ': ' + name + '"><span>' + t('add') + '</span><span aria-hidden="true">+</span></button></div></div></article>';
+    const heading = product.group ? 'h5' : 'h4';
+    return '<article class="product-card" data-product="' + product.id + '"><button type="button" class="product-photo" data-details="' + product.id + '" aria-label="' + t('details') + ': ' + name + '"><img src="' + photo(product) + '" alt="' + name + '" loading="lazy" decoding="async" />' + spice(product.spice) + '</button><div class="product-body"><' + heading + ' class="product-name"><button type="button" class="product-name" data-details="' + product.id + '">' + name + '</button></' + heading + '><div class="product-bottom"><strong class="product-price">' + money(product.price).replace(' ₸', ' <small>₸</small>') + '</strong><div class="product-control" data-product-control="' + product.id + '"></div></div></div></article>';
   }
 
   function renderMenu() {
@@ -293,6 +439,7 @@
       const present = !!$('#category-' + link.dataset.categoryLink);
       link.hidden = !present;
     });
+    syncProductControls();
     observeCategories();
   }
 
@@ -327,13 +474,21 @@
   }
   function closeDialog(id) {
     const dialog = $('#' + id);
-    dialog.close();
+    if (!dialog.open || dialog.dataset.closing) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) { dialog.close(); return; }
+    dialog.dataset.closing = 'true';
+    const closing = dialog.animate([
+      { opacity: 1, transform: 'translate(0, 0)' },
+      { opacity: 0, transform: id === 'cartDialog' ? 'translate(16px, 0)' : 'translate(0, 8px)' },
+    ], { duration: 180, easing: 'cubic-bezier(.4,0,1,1)' });
+    closing.onfinish = () => { dialog.close(); delete dialog.dataset.closing; };
   }
 
   function renderProductDetails() {
     const product = PRODUCT_MAP.get(selectedProductId);
     if (!product) return;
-    $('#productDetails').innerHTML = '<img class="product-detail-image" src="' + photo(product) + '" alt="' + escapeHTML(productName(product)) + '" /><div class="product-detail-body"><p class="eyebrow">' + categoryName(product.category) + '</p><h2 id="productHeading">' + escapeHTML(productName(product)) + '</h2>' + spice(product.spice) + '<p>' + description(product) + '</p><p class="allergen-note">' + t('allergenNote') + '</p><div class="product-detail-action"><strong>' + money(product.price) + '</strong><button type="button" class="button button-red" data-add="' + product.id + '">' + t('add') + ' +</button></div></div>';
+    $('#productDetails').innerHTML = '<img class="product-detail-image" src="' + photo(product) + '" alt="' + escapeHTML(productName(product)) + '" /><div class="product-detail-body"><p class="eyebrow">' + categoryName(product.category) + '</p><h2 id="productHeading">' + escapeHTML(productName(product)) + '</h2>' + spice(product.spice) + '<p>' + description(product) + '</p><p class="allergen-note">' + t('allergenNote') + '</p><div class="product-detail-action"><strong>' + money(product.price) + '</strong><div class="product-control" data-product-control="' + product.id + '"></div></div></div>';
+    syncProductControls();
   }
 
   function setLanguage(lang) {
@@ -366,7 +521,6 @@
     const add = event.target.closest('[data-add]');
     if (add) {
       addProduct(add.dataset.add, add);
-      if ($('#productDialog').open) closeDialog('productDialog');
     }
     const details = event.target.closest('[data-details]');
     if (details) {
@@ -400,10 +554,11 @@
     addItem({ type: 'combo', choices, qty: 1 });
   });
   document.querySelectorAll('dialog').forEach(dialog => {
+    dialog.addEventListener('cancel', event => { event.preventDefault(); closeDialog(dialog.id); });
     dialog.addEventListener('click', event => {
       if (event.target !== dialog) return;
       const rect = dialog.getBoundingClientRect();
-      if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close();
+      if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeDialog(dialog.id);
     });
     dialog.addEventListener('close', () => {
       if (!document.querySelector('dialog[open]')) document.body.classList.remove('modal-open');
@@ -415,6 +570,7 @@
     const message = buildOrderMessage(cart, locale, $('#orderNote').value);
     window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer');
   });
+  document.querySelectorAll('[data-icon]').forEach(element => { element.innerHTML = icon(element.dataset.icon); });
   $('#year').textContent = new Date().getFullYear();
   setLanguage(locale);
 })();
