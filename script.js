@@ -1,5 +1,6 @@
 (() => {
   'use strict';
+  const DELIVERY_ENGINE = typeof module !== 'undefined' && module.exports ? require('./delivery.js') : window.DonsanDelivery;
   const WHATSAPP_NUMBER = '77477919765';
   const COMBO_PRICE = 8990;
   const LANGUAGES = ['kk', 'ru', 'en'];
@@ -24,40 +25,40 @@
   };
   // Product prices are authoritative here, including when restoring a saved cart.
   const PRODUCTS = [
-    { id: 'cezar-dog', category: 'dogs', names: ['Цезарь суши-догы', 'Цезарь дог', 'Cezar Dog'], price: 1490, spice: 0 },
-    { id: 'salmon-dog', category: 'dogs', names: ['Албырт қосылған суши-дог', 'Суши-дог с лососем', 'Salmon Dog'], price: 2090, spice: 0 },
-    { id: 'sausage-dog', category: 'dogs', names: ['Шұжық қосылған суши-дог', 'Суши-дог с сосиской', 'Sausage Dog'], price: 1590, spice: 0 },
-    { id: 'shrimp-dog', category: 'dogs', names: ['Асшаян қосылған суши-дог', 'Суши-дог с креветкой', 'Shrimp Dog'], price: 2290, spice: 3 },
-    { id: 'cheese-dog', category: 'dogs', names: ['Ірімшік қосылған суши-дог', 'Сырный суши-дог', 'Cheese Dog'], price: 1890, spice: 0 },
-    { id: 'americano-tempura', category: 'sushi', group: 'tempura', names: ['Американо темпура', 'Американо темпура', 'Americano Tempura'], price: 1390, spice: 0 },
-    { id: 'cezar-tempura', category: 'sushi', group: 'tempura', names: ['Цезарь темпура', 'Цезарь темпура', 'Caesar Tempura'], price: 1390, spice: 0 },
-    { id: 'salmon-tempura', category: 'sushi', group: 'tempura', names: ['Албырт темпура', 'Лосось темпура', 'Salmon Tempura'], price: 1690, spice: 0 },
-    { id: 'olivier-tempura', category: 'sushi', group: 'tempura', names: ['Оливье темпура', 'Оливье темпура', 'Olivier Tempura'], price: 1390, spice: 5 },
-    { id: 'alaska', category: 'sushi', group: 'cold', names: ['Аляска', 'Аляска', 'Alaska'], price: 1390, spice: 0 },
-    { id: 'phila', category: 'sushi', group: 'cold', names: ['Фила', 'Фила', 'Phila'], price: 1390, spice: 0 },
-    { id: 'dragon', category: 'sushi', group: 'cold', names: ['Айдаһар', 'Дракон', 'Dragon'], price: 1390, spice: 0 },
-    { id: 'shrimp-roll', category: 'sushi', group: 'cold', names: ['Асшаян', 'Креветка', 'Shrimp'], price: 1390, spice: 0 },
-    { id: 'killer', category: 'sushi', group: 'cold', names: ['Киллер', 'Киллер', 'Killer'], price: 1390, spice: 3 },
-    { id: 'kazuto', category: 'sushi', group: 'baked', names: ['Казуто', 'Казуто', 'Kazuto'], price: 1590, spice: 0 },
-    { id: 'unagi-rice', category: 'sushi', group: 'baked', names: ['Унаги райс', 'Унаги райс', 'Unagi Rice'], price: 1590, spice: 0 },
-    { id: 'spicy-salmon', category: 'sushi', group: 'baked', names: ['Ащы албырт', 'Острый с лососем', 'Spicy Salmon'], price: 1590, spice: 4 },
-    { id: 'mexican-pizza', category: 'pizza', names: ['Мексикалық пицца', 'Мексиканская пицца', 'Mexican Pizza'], price: 2900, spice: 3 },
-    { id: 'margherita', category: 'pizza', names: ['Маргарита', 'Маргарита', 'Margherita'], price: 1790, spice: 0 },
-    { id: 'pepperoni', category: 'pizza', names: ['Пепперони', 'Пепперони', 'Pepperoni'], price: 2490, spice: 0 },
-    { id: 'spicy-chicken-pizza', category: 'pizza', names: ['Ащы тауық еті қосылған пицца', 'Острый с курицей', 'Spicy Chicken Pizza'], price: 2990, spice: 5 },
-    { id: 'chicken-mini', category: 'snacks', names: ['Тауық еті — 8 дана', 'Курица мини — 8 шт.', 'Chicken Mini — 8 pcs'], price: 2490, spice: 3 },
-    { id: 'chicken-big', category: 'snacks', names: ['Тауық еті — 16 дана', 'Курица большая — 16 шт.', 'Chicken Big — 16 pcs'], price: 4590, spice: 3 },
-    { id: 'fried-shrimp', category: 'snacks', names: ['Қуырылған асшаян — 5 дана', 'Жареные креветки — 5 шт.', 'Fried Shrimps — 5 pcs'], price: 3590, spice: 0 },
-    { id: 'cola-1', category: 'drinks', names: ['Кола — 1 л', 'Кола — 1 л', 'Cola — 1 L'], price: 700, spice: 0, image: 'assets/cola.jpg' },
-    { id: 'cola-05', category: 'drinks', names: ['Кола — 0,5 л', 'Кола — 0,5 л', 'Cola — 0.5 L'], price: 450, spice: 0, image: 'assets/cola-05.png' },
-    { id: 'fanta-1', category: 'drinks', names: ['Фанта — 1 л', 'Фанта — 1 л', 'Fanta — 1 L'], price: 700, spice: 0, image: 'assets/fanta.jpg' },
-    { id: 'fanta-05', category: 'drinks', names: ['Фанта — 0,5 л', 'Фанта — 0,5 л', 'Fanta — 0.5 L'], price: 450, spice: 0, image: 'assets/fanta-05.png' },
-    { id: 'fuse-tea-1', category: 'drinks', names: ['Фьюзти — 1 л', 'Фьюз Ти — 1 л', 'Fuse Tea — 1 L'], price: 700, spice: 0, image: 'assets/fuse-tea.jpg' },
-    { id: 'fuse-tea-05', category: 'drinks', names: ['Фьюзти — 0,5 л', 'Фьюз Ти — 0,5 л', 'Fuse Tea — 0.5 L'], price: 450, spice: 0, image: 'assets/fuse-tea-05.jpg' },
-    { id: 'bonaqua-1', category: 'drinks', names: ['Бонаква — 1 л', 'Бонаква — 1 л', 'Bonaqua — 1 L'], price: 450, spice: 0, image: 'assets/bonaqua.jpg' },
-    { id: 'bonaqua-05', category: 'drinks', names: ['Бонаква — 0,5 л', 'Бонаква — 0,5 л', 'Bonaqua — 0.5 L'], price: 300, spice: 0, image: 'assets/bonaqua-05.png' },
-    { id: 'cheese-sauce', category: 'sauces', names: ['Ірімшік тұздығы', 'Сырный соус', 'Cheese sauce'], price: 200, spice: 0, image: 'assets/cheese-sauce.jpg' },
-    { id: 'ketchup', category: 'sauces', names: ['Кетчуп', 'Кетчуп', 'Ketchup'], price: 200, spice: 0, image: 'assets/ketchup.png' },
+    {"id":"cezar-dog","category":"dogs","price":1690,"spice":0,"name":"Cezar Dog"},
+    {"id":"salmon-dog","category":"dogs","price":2090,"spice":0,"name":"Salmon Dog"},
+    {"id":"sausage-dog","category":"dogs","price":1590,"spice":0,"name":"Sausage Dog"},
+    {"id":"shrimp-dog","category":"dogs","price":2290,"spice":1,"name":"Shrimp Dog"},
+    {"id":"cheese-dog","category":"dogs","price":1890,"spice":0,"name":"Cheese Dog"},
+    {"id":"americano-tempura","category":"sushi","group":"tempura","price":2390,"spice":0,"name":"Американо Темпура","pieces":8},
+    {"id":"cezar-tempura","category":"sushi","group":"tempura","price":2090,"spice":0,"name":"Цезарь Темпура","pieces":8},
+    {"id":"salmon-tempura","category":"sushi","group":"tempura","price":2690,"spice":0,"name":"Лосось Темпура","pieces":8},
+    {"id":"olivier-tempura","category":"sushi","group":"tempura","price":2390,"spice":1,"name":"Оливье Темпура","pieces":8},
+    {"id":"alaska","category":"sushi","group":"cold","price":1890,"spice":0,"name":"Аляска","pieces":8},
+    {"id":"phila","category":"sushi","group":"cold","price":2390,"spice":0,"name":"Фила","pieces":8},
+    {"id":"dragon","category":"sushi","group":"cold","price":1990,"spice":0,"name":"Дракон","pieces":8},
+    {"id":"shrimp-roll","category":"sushi","group":"cold","price":2390,"spice":0,"name":"Креветка","pieces":8},
+    {"id":"killer","category":"sushi","group":"cold","price":1890,"spice":1,"name":"Killer","pieces":8},
+    {"id":"kazuto","category":"sushi","group":"baked","price":1990,"spice":0,"name":"Kazuto","pieces":8},
+    {"id":"unagi-rice","category":"sushi","group":"baked","price":1990,"spice":0,"name":"Unagi Rice","pieces":8},
+    {"id":"spicy-salmon","category":"sushi","group":"baked","price":2590,"spice":1,"name":"Острый с лососем","pieces":8},
+    {"id":"mexican-pizza","category":"pizza","price":2900,"spice":1,"name":"Мексиканская пицца","diameter":30},
+    {"id":"margherita","category":"pizza","price":1790,"spice":0,"name":"Маргарита","diameter":30},
+    {"id":"pepperoni","category":"pizza","price":2490,"spice":0,"name":"Пепперони","diameter":30},
+    {"id":"spicy-chicken-pizza","category":"pizza","price":2990,"spice":1,"name":"Острый с курицей","diameter":30},
+    {"id":"chicken-mini","category":"snacks","price":2590,"spice":1,"name":"Chicken Mini — 8 шт."},
+    {"id":"chicken-big","category":"snacks","price":4790,"spice":1,"name":"Chicken Big — 16 шт."},
+    {"id":"fried-shrimp","category":"snacks","price":3590,"spice":0,"name":"Fried Shrimps — 5 шт."},
+    {"id":"cola-1","category":"drinks","names":["Кола — 1 л","Кола — 1 л","Cola — 1 L"],"price":700,"spice":0,"image":"assets/cola-full.png"},
+    {"id":"cola-05","category":"drinks","names":["Кола — 0,5 л","Кола — 0,5 л","Cola — 0.5 L"],"price":450,"spice":0,"image":"assets/cola-05-full.png"},
+    {"id":"fanta-1","category":"drinks","names":["Фанта — 1 л","Фанта — 1 л","Fanta — 1 L"],"price":700,"spice":0,"image":"assets/fanta-full.jpg"},
+    {"id":"fanta-05","category":"drinks","names":["Фанта — 0,5 л","Фанта — 0,5 л","Fanta — 0.5 L"],"price":450,"spice":0,"image":"assets/fanta-05-full.png"},
+    {"id":"fuse-tea-1","category":"drinks","names":["Фьюзти — 1 л","Фьюз Ти — 1 л","Fuse Tea — 1 L"],"price":700,"spice":0,"image":"assets/fuse-tea-full.png"},
+    {"id":"fuse-tea-05","category":"drinks","names":["Фьюзти — 0,5 л","Фьюз Ти — 0,5 л","Fuse Tea — 0.5 L"],"price":450,"spice":0,"image":"assets/fuse-tea-05-full.jpg"},
+    {"id":"bonaqua-1","category":"drinks","names":["Бонаква — 1 л","Бонаква — 1 л","Bonaqua — 1 L"],"price":450,"spice":0,"image":"assets/bonaqua-full.png"},
+    {"id":"bonaqua-05","category":"drinks","names":["Бонаква — 0,5 л","Бонаква — 0,5 л","Bonaqua — 0.5 L"],"price":300,"spice":0,"image":"assets/bonaqua-05-full.jpg"},
+    {"id":"cheese-sauce","category":"sauces","names":["Ірімшік тұздығы","Сырный соус","Cheese sauce"],"price":200,"spice":0,"image":"assets/cheese-sauce.jpg"},
+    {"id":"ketchup","category":"sauces","names":["Кетчуп","Кетчуп","Ketchup"],"price":200,"spice":0,"image":"assets/ketchup.png"},
   ];
   const I18N = {
     kk: {
@@ -148,24 +149,28 @@
     en: { darkMode: 'Switch to dark mode', lightMode: 'Switch to light mode', clearCart: 'Clear cart', cartCleared: 'Cart cleared', undo: 'Undo', filters: 'Filters', all: 'All dishes', notSpicy: 'Not spicy', spicy: 'Spicy', maxPrice: 'Maximum price', anyPrice: 'Any price', upTo: 'up to', sortLabel: 'Sort by', sortDefault: 'Menu order', sortAsc: 'Price: low to high', sortDesc: 'Price: high to low', resetFilters: 'Reset filters', showResults: 'Show results', drinkDescription: 'Your favourite drink', sauceDescription: 'A little extra flavour' },
   };
   Object.entries(EXTRA_TEXT).forEach(([lang, words]) => Object.assign(I18N[lang], words));
+  Object.entries({"kk":{"pieces":"дана","spiceNote":"Ащы тағам","diameter":"см","sortHint":"Әр бөлімнің ішіндегі рет өзгереді","clearSearch":"Іздеуді тазалау","cartUnits":"тауар","yourCart":"Себет","emptyTitle":"Тапсырысың осы жерден басталады","emptyText":"Мәзірден ұнаған тағамдарыңды қос.","checkoutNote":"Тапсырысты WhatsApp-та растаңыз."},"ru":{"pieces":"шт.","spiceNote":"Острое блюдо","diameter":"см","sortHint":"Сортировка внутри каждого раздела","clearSearch":"Очистить поиск","cartUnits":"товар","yourCart":"Корзина","emptyTitle":"Здесь будет ваш заказ","emptyText":"Добавьте любимые блюда из меню.","checkoutNote":"Подтвердите заказ в WhatsApp."},"en":{"pieces":"pcs","spiceNote":"Spicy dish","diameter":"cm","sortHint":"Sorted within each menu section","clearSearch":"Clear search","cartUnits":"item","yourCart":"Your cart","emptyTitle":"Your order starts here","emptyText":"Add something you love from the menu.","checkoutNote":"Confirm your order in WhatsApp."}}).forEach(([lang, words]) => Object.assign(I18N[lang], words));
+  Object.entries(DELIVERY_ENGINE.TEXT).forEach(([lang, words]) => Object.assign(I18N[lang], words));
+  const comboText = { kk: { comboSelection: 'Таңдалды', comboCardAdd: 'Жиынтыққа қосу', comboChooseHint: 'Үш пицца таңдаңыз. Бір түрін бірнеше рет алуға болады.' }, ru: { comboSelection: 'Выбрано', comboCardAdd: 'Добавить в комбо', comboChooseHint: 'Выберите три пиццы. Один вкус можно выбрать несколько раз.' }, en: { comboSelection: 'Selected', comboCardAdd: 'Add to combo', comboChooseHint: 'Choose three pizzas. You can pick a flavour more than once.' } };
+  Object.entries(comboText).forEach(([lang, words]) => Object.assign(I18N[lang], words));
   const PRODUCT_MAP = new Map(PRODUCTS.map(product => [product.id, product]));
   const PIZZAS = PRODUCTS.filter(product => product.category === 'pizza');
   const photo = product => product.image || 'assets/products/' + product.id + '.jpg';
   const money = value => new Intl.NumberFormat('ru-RU').format(value) + ' ₸';
   const linePrice = line => line.type === 'combo' ? COMBO_PRICE : (PRODUCT_MAP.get(line.id)?.price || 0);
   const total = lines => lines.reduce((sum, line) => sum + linePrice(line) * line.qty, 0);
-  function selectProducts(products, filters = {}, query = '', language = DEFAULT_LANGUAGE) {
-    filters = { category: 'all', spice: 'all', maxPrice: 0, sort: 'default', ...filters };
+  const productLabel = (product, language = DEFAULT_LANGUAGE) => product.name || product.names[LANGUAGES.indexOf(LANGUAGES.includes(language) ? language : DEFAULT_LANGUAGE)];
+  function selectProducts(products, options = {}, query = '', language = DEFAULT_LANGUAGE) {
     const needle = query.trim().toLocaleLowerCase(language);
-    const selected = products.filter(product =>
-      (filters.category === 'all' || product.category === filters.category) &&
-      (filters.spice === 'all' || (filters.spice === 'spicy' ? product.spice > 0 : product.spice === 0)) &&
-      (!filters.maxPrice || product.price <= filters.maxPrice) &&
-      (!needle || product.names.some(name => name.toLocaleLowerCase(language).includes(needle)))
-    );
-    if (filters.sort === 'asc') selected.sort((a, b) => a.price - b.price);
-    if (filters.sort === 'desc') selected.sort((a, b) => b.price - a.price);
-    return selected;
+    const selected = products.filter(product => !needle || productLabel(product, language).toLocaleLowerCase(language).includes(needle));
+    if (options.sort !== 'asc' && options.sort !== 'desc') return selected;
+    const categories = CATEGORIES.map(category => category.id);
+    const groups = Object.keys(GROUPS);
+    return selected.sort((a, b) => {
+      const section = categories.indexOf(a.category) - categories.indexOf(b.category);
+      const subgroup = a.category === 'sushi' ? groups.indexOf(a.group) - groups.indexOf(b.group) : 0;
+      return section || subgroup || (options.sort === 'asc' ? a.price - b.price : b.price - a.price);
+    });
   }
   function normalizeCart(value) {
     if (!Array.isArray(value)) return [];
@@ -185,10 +190,10 @@
     }
     return [...combined.values()];
   }
-  function buildOrderMessage(order, language, note = '') {
+  function buildOrderMessage(order, language, note = '', fulfillment = null) {
     const lang = LANGUAGES.includes(language) ? language : DEFAULT_LANGUAGE;
     const words = I18N[lang];
-    const name = id => PRODUCT_MAP.get(id).names[LANGUAGES.indexOf(lang)];
+    const name = id => productLabel(PRODUCT_MAP.get(id), lang);
     const lines = [words.messageHello, '', '*' + words.messageItems + ':*'];
     order.forEach((line, index) => {
       lines.push((index + 1) + '. ' + (line.type === 'combo' ? words.comboName : name(line.id)) + ' ×' + line.qty + ' — ' + money(linePrice(line) * line.qty));
@@ -197,7 +202,9 @@
         lines.push('   🎁 ' + words.colaGift);
       }
     });
-    lines.push('', '*' + words.total + ': ' + money(total(order)) + '*', words.deliveryNotIncluded);
+    lines.push('', '*' + words.total + ': ' + money(total(order)) + '*');
+    if (fulfillment) lines.push('', ...DELIVERY_ENGINE.orderLines(fulfillment, lang));
+    else lines.push(words.deliveryNotIncluded);
     if (note.trim()) lines.push('', words.messageNote + ': ' + note.trim());
     lines.push('', words.messageConfirm);
     return lines.join('\n');
@@ -207,7 +214,7 @@
     const steps = distance + (spin && distance > 0 && distance < 4 ? 10 : 0);
     return Array.from({ length: steps + 1 }, (_, index) => (from + direction * index + 100) % 10);
   }
-  if (typeof module !== 'undefined' && module.exports) module.exports = { PRODUCTS, CATEGORIES, GROUPS, I18N, COMBO_PRICE, DEFAULT_LANGUAGE, resolveLocale, total, normalizeCart, buildOrderMessage, digitSequence, selectProducts, photo };
+  if (typeof module !== 'undefined' && module.exports) module.exports = { PRODUCTS, CATEGORIES, GROUPS, I18N, COMBO_PRICE, DEFAULT_LANGUAGE, resolveLocale, total, normalizeCart, buildOrderMessage, digitSequence, selectProducts, photo, productLabel };
   if (typeof document === 'undefined') return;
 
   const $ = selector => document.querySelector(selector);
@@ -217,13 +224,17 @@
   let cart;
   try { cart = normalizeCart(JSON.parse(safeGet('donsan-cart-v2') || '[]')); } catch { cart = []; }
   let selectedProductId = null;
+  let comboSelections = [];
+  let delivery;
   let toastTimer;
-  const defaultFilters = () => ({ category: 'all', spice: 'all', maxPrice: 0, sort: 'default' });
-  let filters = defaultFilters();
+  let sortOrder = 'default';
+  let activeCategory = 'all';
+  let scrollFrame = 0;
+  let scrollTarget = null;
   let clearUndo = null;
   const t = key => I18N[locale][key];
   const translated = names => names[LANGUAGES.indexOf(locale)];
-  const productName = product => translated(product.names);
+  const productName = product => productLabel(product, locale);
   const categoryName = id => translated(CATEGORIES.find(category => category.id === id).names);
   const description = product => t(product.category === 'dogs' ? 'dogDescription' : product.group ? product.group + 'Description' : product.category === 'pizza' ? 'pizzaDescription' : product.category === 'drinks' ? 'drinkDescription' : product.category === 'sauces' ? 'sauceDescription' : 'snackDescription');
   const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
@@ -240,12 +251,20 @@
     chili: '<path d="M16 7c3-1 4-3 3-5M15 6c-2-1-5 0-6 4-1 5-3 8-7 10 8 3 17-3 17-9 0-2-1-4-4-5Z"/><path d="m10 8 7 5"/>',
     moon: '<path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z"/>',
     sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.4 1.4M17.6 17.6 19 19M5 19l1.4-1.4M17.6 6.4 19 5"/>',
-    trash: '<path d="M3 6h18M9 6V3h6v3M5 6l1 15h12l1-15M10 10v7M14 10v7"/>',
+    trash: '<path d="M3 6h18M9 6V3h6v3M5 6v14a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6M10 10v7M14 10v7"/>',
+    pin: '<path d="M20 10c0 6-8 12-8 12S4 16 4 10a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
+    locate: '<circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/><path d="M12 2v4M12 18v4M2 12h4M18 12h4"/>',
+    truck: '<path d="M3 6h11v11H3zM14 10h4l3 4v3h-7"/><circle cx="7" cy="18" r="2"/><circle cx="18" cy="18" r="2"/>',
     sliders: '<path d="M4 6h5M15 6h5M4 12h10M20 12h0M4 18h2M12 18h8"/><circle cx="12" cy="6" r="3"/><circle cx="17" cy="12" r="3"/><circle cx="9" cy="18" r="3"/>',
+    sort: '<path d="M4 6h16M4 12h10M4 18h5"/><path d="m17 15 3 3 3-3M20 9v9"/>',
+    chevron: '<path d="m8 10 4 4 4-4"/>',
+    check: '<path d="m5 12 4 4L19 6"/>',
+    ruler: '<path d="m3 14 11-11 7 7-11 11-7-7Z"/><path d="m7 10 3 3m1-7 3 3m1 3 3 3"/>',
+    bagEmpty: '<path d="M5 8h14l1 12H4L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/><path d="M9 13c1.5 2 4.5 2 6 0"/>',
     sakura: '<path d="M12 12C4 8 9 1 12 5c3-4 8 3 0 7Zm0 0c1-9 10-6 7-2 5 2 0 9-7 2Zm0 0c9-1 9 8 4 7 0 5-8 2-4-7Zm0 0c4 8-4 11-5 6-5 1-5-8 5-6Zm0 0c-7 6-12-1-7-3C2 5 10 3 12 12Z"/><circle cx="12" cy="12" r="1.3"/>',
   };
   const icon = name => '<svg class="ui-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + ICON_PATHS[name] + '</svg>';
-  const spice = level => level ? '<span class="spice-level" aria-label="' + t('spiceLabel') + ': ' + level + '/5">' + icon('chili').repeat(level) + '</span>' : '';
+  const spice = level => level ? '<span class="spice-level" aria-label="' + t('spicy') + '">' + icon('chili') + '</span>' : '';
   const lineName = line => line.type === 'combo' ? t('comboName') : productName(PRODUCT_MAP.get(line.id));
   const lineDescription = line => line.type === 'combo' ? line.choices.map(id => productName(PRODUCT_MAP.get(id))).join(' + ') + ' · ' + t('colaGift') : description(PRODUCT_MAP.get(line.id));
   const lineImage = line => line.type === 'combo' ? 'image.png' : photo(PRODUCT_MAP.get(line.id));
@@ -280,7 +299,7 @@
     button.setAttribute('aria-pressed', String(dark));
     button.setAttribute('aria-label', t(dark ? 'lightMode' : 'darkMode'));
     button.title = t(dark ? 'lightMode' : 'darkMode');
-    $('meta[name="theme-color"]').content = dark ? '#171518' : '#fcf7f6';
+    $('meta[name="theme-color"]').content = dark ? '#121516' : '#ffffff';
   }
 
   // Each place value keeps its own reel. Unchanged digits remain still, and rapid
@@ -387,54 +406,71 @@
     safeSet('donsan-cart-v2', JSON.stringify(cart));
   }
 
+  function cartCountLabel(value) {
+    if (locale === 'ru') {
+      const ending = new Intl.PluralRules('ru').select(value);
+      return value + ' ' + (ending === 'one' ? 'товар' : ending === 'few' ? 'товара' : 'товаров');
+    }
+    return value + ' ' + (locale === 'kk' ? 'тауар' : value === 1 ? 'item' : 'items');
+  }
+
   function renderCart(animate = false) {
     const active = document.activeElement;
     const focusRoot = active?.closest('dialog') || document;
     const focusedKey = active?.dataset?.key;
     const focusedAction = active?.dataset?.cartAction;
     const root = $('#cartItems');
-    if (!cart.length) {
-      root.innerHTML = '<div class="cart-empty"><span aria-hidden="true">' + icon('bag') + '</span><h3>' + t('emptyTitle') + '</h3><p>' + t('emptyText') + '</p><button type="button" class="button button-red" data-close="cartDialog">' + t('viewMenu') + '</button></div>';
+    const empty = cart.length === 0;
+    $('#cartDialog').classList.toggle('is-empty', empty);
+    if (empty) {
+      root.innerHTML = '<div class="cart-empty"><div class="empty-emblem" aria-hidden="true">' + icon('bagEmpty') + '<span>' + icon('sakura') + '</span></div><h3>' + t('emptyTitle') + '</h3><p>' + t('emptyText') + '</p><button type="button" class="button button-red" data-close="cartDialog">' + t('viewMenu') + icon('arrow') + '</button></div>';
     } else {
       root.querySelector('.cart-empty')?.remove();
       const keys = new Set(cart.map(lineKey));
       root.querySelectorAll('.cart-item').forEach(row => { if (!keys.has(row.dataset.lineKey)) row.remove(); });
-      cart.forEach((line, index) => {
+      cart.forEach(line => {
         const key = lineKey(line);
         let row = [...root.children].find(element => element.dataset.lineKey === key);
         if (!row) {
           row = document.createElement('article');
           row.className = 'cart-item';
           row.dataset.lineKey = key;
-          row.innerHTML = '<img class="cart-item-image" alt="" /><div><h3></h3><p class="cart-item-description"></p><div class="cart-item-bottom"><strong class="cart-line-price"></strong><div class="quantity-control"><button type="button" data-cart-action="decrease">' + icon('minus') + '</button><span class="quantity-value"></span><button type="button" data-cart-action="increase">' + icon('plus') + '</button></div></div><button class="remove-item" type="button" data-cart-action="remove"></button></div>';
+          row.innerHTML = '<div class="cart-item-media"><img class="cart-item-image" alt="" /></div><div class="cart-item-content"><div class="cart-item-title"><h3></h3><button class="remove-item" type="button" data-cart-action="remove">' + icon('trash') + '</button></div><p class="cart-item-description"></p><div class="cart-item-bottom"><div class="quantity-control"><button type="button" data-cart-action="decrease">' + icon('minus') + '</button><span class="quantity-value"></span><button type="button" data-cart-action="increase">' + icon('plus') + '</button></div><strong class="cart-line-price"></strong></div></div>';
           root.append(row);
         }
+        const product = line.type === 'product' ? PRODUCT_MAP.get(line.id) : null;
         row.querySelector('.cart-item-image').src = lineImage(line);
         row.querySelector('h3').textContent = lineName(line);
-        row.querySelector('.cart-item-description').textContent = line.type === 'combo' ? lineDescription(line) : '';
-        row.querySelector('.cart-item-description').hidden = line.type !== 'combo';
-        row.querySelector('[data-cart-action="remove"]').textContent = t('remove');
+        row.querySelector('.cart-item-description').textContent = product
+          ? categoryName(product.category) + (product.pieces ? ' · ' + product.pieces + ' ' + t('pieces') : product.diameter ? ' · ' + product.diameter + ' ' + t('diameter') : '')
+          : lineDescription(line);
         row.querySelectorAll('[data-cart-action]').forEach(button => {
           button.dataset.key = key;
           button.setAttribute('aria-label', t(button.dataset.cartAction) + ': ' + lineName(line));
-          button.disabled = button.dataset.cartAction === 'increase' && line.qty >= 99;
+          button.disabled = (button.dataset.cartAction === 'increase' && line.qty >= 99) || (button.dataset.cartAction === 'decrease' && line.qty <= 1);
         });
         rollNumber(row.querySelector('.cart-line-price'), linePrice(line) * line.qty, { animate });
         rollNumber(row.querySelector('.quantity-value'), line.qty, { animate, currency: false });
       });
     }
+    const count = cart.reduce((sum, line) => sum + line.qty, 0);
+    $('#cartCount').textContent = count;
+    $('#cartCount').hidden = empty;
+    $('#cartCountLabel').textContent = cartCountLabel(count);
     rollNumber($('#cartTotal'), total(cart), { animate });
-    $('#checkoutBtn').disabled = cart.length === 0;
-    $('#clearCartBtn').hidden = cart.length === 0;
-    $('.cart-tools').hidden = cart.length === 0;
-    $('#orderNoteLabel').hidden = cart.length === 0;
+    $('#checkoutBtn').disabled = empty;
+    $('.cart-summary').hidden = empty;
+    $('#clearCartBtn').hidden = empty;
+    $('.cart-tools').hidden = empty;
+    $('#orderNoteLabel').hidden = empty;
     updateAmount(animate);
     syncProductControls(animate);
+    delivery?.renderSummary();
     if (focusedKey && focusedAction) {
       const replacement = [...focusRoot.querySelectorAll('[data-cart-action]')].find(el => el.dataset.key === focusedKey && el.dataset.cartAction === focusedAction);
       if (replacement) {
         if (document.activeElement !== replacement) replacement.focus({ preventScroll: true });
-      } else if ($('#cartDialog').open) $('#cartDialog [data-close]').focus({ preventScroll: true });
+      } else if ($('#cartDialog').open) $('#cartHeading').focus({ preventScroll: true });
     }
   }
 
@@ -447,6 +483,7 @@
     saveCart();
     renderCart(true);
     showToast(lineName(item) + ' — ' + t('addedToast'));
+    delivery?.promptAfterAdd();
     return true;
   }
 
@@ -476,70 +513,143 @@
         }
         rollNumber(root.querySelector('.quantity-value'), qty, { animate, currency: false });
         root.querySelector('[data-cart-action="increase"]').disabled = qty >= 99;
+        root.querySelector('[data-cart-action="decrease"]').disabled = qty <= 1;
       }
     });
+  }
+
+  function portionBadge(product) {
+    if (product.pieces) return '<span class="portion-badge">' + product.pieces + ' ' + t('pieces') + '</span>';
+    if (product.diameter) return '<span class="portion-badge">' + icon('ruler') + product.diameter + ' ' + t('diameter') + '</span>';
+    return '';
   }
 
   function productCard(product) {
     const name = escapeHTML(productName(product));
     const heading = product.group ? 'h4' : 'h3';
     const pack = product.category === 'drinks' || product.category === 'sauces' ? ' is-pack' : product.category === 'pizza' || product.category === 'snacks' ? ' is-plated' : '';
-    return '<article class="product-card' + pack + '" data-product="' + product.id + '"><button type="button" class="product-photo" data-details="' + product.id + '" aria-label="' + t('details') + ': ' + name + '"><img src="' + photo(product) + '" alt="' + name + '" loading="lazy" decoding="async" /><span class="product-seal" aria-hidden="true">' + icon('sakura') + '</span>' + spice(product.spice) + '</button><div class="product-body"><' + heading + ' class="product-name"><button type="button" class="product-name" data-details="' + product.id + '">' + name + '</button></' + heading + '><div class="product-bottom"><strong class="product-price">' + money(product.price).replace(' ₸', ' <small>₸</small>') + '</strong><div class="product-control" data-product-control="' + product.id + '"></div></div></div></article>';
+    return '<article class="product-card' + pack + '" data-product="' + product.id + '"><button type="button" class="product-photo" data-details="' + product.id + '" aria-label="' + t('details') + ': ' + name + '"><img src="' + photo(product) + '" alt="' + name + '" loading="lazy" decoding="async" />' + portionBadge(product) + spice(product.spice) + '</button><div class="product-body"><' + heading + ' class="product-name"><button type="button" data-details="' + product.id + '">' + name + '</button></' + heading + '><div class="product-bottom"><strong class="product-price">' + money(product.price).replace(' ₸', ' <small>₸</small>') + '</strong><div class="product-control" data-product-control="' + product.id + '"></div></div></div></article>';
+  }
+
+  function setActiveCategory(id, reveal = true) {
+    const nav = $('#categoryNav');
+    activeCategory = id;
+    nav.querySelectorAll('[data-category-link]').forEach(button => {
+      if (button.dataset.categoryLink === id) button.setAttribute('aria-current', 'location');
+      else button.removeAttribute('aria-current');
+    });
+    const button = nav.querySelector('[data-category-link="' + id + '"]');
+    const marker = nav.querySelector('.category-indicator');
+    if (!button || !marker) return;
+    marker.style.width = button.offsetWidth + 'px';
+    marker.style.transform = 'translateX(' + button.offsetLeft + 'px)';
+    if (reveal) {
+      const left = button.offsetLeft - (nav.clientWidth - button.offsetWidth) / 2;
+      nav.scrollTo({ left, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+    }
+  }
+
+  function updateScrollCategory() {
+    scrollFrame = 0;
+    const toolbar = $('.menu-toolbar');
+    const threshold = toolbar.getBoundingClientRect().bottom + 30;
+    if (scrollTarget && performance.now() < scrollTarget.until) {
+      const target = scrollTarget.id === 'all' ? $('#menu') : $('#category-' + scrollTarget.id);
+      if (target && Math.abs(target.getBoundingClientRect().top - threshold) > 3) return;
+    }
+    scrollTarget = null;
+    let current = 'all';
+    document.querySelectorAll('.menu-category').forEach(section => {
+      if (section.getBoundingClientRect().top <= threshold) current = section.id.replace('category-', '');
+    });
+    const lastSection = document.querySelector('.menu-category:last-child');
+    if (lastSection && window.scrollY > 0 && window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4) {
+      current = lastSection.id.replace('category-', '');
+    }
+    if (current !== activeCategory) setActiveCategory(current);
+    else setActiveCategory(current, false);
+  }
+
+  function scheduleScrollCategory() {
+    if (!scrollFrame) scrollFrame = requestAnimationFrame(updateScrollCategory);
+  }
+
+  function navigateCategory(id, smooth = true) {
+    let target = id === 'all' ? $('#menu') : $('#category-' + id);
+    if (!target && $('#menuSearch').value) {
+      $('#menuSearch').value = '';
+      renderMenu();
+      target = $('#category-' + id);
+    }
+    if (!target) return;
+    const offset = $('.site-header').offsetHeight + $('.menu-toolbar').offsetHeight + 28;
+    setActiveCategory(id);
+    scrollTarget = { id, until: performance.now() + (smooth ? 1400 : 100) };
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - offset, behavior: smooth && !matchMedia('(prefers-reduced-motion: reduce)').matches ? 'smooth' : 'auto' });
+    const url = new URL(location.href);
+    url.hash = id === 'all' ? 'menu' : 'category-' + id;
+    history.replaceState(null, '', url);
   }
 
   function renderMenu() {
-    const focusedCategory = document.activeElement?.dataset?.categoryFilter;
-    const items = selectProducts(PRODUCTS, filters, $('#menuSearch').value, locale);
+    const nav = $('#categoryNav');
+    const scrollLeft = nav.scrollLeft;
+    const focusedCategory = document.activeElement?.dataset?.categoryLink;
+    const items = selectProducts(PRODUCTS, { sort: sortOrder }, $('#menuSearch').value, locale);
     const navItems = [{ id: 'all', names: LANGUAGES.map(lang => I18N[lang].all) }, ...CATEGORIES];
-    $('#categoryNav').innerHTML = navItems.map(category => '<button type="button" data-category-filter="' + category.id + '" aria-pressed="' + (filters.category === category.id) + '">' + translated(category.names) + '</button>').join('');
-    $('#productGrid').innerHTML = CATEGORIES.map(category => {
+    nav.innerHTML = '<span class="category-indicator" aria-hidden="true"></span>' + navItems.map(category => '<button type="button" data-category-link="' + category.id + '" aria-controls="' + (category.id === 'all' ? 'productGrid' : 'category-' + category.id) + '">' + translated(category.names) + '</button>').join('');
+    nav.scrollLeft = scrollLeft;
+    $('#productGrid').innerHTML = CATEGORIES.map((category, index) => {
       const categoryItems = items.filter(product => product.category === category.id);
       if (!categoryItems.length) return '';
       const content = category.id === 'sushi' ? Object.entries(GROUPS).map(([id, names]) => {
         const groupItems = categoryItems.filter(product => product.group === id);
         return groupItems.length ? '<div class="menu-subgroup"><h3>' + translated(names) + '</h3><div class="menu-products">' + groupItems.map(productCard).join('') + '</div></div>' : '';
       }).join('') : '<div class="menu-products">' + categoryItems.map(productCard).join('') + '</div>';
-      return '<section class="menu-category" id="category-' + category.id + '" aria-labelledby="heading-' + category.id + '"><div class="category-heading"><span class="category-flower" aria-hidden="true">' + icon('sakura') + '</span><h2 id="heading-' + category.id + '">' + translated(category.names) + '</h2><span class="category-count">' + categoryItems.length + '</span></div>' + content + '</section>';
+      return '<section class="menu-category" id="category-' + category.id + '" aria-labelledby="heading-' + category.id + '"><div class="category-heading"><h2 id="heading-' + category.id + '">' + translated(category.names) + '</h2></div>' + content + '</section>';
     }).join('');
     $('#noResults').hidden = items.length !== 0;
-    const count = Number(filters.category !== 'all') + Number(filters.spice !== 'all') + Number(filters.maxPrice > 0) + Number(filters.sort !== 'default');
-    $('#filterBadge').textContent = count;
-    $('#filterBadge').hidden = count === 0;
-    $('#filterOpenBtn').classList.toggle('has-filters', count > 0);
     syncProductControls();
-    if (focusedCategory) document.querySelector('[data-category-filter="' + focusedCategory + '"]')?.focus({ preventScroll: true });
+    if (focusedCategory) nav.querySelector('[data-category-link="' + focusedCategory + '"]')?.focus({ preventScroll: true });
+    requestAnimationFrame(() => { setActiveCategory(activeCategory, false); scheduleScrollCategory(); });
   }
 
-  function renderFilterOptions() {
-    $('#spiceFilterOptions').innerHTML = [['all', 'all'], ['mild', 'notSpicy'], ['spicy', 'spicy']].map(([value, key]) => '<label><input type="radio" name="spice" value="' + value + '"' + (filters.spice === value ? ' checked' : '') + ' /><span>' + t(key) + '</span></label>').join('');
-    $('#maxPriceFilter').innerHTML = [0, 500, 1000, 1500, 3000, 5000].map(value => {
-      const label = value === 0 ? t('anyPrice') : locale === 'kk' ? money(value) + ' ' + t('upTo') : t('upTo') + ' ' + money(value);
-      return '<option value="' + value + '">' + label + '</option>';
+  function renderSortOptions() {
+    $('#menuSort').innerHTML = [['default', 'sortLabel'], ['asc', 'sortAsc'], ['desc', 'sortDesc']].map(([value, key]) => '<option value="' + value + '">' + t(key) + '</option>').join('');
+    $('#menuSort').value = sortOrder;
+    $('.sort-control').title = t('sortHint');
+  }
+
+  function renderComboOptions() {
+    const counts = new Map(PIZZAS.map(pizza => [pizza.id, comboSelections.filter(id => id === pizza.id).length]));
+    $('#comboOptions').innerHTML = PIZZAS.map(pizza => {
+      const count = counts.get(pizza.id);
+      return '<article class="combo-pizza-card' + (count ? ' is-selected' : '') + '"><button class="combo-pizza-main" type="button" data-combo-choice="' + pizza.id + '" aria-label="' + t('comboCardAdd') + ': ' + escapeHTML(productName(pizza)) + '"><img src="' + photo(pizza) + '" alt="" /><h3>' + escapeHTML(productName(pizza)) + '</h3><span class="combo-pizza-meta">30 ' + t('diameter') + '</span>' + spice(pizza.spice) + (count ? '<span class="combo-selected-mark">' + icon('check') + '</span>' : '') + '</button><div class="combo-pizza-controls"><button type="button" data-combo-step="decrease" data-combo-id="' + pizza.id + '" aria-label="' + t('decrease') + ': ' + escapeHTML(productName(pizza)) + '"' + (count === 0 ? ' disabled' : '') + '>' + icon('minus') + '</button><span>' + count + '</span><button type="button" data-combo-step="increase" data-combo-id="' + pizza.id + '" aria-label="' + t('increase') + ': ' + escapeHTML(productName(pizza)) + '"' + (comboSelections.length >= 3 ? ' disabled' : '') + '>' + icon('plus') + '</button></div></article>';
     }).join('');
-    $('#maxPriceFilter').value = String(filters.maxPrice);
-    $('#sortFilter').innerHTML = [['default', 'sortDefault'], ['asc', 'sortAsc'], ['desc', 'sortDesc']].map(([value, key]) => '<option value="' + value + '">' + t(key) + '</option>').join('');
-    $('#sortFilter').value = filters.sort;
+    $('#comboProgress').textContent = t('comboSelection') + ' ' + comboSelections.length + ' / 3';
+    $('#comboForm button[type="submit"]').disabled = comboSelections.length !== 3;
   }
 
-  function resetFilters() {
-    filters = defaultFilters();
-    $('#menuSearch').value = '';
-    renderMenu();
-    renderFilterOptions();
-  }
-
-  function renderComboOptions(preserve = true) {
-    const selected = preserve ? [...document.querySelectorAll('#comboOptions select')].map(select => select.value) : [];
-    $('#comboOptions').innerHTML = [0, 1, 2].map(index => {
-      const label = locale === 'kk' ? (index + 1) + '-' + t('pizzaSlot') : t('pizzaSlot') + ' ' + (index + 1);
-      return '<label class="combo-option"><span>' + label + '</span><select name="pizza-' + index + '" required>' + PIZZAS.map((pizza, pizzaIndex) => '<option value="' + pizza.id + '"' + ((selected[index] || PIZZAS[index].id) === pizza.id ? ' selected' : '') + '>' + escapeHTML(productName(pizza)) + (pizza.spice ? ' ' + '🌶️'.repeat(pizza.spice) : '') + '</option>').join('') + '</select></label>';
-    }).join('');
+  function changeCombo(id, direction = 'increase') {
+    if (!PIZZAS.some(pizza => pizza.id === id)) return;
+    const photoFocused = document.activeElement?.hasAttribute('data-combo-choice');
+    if (direction === 'increase' && comboSelections.length < 3) comboSelections.push(id);
+    else if (direction === 'decrease') {
+      const index = comboSelections.lastIndexOf(id);
+      if (index >= 0) comboSelections.splice(index, 1);
+    }
+    renderComboOptions();
+    let focus = photoFocused ? document.querySelector('[data-combo-choice="' + id + '"]') : document.querySelector('[data-combo-id="' + id + '"][data-combo-step="' + direction + '"]');
+    if (focus?.disabled) focus = document.querySelector('[data-combo-id="' + id + '"][data-combo-step="decrease"]');
+    focus?.focus({ preventScroll: true });
   }
 
   function showDialog(id) {
     const dialog = $('#' + id);
     if (!dialog.open) dialog.showModal();
     document.body.classList.add('modal-open');
+    if (id === 'cartDialog') $('#cartHeading').focus({ preventScroll: true });
+    if (id === 'comboDialog') $('#comboDialogHeading').focus({ preventScroll: true });
   }
   function closeDialog(id) {
     const dialog = $('#' + id);
@@ -556,7 +666,7 @@
   function renderProductDetails() {
     const product = PRODUCT_MAP.get(selectedProductId);
     if (!product) return;
-    $('#productDetails').innerHTML = '<img class="product-detail-image" src="' + photo(product) + '" alt="' + escapeHTML(productName(product)) + '" /><div class="product-detail-body"><p class="eyebrow">' + categoryName(product.category) + '</p><h2 id="productHeading">' + escapeHTML(productName(product)) + '</h2>' + spice(product.spice) + '<p>' + description(product) + '</p><p class="allergen-note">' + t('allergenNote') + '</p><div class="product-detail-action"><strong>' + money(product.price) + '</strong><div class="product-control" data-product-control="' + product.id + '"></div></div></div>';
+    $('#productDetails').innerHTML = '<div class="product-detail-media"><img class="product-detail-image" src="' + photo(product) + '" alt="' + escapeHTML(productName(product)) + '" /></div><div class="product-detail-body"><p class="eyebrow">' + categoryName(product.category) + '</p><h2 id="productHeading">' + escapeHTML(productName(product)) + '</h2><div class="detail-badges">' + portionBadge(product) + spice(product.spice) + '</div><p>' + description(product) + '</p><p class="allergen-note">' + t('allergenNote') + '</p><div class="product-detail-action"><strong>' + money(product.price) + '</strong><div class="product-control" data-product-control="' + product.id + '"></div></div></div>';
     syncProductControls();
   }
 
@@ -578,20 +688,22 @@
     renderMenu();
     renderCart();
     renderComboOptions();
-    renderFilterOptions();
+    renderSortOptions();
     updateThemeButton();
+    delivery?.translate();
     if ($('#productDialog').open) renderProductDetails();
   }
 
   document.addEventListener('click', event => {
     const lang = event.target.closest('[data-lang]');
     if (lang) setLanguage(lang.dataset.lang);
-    const category = event.target.closest('[data-category-filter]');
-    if (category) {
-      filters.category = category.dataset.categoryFilter;
+    const category = event.target.closest('[data-category-link]');
+    if (category) navigateCategory(category.dataset.categoryLink);
+    if (event.target.closest('[data-clear-search]')) {
+      $('#menuSearch').value = '';
       renderMenu();
+      $('#menuSearch').focus();
     }
-    if (event.target.closest('[data-reset-filters]')) resetFilters();
     if (event.target.closest('[data-undo-cart]') && clearUndo) {
       cart = normalizeCart(clearUndo.items);
       $('#orderNote').value = clearUndo.note;
@@ -600,6 +712,10 @@
       renderCart(true);
       $('#toast').classList.remove('show');
     }
+    const comboChoice = event.target.closest('[data-combo-choice]');
+    if (comboChoice) changeCombo(comboChoice.dataset.comboChoice);
+    const comboStep = event.target.closest('[data-combo-step]');
+    if (comboStep) changeCombo(comboStep.dataset.comboId, comboStep.dataset.comboStep);
     const closer = event.target.closest('[data-close]');
     if (closer) closeDialog(closer.dataset.close);
     const add = event.target.closest('[data-add]');
@@ -619,7 +735,10 @@
       if (action.dataset.cartAction === 'increase') {
         if (line.qty === 99) { showToast(t('quantityLimit')); return; }
         line.qty += 1;
-      } else if (action.dataset.cartAction === 'decrease') line.qty -= 1;
+      } else if (action.dataset.cartAction === 'decrease') {
+        if (line.qty <= 1) return;
+        line.qty -= 1;
+      }
       else if (action.dataset.cartAction === 'remove') line.qty = 0;
       cart = cart.filter(item => item.qty > 0);
       saveCart();
@@ -631,7 +750,7 @@
   $('#themeToggle').addEventListener('click', () => {
     const theme = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
     document.documentElement.dataset.theme = theme;
-    safeSet('donsan-theme', theme);
+    safeSet('donsan-appearance-v2', theme);
     updateThemeButton();
   });
   $('#clearCartBtn').addEventListener('click', () => {
@@ -641,31 +760,33 @@
     $('#orderNote').value = '';
     saveCart();
     renderCart(true);
-    $('#cartDialog [data-close]').focus({ preventScroll: true });
+    $('#cartHeading').focus({ preventScroll: true });
     showToast(t('cartCleared'), true);
   });
   $('#heroOrderBtn').addEventListener('click', () => { renderComboOptions(); showDialog('comboDialog'); });
-  $('#filterOpenBtn').addEventListener('click', () => { renderFilterOptions(); showDialog('filterDialog'); });
-  $('#filterForm').addEventListener('submit', event => {
-    event.preventDefault();
-    filters.spice = new FormData($('#filterForm')).get('spice') || 'all';
-    filters.maxPrice = Number($('#maxPriceFilter').value);
-    filters.sort = $('#sortFilter').value;
+  $('#menuSort').addEventListener('change', () => {
+    const anchor = activeCategory;
+    sortOrder = $('#menuSort').value;
     renderMenu();
-    closeDialog('filterDialog');
+    requestAnimationFrame(() => {
+      if (anchor !== 'all' && $('#category-' + anchor)) navigateCategory(anchor, false);
+    });
   });
   $('#menuSearch').addEventListener('input', renderMenu);
   $('#comboForm').addEventListener('submit', event => {
     event.preventDefault();
-    const choices = [...document.querySelectorAll('#comboOptions select')].map(select => select.value);
+    const choices = [...comboSelections];
     if (choices.length !== 3 || !choices.every(id => PIZZAS.some(pizza => pizza.id === id))) return;
     closeDialog('comboDialog');
-    addItem({ type: 'combo', choices, qty: 1 });
+    if (addItem({ type: 'combo', choices, qty: 1 })) {
+      comboSelections = [];
+      renderComboOptions();
+    }
   });
   document.querySelectorAll('dialog').forEach(dialog => {
-    dialog.addEventListener('cancel', event => { event.preventDefault(); closeDialog(dialog.id); });
+    if (dialog.id !== 'deliveryDialog') dialog.addEventListener('cancel', event => { event.preventDefault(); closeDialog(dialog.id); });
     dialog.addEventListener('click', event => {
-      if (event.target !== dialog) return;
+      if (dialog.id === 'deliveryDialog' || event.target !== dialog) return;
       const rect = dialog.getBoundingClientRect();
       if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeDialog(dialog.id);
     });
@@ -674,13 +795,39 @@
       document.body.append($('#toast'));
     });
   });
-  $('#checkoutBtn').addEventListener('click', () => {
+  function sendOrder(fulfillment) {
     if (!cart.length) return;
-    const message = buildOrderMessage(cart, locale, $('#orderNote').value);
+    const message = buildOrderMessage(cart, locale, $('#orderNote').value, fulfillment);
     window.open('https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message), '_blank', 'noopener,noreferrer');
+  }
+  delivery = DELIVERY_ENGINE.createController({
+    getLanguage: () => locale, icon, showDialog, closeDialog,
+    onChange: () => renderCart(), onCheckout: sendOrder,
+  });
+  $('#checkoutBtn').addEventListener('click', () => {
+    if (cart.length) delivery.open({ forCheckout: true });
   });
   document.querySelectorAll('[data-icon]').forEach(element => { element.innerHTML = icon(element.dataset.icon); });
   document.querySelectorAll('[data-combo-price]').forEach(element => { element.textContent = money(COMBO_PRICE); });
+  window.addEventListener('scroll', scheduleScrollCategory, { passive: true });
+  window.addEventListener('wheel', () => { scrollTarget = null; }, { passive: true });
+  window.addEventListener('touchstart', () => { scrollTarget = null; }, { passive: true });
+  window.addEventListener('keydown', event => {
+    if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', 'Home', 'End'].includes(event.key)) scrollTarget = null;
+  });
+  window.addEventListener('resize', scheduleScrollCategory);
+  if ('ResizeObserver' in window) {
+    new ResizeObserver(() => {
+      document.documentElement.style.setProperty('--toolbar-height', $('.menu-toolbar').offsetHeight + 'px');
+      scheduleScrollCategory();
+    }).observe($('.menu-toolbar'));
+  }
+  document.fonts?.ready.then(scheduleScrollCategory);
   $('#year').textContent = new Date().getFullYear();
   setLanguage(locale);
+  requestAnimationFrame(() => {
+    const initialCategory = location.hash.match(/^#category-(dogs|sushi|pizza|snacks|drinks|sauces)$/)?.[1];
+    if (initialCategory) navigateCategory(initialCategory, false);
+    else scheduleScrollCategory();
+  });
 })();
