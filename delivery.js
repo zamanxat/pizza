@@ -118,11 +118,11 @@
   }
 
   function createController(options) {
-    const { getLanguage, icon, showDialog, closeDialog, onChange, onCheckout } = options;
+    const { getLanguage, icon, showDialog, closeDialog, onChange, onCheckout, storage } = options;
     const $ = selector => document.querySelector(selector);
     const t = key => TEXT[getLanguage()][key];
-    const get = key => { try { return localStorage.getItem(key); } catch { return null; } };
-    const put = (key, value) => { try { localStorage.setItem(key, value); } catch { /* Session still works. */ } };
+    const get = key => storage.get(key);
+    const put = (key, value) => storage.set(key, value);
     let selection;
     try { selection = normalize(JSON.parse(get('donsan-delivery-v1'))); } catch { selection = normalize(); }
     let draft = normalize(selection), checkout = false, returnToCart = false;

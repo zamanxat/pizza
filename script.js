@@ -1,6 +1,7 @@
 (() => {
   'use strict';
   const DELIVERY_ENGINE = typeof module !== 'undefined' && module.exports ? require('./delivery.js') : window.DonsanDelivery;
+  const PRIVACY_ENGINE = typeof module !== 'undefined' && module.exports ? require('./privacy.js') : window.DonsanPrivacy;
   const WHATSAPP_NUMBER = '77477919765';
   const COMBO_PRICE = 8990;
   const LANGUAGES = ['kk', 'ru', 'en'];
@@ -151,6 +152,7 @@
   Object.entries(EXTRA_TEXT).forEach(([lang, words]) => Object.assign(I18N[lang], words));
   Object.entries({"kk":{"pieces":"дана","spiceNote":"Ащы тағам","diameter":"см","sortHint":"Әр бөлімнің ішіндегі рет өзгереді","clearSearch":"Іздеуді тазалау","cartUnits":"тауар","yourCart":"Себет","emptyTitle":"Тапсырысың осы жерден басталады","emptyText":"Мәзірден ұнаған тағамдарыңды қос.","checkoutNote":"Тапсырысты WhatsApp-та растаңыз."},"ru":{"pieces":"шт.","spiceNote":"Острое блюдо","diameter":"см","sortHint":"Сортировка внутри каждого раздела","clearSearch":"Очистить поиск","cartUnits":"товар","yourCart":"Корзина","emptyTitle":"Здесь будет ваш заказ","emptyText":"Добавьте любимые блюда из меню.","checkoutNote":"Подтвердите заказ в WhatsApp."},"en":{"pieces":"pcs","spiceNote":"Spicy dish","diameter":"cm","sortHint":"Sorted within each menu section","clearSearch":"Clear search","cartUnits":"item","yourCart":"Your cart","emptyTitle":"Your order starts here","emptyText":"Add something you love from the menu.","checkoutNote":"Confirm your order in WhatsApp."}}).forEach(([lang, words]) => Object.assign(I18N[lang], words));
   Object.entries(DELIVERY_ENGINE.TEXT).forEach(([lang, words]) => Object.assign(I18N[lang], words));
+  Object.entries(PRIVACY_ENGINE.TEXT).forEach(([lang, words]) => Object.assign(I18N[lang], words));
   const comboText = { kk: { comboSelection: 'Таңдалды', comboCardAdd: 'Жиынтыққа қосу', comboChooseHint: 'Үш пицца таңдаңыз. Бір түрін бірнеше рет алуға болады.' }, ru: { comboSelection: 'Выбрано', comboCardAdd: 'Добавить в комбо', comboChooseHint: 'Выберите три пиццы. Один вкус можно выбрать несколько раз.' }, en: { comboSelection: 'Selected', comboCardAdd: 'Add to combo', comboChooseHint: 'Choose three pizzas. You can pick a flavour more than once.' } };
   Object.entries(comboText).forEach(([lang, words]) => Object.assign(I18N[lang], words));
   const PRODUCT_MAP = new Map(PRODUCTS.map(product => [product.id, product]));
@@ -218,8 +220,8 @@
   if (typeof document === 'undefined') return;
 
   const $ = selector => document.querySelector(selector);
-  const safeGet = key => { try { return localStorage.getItem(key); } catch { return null; } };
-  const safeSet = (key, value) => { try { localStorage.setItem(key, value); } catch { /* The cart still works without storage. */ } };
+  const safeGet = key => PRIVACY_ENGINE.store.get(key);
+  const safeSet = (key, value) => PRIVACY_ENGINE.store.set(key, value);
   let locale = resolveLocale(location.search);
   let cart;
   try { cart = normalizeCart(JSON.parse(safeGet('donsan-cart-v2') || '[]')); } catch { cart = []; }
@@ -259,6 +261,7 @@
     sort: '<path d="M4 6h16M4 12h10M4 18h5"/><path d="m17 15 3 3 3-3M20 9v9"/>',
     chevron: '<path d="m8 10 4 4 4-4"/>',
     check: '<path d="m5 12 4 4L19 6"/>',
+    shield: '<path d="m12 3 8 3v5c0 5-8 10-8 10S4 16 4 11V6l8-3Z"/><path d="m8.5 11.5 2.5 2.5 4.5-5"/>',
     ruler: '<path d="m3 14 11-11 7 7-11 11-7-7Z"/><path d="m7 10 3 3m1-7 3 3m1 3 3 3"/>',
     bagEmpty: '<path d="M5 8h14l1 12H4L5 8Z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/><path d="M9 13c1.5 2 4.5 2 6 0"/>',
     sakura: '<path d="M12 12C4 8 9 1 12 5c3-4 8 3 0 7Zm0 0c1-9 10-6 7-2 5 2 0 9-7 2Zm0 0c9-1 9 8 4 7 0 5-8 2-4-7Zm0 0c4 8-4 11-5 6-5 1-5-8 5-6Zm0 0c-7 6-12-1-7-3C2 5 10 3 12 12Z"/><circle cx="12" cy="12" r="1.3"/>',
@@ -802,8 +805,9 @@
   }
   delivery = DELIVERY_ENGINE.createController({
     getLanguage: () => locale, icon, showDialog, closeDialog,
-    onChange: () => renderCart(), onCheckout: sendOrder,
+    onChange: () => renderCart(), onCheckout: sendOrder, storage: PRIVACY_ENGINE.store,
   });
+  PRIVACY_ENGINE.mount({ showDialog, closeDialog, getLanguage: () => locale, showToast });
   $('#checkoutBtn').addEventListener('click', () => {
     if (cart.length) delivery.open({ forCheckout: true });
   });

@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="theme-color" content="#ffffff" />
-    <script>try{document.documentElement.dataset.theme=localStorage.getItem('donsan-appearance-v2')==='dark'?'dark':'light'}catch{document.documentElement.dataset.theme='light'}</script>
+    <script src="privacy.js?v=20261026-3"></script>
+    <script>document.documentElement.dataset.theme=window.DonsanPrivacy?.store.get('donsan-appearance-v2')==='dark'?'dark':'light'</script>
     <meta name="description" content="DONSAN: суши, пицца и закуски. Выбирайте блюда и оформляйте заказ через WhatsApp." />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="DONSAN — Суши и пицца" />
@@ -14,15 +15,14 @@
     <link rel="canonical" href="https://donsan.vercel.app/" />
     <title>DONSAN — Суши и пицца</title>
     <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Noto+Serif:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/fonts/fonts.css" />
     <link rel="stylesheet" href="assets/vendor/leaflet/leaflet.css" />
     <link rel="stylesheet" href="style.css?v=20261026-2" />
     <link rel="stylesheet" href="delivery.css?v=20261026-2" />
+    <link rel="stylesheet" href="privacy.css?v=20261026-3" />
     <script src="assets/vendor/leaflet/leaflet.js" defer></script>
-    <script src="delivery.js?v=20261026-2" defer></script>
-    <script src="script.js?v=20261026-2" defer></script>
+    <script src="delivery.js?v=20261026-3" defer></script>
+    <script src="script.js?v=20261026-3" defer></script>
   </head>
   <body>
     <a class="skip-link" href="#menu" data-i18n="skip">Перейти к меню</a>
@@ -65,7 +65,7 @@
       </section>
     </main>
     <footer class="site-footer" id="contacts">
-      <div class="footer-inner shell"><p>© <span id="year">2026</span> DONSAN</p><p class="powered">Powered by <strong>JobaLab</strong></p></div>
+      <div class="footer-inner shell"><p>© <span id="year">2026</span> DONSAN</p><button class="privacy-link" type="button" data-privacy-open data-i18n="privacySettings">Cookies и данные</button><p class="powered">Powered by <strong>JobaLab</strong></p></div>
     </footer>
     <dialog class="cart-dialog" id="cartDialog" aria-labelledby="cartHeading">
       <div class="dialog-head"><div><p class="eyebrow">DONSAN</p><div class="cart-title-line"><h2 id="cartHeading" tabindex="-1" data-i18n="yourCart">Корзина</h2><span class="cart-count" id="cartCount" hidden></span></div></div><button type="button" class="icon-button" data-close="cartDialog" data-i18n-aria="close" data-icon="close" aria-label="Закрыть"></button></div>
@@ -94,6 +94,21 @@
           </div>
         </div>
         <div class="address-actions"><p id="deliveryZoneStatus" role="status" aria-live="polite"></p><button type="submit" class="button button-red"><span id="addressSubmitText" data-i18n="saveAddress">Сохранить адрес</span><span data-icon="arrow" aria-hidden="true"></span></button></div>
+      </form>
+    </dialog>
+    <section class="cookie-banner" id="cookieBanner" aria-labelledby="cookieHeading" hidden>
+      <div class="cookie-copy"><span class="cookie-emblem" data-icon="shield" aria-hidden="true"></span><div><h2 id="cookieHeading" data-i18n="cookieTitle">Cookies и ваши настройки</h2><p data-i18n="cookieIntro">Корзина хранится в браузере. С вашего разрешения мы также запомним тему и адрес для следующего визита. Рекламных cookies нет.</p><button type="button" class="privacy-link" data-privacy-open data-i18n="cookieDetails">Как это работает</button></div></div>
+      <div class="cookie-actions"><button type="button" class="button privacy-button" id="cookieRequiredBtn" data-i18n="cookieRequired">Только необходимые</button><button type="button" class="button privacy-button" id="cookieAllowBtn" data-i18n="cookieAllow">Запоминать настройки</button></div>
+    </section>
+    <dialog class="privacy-dialog" id="privacyDialog" aria-labelledby="privacyHeading">
+      <div class="dialog-head"><h2 id="privacyHeading" tabindex="-1" data-i18n="privacySettings">Cookies и данные</h2><button type="button" class="icon-button" data-close="privacyDialog" data-i18n-aria="close" data-icon="close" aria-label="Закрыть"></button></div>
+      <form id="privacyForm">
+        <div class="privacy-content"><p class="privacy-intro" data-i18n="privacyIntro"></p>
+          <section class="privacy-section"><div class="privacy-section-head"><h3 data-i18n="privacyEssentialTitle"></h3><span class="privacy-required" data-i18n="privacyAlways"></span></div><p data-i18n="privacyEssentialText"></p></section>
+          <section class="privacy-section"><label class="privacy-preference"><input type="checkbox" id="rememberPreferences" aria-describedby="privacyOptionalText" /><span data-i18n="privacyOptionalTitle"></span></label><p id="privacyOptionalText" data-i18n="privacyOptionalText"></p></section>
+          <section class="privacy-section"><h3 data-i18n="privacyServicesTitle"></h3><p data-i18n="privacyServicesText"></p></section>
+          <section class="privacy-section"><h3 data-i18n="privacyControlTitle"></h3><p data-i18n="privacyControlText"></p></section>
+        </div><div class="privacy-bottom"><button class="button button-red" type="submit" data-i18n="privacySave">Сохранить выбор</button></div>
       </form>
     </dialog>
     <div class="toast" id="toast" role="status" aria-live="polite"></div>

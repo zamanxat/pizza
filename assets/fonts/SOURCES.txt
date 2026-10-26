@@ -1,0 +1,4 @@
+Manrope and Noto Serif — SIL Open Font License 1.1.
+Font files: https://fonts.googleapis.com/css2?family=Manrope:wght@400..800&family=Noto+Serif:wght@400..700&display=swap
+Licenses: https://github.com/google/fonts/tree/main/ofl/manrope and https://github.com/google/fonts/tree/main/ofl/notoserif
+Downloaded 2026-10-26. Served locally; no visitor requests to Google Fonts.
