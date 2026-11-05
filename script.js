@@ -157,7 +157,32 @@
   Object.entries(comboText).forEach(([lang, words]) => Object.assign(I18N[lang], words));
   const PRODUCT_MAP = new Map(PRODUCTS.map(product => [product.id, product]));
   const PIZZAS = PRODUCTS.filter(product => product.category === 'pizza');
-  const photo = product => product.image || 'assets/products/' + product.id + '.jpg';
+  // Original photos from the 29 October shoot. Framing changes only the viewport,
+  // so the photographer's JPEGs remain intact and can be reused elsewhere.
+  const PHOTOSHOOT = {
+    'cezar-dog': { file: 'DSC00136.jpg', x: 53, y: 65, scale: 1.15 },
+    'salmon-dog': { file: 'DSC00153.jpg', x: 53, y: 65, scale: 1.15 },
+    'sausage-dog': { file: 'DSC00146.jpg', x: 53, y: 65, scale: 1.15 },
+    'shrimp-dog': { file: 'DSC00165.jpg', x: 53, y: 65, scale: 1.15 },
+    'cheese-dog': { file: 'DSC00174.jpg', x: 53, y: 65, scale: 1.15 },
+    'americano-tempura': { file: 'DSC00120.jpg', x: 53, y: 65, scale: 1.3 },
+    'cezar-tempura': { file: 'DSC00044.jpg', x: 53, y: 65, scale: 1.3 },
+    'salmon-tempura': { file: 'DSC00095.jpg', x: 53, y: 65, scale: 1.3 },
+    'olivier-tempura': { file: 'DSC00034.jpg', x: 53, y: 65, scale: 1.3 },
+    'alaska': { file: 'DSC00010.jpg', x: 53, y: 65, scale: 1.3 },
+    'shrimp-roll': { file: 'DSC00003.jpg', x: 53, y: 65, scale: 1.3 },
+    'phila': { file: 'DSC00107.jpg', x: 53, y: 65, scale: 1.3 },
+    'dragon': { file: 'DSC00112.jpg', x: 53, y: 65, scale: 1.3 },
+    'killer': { file: 'DSC00017.jpg', x: 53, y: 65, scale: 1.3 },
+    'kazuto': { file: 'DSC00053.jpg', x: 53, y: 65, scale: 1.3 },
+    'unagi-rice': { file: 'DSC00070.jpg', x: 53, y: 65, scale: 1.3 },
+    'spicy-salmon': { file: 'DSC00059.jpg', x: 53, y: 65, scale: 1.3 },
+    'mexican-pizza': { file: 'DSC00213.jpg', x: 50, y: 60, scale: 1 },
+    'margherita': { file: 'DSC00220.jpg', x: 50, y: 60, scale: 1 },
+    'pepperoni': { file: 'DSC00230.jpg', x: 50, y: 65, scale: 1.05 },
+    'spicy-chicken-pizza': { file: 'DSC00237.jpg', x: 50, y: 65, scale: 1.05 },
+  };
+  const photo = product => PHOTOSHOOT[product.id] ? 'assets/photoshoot-2026-10-29/' + PHOTOSHOOT[product.id].file : product.image || 'assets/products/' + product.id + '.jpg';
   const money = value => new Intl.NumberFormat('ru-RU').format(value) + ' ₸';
   const linePrice = line => line.type === 'combo' ? COMBO_PRICE : (PRODUCT_MAP.get(line.id)?.price || 0);
   const total = lines => lines.reduce((sum, line) => sum + linePrice(line) * line.qty, 0);
@@ -240,6 +265,11 @@
   const categoryName = id => translated(CATEGORIES.find(category => category.id === id).names);
   const description = product => t(product.category === 'dogs' ? 'dogDescription' : product.group ? product.group + 'Description' : product.category === 'pizza' ? 'pizzaDescription' : product.category === 'drinks' ? 'drinkDescription' : product.category === 'sauces' ? 'sauceDescription' : 'snackDescription');
   const escapeHTML = value => String(value).replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+  const photoStyle = product => {
+    const frame = PHOTOSHOOT[product?.id];
+    return frame ? '--photo-x:' + frame.x + '%;--photo-y:' + frame.y + '%;--photo-scale:' + frame.scale : '';
+  };
+  const photoImage = (product, alt, className = '', lazy = false) => '<img class="' + className + (PHOTOSHOOT[product.id] ? ' shoot-photo' : '') + '" style="' + photoStyle(product) + '" src="' + photo(product) + '" alt="' + escapeHTML(alt) + '"' + (lazy ? ' loading="lazy" decoding="async"' : '') + ' />';
   const ICON_PATHS = {
     plus: '<path d="M12 5v14M5 12h14"/>',
     minus: '<path d="M5 12h14"/>',
@@ -443,6 +473,8 @@
         }
         const product = line.type === 'product' ? PRODUCT_MAP.get(line.id) : null;
         row.querySelector('.cart-item-image').src = lineImage(line);
+        row.querySelector('.cart-item-image').classList.toggle('shoot-photo', Boolean(PHOTOSHOOT[product?.id]));
+        row.querySelector('.cart-item-image').style.cssText = photoStyle(product);
         row.querySelector('h3').textContent = lineName(line);
         row.querySelector('.cart-item-description').textContent = product
           ? categoryName(product.category) + (product.pieces ? ' · ' + product.pieces + ' ' + t('pieces') : product.diameter ? ' · ' + product.diameter + ' ' + t('diameter') : '')
@@ -531,7 +563,7 @@
     const name = escapeHTML(productName(product));
     const heading = product.group ? 'h4' : 'h3';
     const pack = product.category === 'drinks' || product.category === 'sauces' ? ' is-pack' : product.category === 'pizza' || product.category === 'snacks' ? ' is-plated' : '';
-    return '<article class="product-card' + pack + '" data-product="' + product.id + '"><button type="button" class="product-photo" data-details="' + product.id + '" aria-label="' + t('details') + ': ' + name + '"><img src="' + photo(product) + '" alt="' + name + '" loading="lazy" decoding="async" />' + portionBadge(product) + spice(product.spice) + '</button><div class="product-body"><' + heading + ' class="product-name"><button type="button" data-details="' + product.id + '">' + name + '</button></' + heading + '><div class="product-bottom"><strong class="product-price">' + money(product.price).replace(' ₸', ' <small>₸</small>') + '</strong><div class="product-control" data-product-control="' + product.id + '"></div></div></div></article>';
+    return '<article class="product-card' + pack + '" data-product="' + product.id + '"><button type="button" class="product-photo" data-details="' + product.id + '" aria-label="' + t('details') + ': ' + name + '">' + photoImage(product, productName(product), '', true) + portionBadge(product) + spice(product.spice) + '</button><div class="product-body"><' + heading + ' class="product-name"><button type="button" data-details="' + product.id + '">' + name + '</button></' + heading + '><div class="product-bottom"><strong class="product-price">' + money(product.price).replace(' ₸', ' <small>₸</small>') + '</strong><div class="product-control" data-product-control="' + product.id + '"></div></div></div></article>';
   }
 
   function setActiveCategory(id, reveal = true) {
@@ -627,7 +659,7 @@
     const counts = new Map(PIZZAS.map(pizza => [pizza.id, comboSelections.filter(id => id === pizza.id).length]));
     $('#comboOptions').innerHTML = PIZZAS.map(pizza => {
       const count = counts.get(pizza.id);
-      return '<article class="combo-pizza-card' + (count ? ' is-selected' : '') + '"><button class="combo-pizza-main" type="button" data-combo-choice="' + pizza.id + '" aria-label="' + t('comboCardAdd') + ': ' + escapeHTML(productName(pizza)) + '"><img src="' + photo(pizza) + '" alt="" /><h3>' + escapeHTML(productName(pizza)) + '</h3><span class="combo-pizza-meta">30 ' + t('diameter') + '</span>' + spice(pizza.spice) + (count ? '<span class="combo-selected-mark">' + icon('check') + '</span>' : '') + '</button><div class="combo-pizza-controls"><button type="button" data-combo-step="decrease" data-combo-id="' + pizza.id + '" aria-label="' + t('decrease') + ': ' + escapeHTML(productName(pizza)) + '"' + (count === 0 ? ' disabled' : '') + '>' + icon('minus') + '</button><span>' + count + '</span><button type="button" data-combo-step="increase" data-combo-id="' + pizza.id + '" aria-label="' + t('increase') + ': ' + escapeHTML(productName(pizza)) + '"' + (comboSelections.length >= 3 ? ' disabled' : '') + '>' + icon('plus') + '</button></div></article>';
+      return '<article class="combo-pizza-card' + (count ? ' is-selected' : '') + '"><button class="combo-pizza-main" type="button" data-combo-choice="' + pizza.id + '" aria-label="' + t('comboCardAdd') + ': ' + escapeHTML(productName(pizza)) + '"><span class="combo-pizza-photo">' + photoImage(pizza, '') + '</span><h3>' + escapeHTML(productName(pizza)) + '</h3><span class="combo-pizza-meta">30 ' + t('diameter') + '</span>' + spice(pizza.spice) + (count ? '<span class="combo-selected-mark">' + icon('check') + '</span>' : '') + '</button><div class="combo-pizza-controls"><button type="button" data-combo-step="decrease" data-combo-id="' + pizza.id + '" aria-label="' + t('decrease') + ': ' + escapeHTML(productName(pizza)) + '"' + (count === 0 ? ' disabled' : '') + '>' + icon('minus') + '</button><span>' + count + '</span><button type="button" data-combo-step="increase" data-combo-id="' + pizza.id + '" aria-label="' + t('increase') + ': ' + escapeHTML(productName(pizza)) + '"' + (comboSelections.length >= 3 ? ' disabled' : '') + '>' + icon('plus') + '</button></div></article>';
     }).join('');
     $('#comboProgress').textContent = t('comboSelection') + ' ' + comboSelections.length + ' / 3';
     $('#comboForm button[type="submit"]').disabled = comboSelections.length !== 3;
@@ -669,7 +701,7 @@
   function renderProductDetails() {
     const product = PRODUCT_MAP.get(selectedProductId);
     if (!product) return;
-    $('#productDetails').innerHTML = '<div class="product-detail-media"><img class="product-detail-image" src="' + photo(product) + '" alt="' + escapeHTML(productName(product)) + '" /></div><div class="product-detail-body"><p class="eyebrow">' + categoryName(product.category) + '</p><h2 id="productHeading">' + escapeHTML(productName(product)) + '</h2><div class="detail-badges">' + portionBadge(product) + spice(product.spice) + '</div><p>' + description(product) + '</p><p class="allergen-note">' + t('allergenNote') + '</p><div class="product-detail-action"><strong>' + money(product.price) + '</strong><div class="product-control" data-product-control="' + product.id + '"></div></div></div>';
+    $('#productDetails').innerHTML = '<div class="product-detail-media">' + photoImage(product, productName(product), 'product-detail-image') + '</div><div class="product-detail-body"><p class="eyebrow">' + categoryName(product.category) + '</p><h2 id="productHeading">' + escapeHTML(productName(product)) + '</h2><div class="detail-badges">' + portionBadge(product) + spice(product.spice) + '</div><p>' + description(product) + '</p><p class="allergen-note">' + t('allergenNote') + '</p><div class="product-detail-action"><strong>' + money(product.price) + '</strong><div class="product-control" data-product-control="' + product.id + '"></div></div></div>';
     syncProductControls();
   }
 

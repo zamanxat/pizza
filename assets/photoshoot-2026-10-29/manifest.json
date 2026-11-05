@@ -1,0 +1,226 @@
+{
+  "shootDate": "2026-10-29",
+  "appliedDate": "2026-11-05",
+  "photographer": "Rinad",
+  "gallery": "https://balkybekrinad.wfolio.pro/disk/29-10-2026-donsan-h72tjl",
+  "archive": "archives/donsan-product-photos-before-2026-11-05.zip",
+  "selection": "Matching front three-quarter angles within each food category; no top-down frames mixed in. JPEG contents are unchanged; viewport framing is defined in script.js.",
+  "photos": [
+    {
+      "productId": "cezar-dog",
+      "galleryFilename": "DSC00136.jpg",
+      "galleryIndex": 136,
+      "galleryPieceId": "5600655620",
+      "file": "assets/photoshoot-2026-10-29/DSC00136.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "9beb6fc4fc6e36983c5f53fdd8305cd148ba57b45d478d6a898e47f95540f187"
+    },
+    {
+      "productId": "salmon-dog",
+      "galleryFilename": "DSC00153.jpg",
+      "galleryIndex": 153,
+      "galleryPieceId": "5600662477",
+      "file": "assets/photoshoot-2026-10-29/DSC00153.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "2a3fa2739966ba162c37ec2391ebb70c4a7ca7ddc5bef7f7900f1de5ef7b622e"
+    },
+    {
+      "productId": "sausage-dog",
+      "galleryFilename": "DSC00146.jpg",
+      "galleryIndex": 146,
+      "galleryPieceId": "5600659702",
+      "file": "assets/photoshoot-2026-10-29/DSC00146.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "f6f0adec52a2d178167305331428a0c57bb236ad91ff064d015dddc9b05ffa30"
+    },
+    {
+      "productId": "shrimp-dog",
+      "galleryFilename": "DSC00165.jpg",
+      "galleryIndex": 165,
+      "galleryPieceId": "5600667414",
+      "file": "assets/photoshoot-2026-10-29/DSC00165.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "1fb817c4075a9403e50c8c049cf9b67e72b67a21a5dd96fb7d18de610c1ad0a5"
+    },
+    {
+      "productId": "cheese-dog",
+      "galleryFilename": "DSC00174.jpg",
+      "galleryIndex": 174,
+      "galleryPieceId": "5600669244",
+      "file": "assets/photoshoot-2026-10-29/DSC00174.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "c4d05bf7236d91ba1b1472b205ddead1c394085281c64c3ce4b4528b19402edd"
+    },
+    {
+      "productId": "americano-tempura",
+      "galleryFilename": "DSC00120.jpg",
+      "galleryIndex": 120,
+      "galleryPieceId": "5600649611",
+      "file": "assets/photoshoot-2026-10-29/DSC00120.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "eb4bf991c00094aa7552ea0b6e924b90aa56ac91cba59a28effbc8bbf1ca2a3a"
+    },
+    {
+      "productId": "cezar-tempura",
+      "galleryFilename": "DSC00044.jpg",
+      "galleryIndex": 44,
+      "galleryPieceId": "5600621208",
+      "file": "assets/photoshoot-2026-10-29/DSC00044.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "b01b2afd66452b5bc1f18de16c3188d93d89319d943db72263f32b2ccd8874f0"
+    },
+    {
+      "productId": "salmon-tempura",
+      "galleryFilename": "DSC00095.jpg",
+      "galleryIndex": 95,
+      "galleryPieceId": "5600642014",
+      "file": "assets/photoshoot-2026-10-29/DSC00095.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "c5a5c7beda86628d72df6d77b4a0906ba74688b982184a9432cf02ac97e45880"
+    },
+    {
+      "productId": "olivier-tempura",
+      "galleryFilename": "DSC00034.jpg",
+      "galleryIndex": 34,
+      "galleryPieceId": "5600618359",
+      "file": "assets/photoshoot-2026-10-29/DSC00034.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "e07a64d21f94aef8b910639bc30d299c7e8557be1c7ac5bcd70c2c1bd37f9f13"
+    },
+    {
+      "productId": "alaska",
+      "galleryFilename": "DSC00010.jpg",
+      "galleryIndex": 10,
+      "galleryPieceId": "5600609646",
+      "file": "assets/photoshoot-2026-10-29/DSC00010.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "4ec27a05f3033325cee07840ebcd709ddf4300553e44ad404d6116de3a3fc99f"
+    },
+    {
+      "productId": "phila",
+      "galleryFilename": "DSC00107.jpg",
+      "galleryIndex": 107,
+      "galleryPieceId": "5600644864",
+      "file": "assets/photoshoot-2026-10-29/DSC00107.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "be8ca2783e8077a4710417ada99b6f17f02d2be1d400c3b525f862b80a3585e1"
+    },
+    {
+      "productId": "dragon",
+      "galleryFilename": "DSC00112.jpg",
+      "galleryIndex": 112,
+      "galleryPieceId": "5600646064",
+      "file": "assets/photoshoot-2026-10-29/DSC00112.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "79196c07edd2bdfe5f9886ede3f28b8f8d364b76bec49ab6e484ee800bd8f882"
+    },
+    {
+      "productId": "shrimp-roll",
+      "galleryFilename": "DSC00003.jpg",
+      "galleryIndex": 3,
+      "galleryPieceId": "5600607426",
+      "file": "assets/photoshoot-2026-10-29/DSC00003.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "db251ce10f5fb5746f214e3650655c7aeeebe02f67082039f984e2cb5bccd251"
+    },
+    {
+      "productId": "killer",
+      "galleryFilename": "DSC00017.jpg",
+      "galleryIndex": 17,
+      "galleryPieceId": "5600611196",
+      "file": "assets/photoshoot-2026-10-29/DSC00017.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "07bc040d3dbb4d84fe9479dbb6301fb3b85e3475fdd7921c659d6fac37f93866"
+    },
+    {
+      "productId": "kazuto",
+      "galleryFilename": "DSC00053.jpg",
+      "galleryIndex": 53,
+      "galleryPieceId": "5600625244",
+      "file": "assets/photoshoot-2026-10-29/DSC00053.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "f66092bdb369c81ef86f275a72eafbfaff58137c2f231436d9ca3f7bc2a0280d"
+    },
+    {
+      "productId": "unagi-rice",
+      "galleryFilename": "DSC00070.jpg",
+      "galleryIndex": 70,
+      "galleryPieceId": "5600633511",
+      "file": "assets/photoshoot-2026-10-29/DSC00070.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "8ca791e8cac62c1b6238114a17e146ea7bcedcfe851a81409e7d77e34a07eb59"
+    },
+    {
+      "productId": "spicy-salmon",
+      "galleryFilename": "DSC00059.jpg",
+      "galleryIndex": 59,
+      "galleryPieceId": "5600627697",
+      "file": "assets/photoshoot-2026-10-29/DSC00059.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "a235d165b918181d660d48e1e39cd1ed71d646784d2b5cab522e55aabc800282"
+    },
+    {
+      "productId": "mexican-pizza",
+      "galleryFilename": "DSC00213.jpg",
+      "galleryIndex": 213,
+      "galleryPieceId": "5600681336",
+      "file": "assets/photoshoot-2026-10-29/DSC00213.jpg",
+      "width": 1441,
+      "height": 2560,
+      "sha256": "b3fc3c29c01d8c261ed0de2532651cd9a0950c205ff414435d94fe2dc858fd46"
+    },
+    {
+      "productId": "margherita",
+      "galleryFilename": "DSC00220.jpg",
+      "galleryIndex": 220,
+      "galleryPieceId": "5600682799",
+      "file": "assets/photoshoot-2026-10-29/DSC00220.jpg",
+      "width": 1441,
+      "height": 2560,
+      "sha256": "8f285fc148e626787d2e446e4d5028df56432e500520b11a401811a25b1b14e1"
+    },
+    {
+      "productId": "pepperoni",
+      "galleryFilename": "DSC00230.jpg",
+      "galleryIndex": 230,
+      "galleryPieceId": "5600685961",
+      "file": "assets/photoshoot-2026-10-29/DSC00230.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "18661c1152312b7ee77558926afb9ab42871393702b55ac4fcb6f3c111b212d6"
+    },
+    {
+      "productId": "spicy-chicken-pizza",
+      "galleryFilename": "DSC00237.jpg",
+      "galleryIndex": 237,
+      "galleryPieceId": "5600688430",
+      "file": "assets/photoshoot-2026-10-29/DSC00237.jpg",
+      "width": 1920,
+      "height": 1081,
+      "sha256": "ff8c19dcf7b749e02dd18490e85b6ebe4cf31991563a9c1e0546534fe9df01db"
+    }
+  ],
+  "identification": "Selected from visible ingredients, category and the existing menu; proprietary recipes cannot be independently certified from photographs.",
+  "unchangedCategories": [
+    "snacks",
+    "drinks",
+    "sauces"
+  ]
+}

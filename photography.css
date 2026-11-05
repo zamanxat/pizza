@@ -1,0 +1,22 @@
+/* Real photography retains its own background and colours in both themes. */
+.product-photo img.shoot-photo,
+.product-detail-image.shoot-photo,
+.combo-pizza-photo img.shoot-photo,
+.cart-item-image.shoot-photo {
+  object-fit: cover;
+  object-position: var(--photo-x, 50%) var(--photo-y, 65%);
+  mix-blend-mode: normal;
+  transform-origin: var(--photo-x, 50%) var(--photo-y, 65%);
+  transform: scale(var(--photo-scale, 1));
+}
+.product-photo:hover img.shoot-photo { transform: scale(calc(var(--photo-scale, 1) * 1.025)); }
+.product-detail-media { overflow: hidden; }
+.product-detail-media:has(.shoot-photo) { position: relative; aspect-ratio: 1.36; }
+.product-detail-media .product-detail-image.shoot-photo { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
+.cart-item-image.shoot-photo { transform: none; }
+.combo-pizza-photo { display: block; width: calc(100% + 26px); aspect-ratio: 1.5; margin-inline: -13px; overflow: hidden; background: var(--photo); }
+.combo-pizza-photo img { display: block; width: 100%; height: 100%; margin: 0; }
+.combo-pizza-photo img.shoot-photo { object-position: var(--photo-x, 50%) calc(var(--photo-y, 65%) - 3%); }
+@media (prefers-reduced-motion: reduce) {
+  .product-photo img.shoot-photo { transition: none; }
+}
